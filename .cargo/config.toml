@@ -1,0 +1,4 @@
+[alias]
+xtask = "run -p xtask --"
+verify = "run -p xtask -- verify --all"
+policy = "run -p xtask -- dependency-policy"
