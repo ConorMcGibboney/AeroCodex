@@ -1,0 +1,57 @@
+version: agentic-release-train-phase-0.001
+policy: "Agentic functionality remains scaffold/planning until the Phase 0.005 vertical slice gate passes."
+releases:
+  - version: phase-0.001-agent-scaffold
+    codename: Planning Harness
+    deliverables:
+      - aero-codex-agent-core type scaffold
+      - agent schema scaffold
+      - registry/retrieval/trace/tool/server crate layout
+      - companion vector token schema
+      - example trace fixture
+    exit_gate: Agentic crates are deployed with docs and compile checks run by deployment agent.
+  - version: phase-0.005-agent-vertical-slice
+    codename: Trust Loop Alpha
+    deliverables:
+      - one hand-registered tool
+      - one generated JSON schema
+      - one trace write/read/replay path
+      - one CLI invocation path
+    exit_gate: One Codex Entry can be discovered, schema-inspected, invoked, and replayed without LLM math.
+  - version: phase-0.01-agent-preview
+    codename: Registry Alpha
+    deliverables:
+      - evidence-card agent metadata
+      - registry builder
+      - list-tools command
+      - schema export
+      - manifest generation
+    exit_gate: All Phase 0.01 exposed calculations appear in the agent registry.
+  - version: phase-0.1-agent-alpha
+    codename: Companion Vector Token Alpha
+    deliverables:
+      - CVT generator
+      - alias index
+      - symbol index
+      - JSONL output
+      - capability graph
+    exit_gate: Every exposed Codex Entry generates at least one CVT and retrieval record.
+  - version: phase-0.5-agent-beta
+    codename: Hybrid Retrieval and Invocation
+    deliverables:
+      - lexical search
+      - alias search
+      - symbol search
+      - metadata filters
+      - tool invocation
+      - structured errors
+    exit_gate: Natural-language engineering queries retrieve and invoke the correct Rust tool with transparent reasons.
+  - version: phase-0.9-agent-rc
+    codename: Traceable Agent Tooling RC
+    deliverables:
+      - explain mode
+      - verify mode
+      - trace replay
+      - local server
+      - CI release gates
+    exit_gate: Agent tooling is ready to accompany v1.0 stable bounded core.

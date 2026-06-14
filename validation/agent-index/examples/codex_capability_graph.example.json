@@ -1,0 +1,67 @@
+{
+  "nodes": [
+    {
+      "node_id": "node:atmosphere.standard_1976.at_altitude",
+      "codex_id": "atmosphere.standard_1976.at_altitude",
+      "title": "Standard atmosphere at altitude",
+      "domain": "atmosphere",
+      "node_kind": "model",
+      "inputs": [
+        "geometric_altitude"
+      ],
+      "outputs": [
+        "static_pressure",
+        "static_temperature",
+        "density",
+        "speed_of_sound"
+      ],
+      "evidence_status": "C3_reference_validated"
+    },
+    {
+      "node_id": "node:gasdyn.flow_state.from_mach_static_conditions",
+      "codex_id": "gasdyn.flow_state.from_mach_static_conditions",
+      "title": "Build flow state from Mach and static conditions",
+      "domain": "gas_dynamics",
+      "node_kind": "workflow",
+      "inputs": [
+        "mach",
+        "static_pressure",
+        "static_temperature",
+        "gas_model"
+      ],
+      "outputs": [
+        "flow_state"
+      ],
+      "evidence_status": "C2_implementation_verified"
+    },
+    {
+      "node_id": "node:gasdyn.normal_shock.evaluate",
+      "codex_id": "gasdyn.normal_shock.evaluate",
+      "title": "Evaluate normal shock state",
+      "domain": "gas_dynamics",
+      "node_kind": "model",
+      "inputs": [
+        "upstream_flow_state"
+      ],
+      "outputs": [
+        "downstream_flow_state",
+        "pressure_ratio",
+        "temperature_ratio",
+        "density_ratio"
+      ],
+      "evidence_status": "C3_reference_validated"
+    }
+  ],
+  "edges": [
+    {
+      "from": "node:atmosphere.standard_1976.at_altitude",
+      "to": "node:gasdyn.flow_state.from_mach_static_conditions",
+      "edge_kind": "produces_input_for"
+    },
+    {
+      "from": "node:gasdyn.flow_state.from_mach_static_conditions",
+      "to": "node:gasdyn.normal_shock.evaluate",
+      "edge_kind": "produces_input_for"
+    }
+  ]
+}

@@ -3,6 +3,10 @@
 
 use std::fmt;
 
+pub const PROJECT_PHASE_VERSION: &str = "0.001";
+pub const CARGO_SEMVER_VERSION: &str = env!("CARGO_PKG_VERSION");
+pub const CURRENT_REPORT_ID: &str = "phase-0.001-development-baseline";
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct VerificationId(&'static str);
 
@@ -90,7 +94,7 @@ impl<T> EngineeringResult<T> {
             verification: VerificationRecord {
                 id: VerificationId::new(verification_id),
                 evidence_level,
-                report_id: "founder-baseline-v0.0.0",
+                report_id: CURRENT_REPORT_ID,
             },
             uncertainty: None,
         }
@@ -130,6 +134,10 @@ pub enum AeroError {
         value: f64,
         reason: &'static str,
     },
+    RequiresPositive {
+        parameter: &'static str,
+        value: f64,
+    },
     RequiresSupersonic {
         parameter: &'static str,
         value: f64,
@@ -168,6 +176,9 @@ impl fmt::Display for AeroError {
                 value,
                 reason,
             } => write!(f, "invalid input {parameter}={value}: {reason}"),
+            Self::RequiresPositive { parameter, value } => {
+                write!(f, "{parameter}={value} must be positive")
+            }
             Self::RequiresSupersonic { parameter, value } => {
                 write!(f, "{parameter}={value} must be supersonic")
             }
@@ -208,6 +219,7 @@ impl std::error::Error for AeroError {}
 pub mod prelude {
     pub use crate::{
         AeroError, AeroResult, Assumption, EngineeringResult, EvidenceLevel, ModelWarning,
-        Uncertainty, ValidityStatus, VerificationId, VerificationRecord,
+        Uncertainty, ValidityStatus, VerificationId, VerificationRecord, CARGO_SEMVER_VERSION,
+        CURRENT_REPORT_ID, PROJECT_PHASE_VERSION,
     };
 }

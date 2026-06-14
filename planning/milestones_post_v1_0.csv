@@ -1,0 +1,13 @@
+Version,Theme,Major Deliverables
+1.1,Reference Validation Expansion,More gas dynamics and atmosphere tables plus generated release reports
+1.2,Low-Order Aerodynamics,Thin airfoil finite wing drag buildup VLM/panel starters
+1.3,Propulsion Workflows,Rocket nozzle ideal cycles ramjet/turbojet preliminary models
+1.4,Astrodynamics Propagation,Kepler solvers frames J2 Hohmann Lambert starter
+1.5,Structures and Loads,Beams thin-walled sections buckling mass properties
+1.6,Bioregenerative Loops,Crew loads oxygen water biomass nutrients buffer loops
+1.7,Agentic Maturity,Registry CVT retrieval local server trace replay
+1.8,WASM Workbench,Browser docs calculators visual validation reports
+1.9,UQ and Sensitivity,Monte Carlo intervals derivatives design sweeps
+2.0,Architecture Major,API cleanup after alpha/beta user feedback
+2.x,Advanced Physics,Real gas equilibrium chemistry high-temp transport advanced inlets
+3.x,Integrated Workflows,Vehicle habitat mission-level studies and replayable optimization

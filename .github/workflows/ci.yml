@@ -33,5 +33,11 @@ jobs:
       - name: Dependency policy
         run: cargo run -p xtask -- dependency-policy
 
+      - name: Agent index scaffold
+        run: cargo run -p aero-codex-agent-cli -- build-index --check
+
+      - name: Agent scaffold files
+        run: cargo run -p xtask -- agent-index
+
       - name: Documentation
         run: cargo doc --workspace --all-features --no-deps

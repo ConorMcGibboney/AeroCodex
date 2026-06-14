@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentTrace",
+  "type": "object",
+  "required": [
+    "trace_id",
+    "created_at",
+    "aero_codex_version",
+    "invocation",
+    "result",
+    "evidence"
+  ],
+  "properties": {
+    "trace_id": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "aero_codex_version": {
+      "type": "string"
+    },
+    "workspace_git_sha": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "invocation": {
+      "type": "object"
+    },
+    "result": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "data_checksums": {
+      "type": "array"
+    },
+    "environment": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

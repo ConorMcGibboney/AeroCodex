@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanionVectorToken",
+  "type": "object",
+  "required": [
+    "token_id",
+    "codex_id",
+    "kind",
+    "title",
+    "retrieval_text",
+    "evidence_status",
+    "provenance"
+  ],
+  "properties": {
+    "token_id": {
+      "type": "string"
+    },
+    "codex_id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "calculation",
+        "model",
+        "solver",
+        "dataset",
+        "theory_note",
+        "workflow",
+        "error_explanation",
+        "branch_rule",
+        "validity_rule",
+        "unit_definition",
+        "frame_definition"
+      ]
+    },
+    "domain": {
+      "type": "string"
+    },
+    "crate_name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "retrieval_text": {
+      "type": "string"
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "inputs": {
+      "type": "array"
+    },
+    "outputs": {
+      "type": "array"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validity": {
+      "type": "object"
+    },
+    "forbidden_when": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_status": {
+      "type": "string"
+    },
+    "callable": {
+      "type": "boolean"
+    },
+    "tool_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "explainable": {
+      "type": "boolean"
+    },
+    "verifiable": {
+      "type": "boolean"
+    },
+    "embedding": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,33 @@
+{
+  "manifest": {
+    "aero_codex_version": "0.4.0",
+    "generated_at": "2026-06-14T00:00:00Z",
+    "tool_count": 1,
+    "codex_entry_count": 1,
+    "cvt_count": 1,
+    "evidence_cards": 1
+  },
+  "entries": [
+    {
+      "codex_id": "gasdyn.normal_shock.p2_over_p1",
+      "tool_name": "gasdyn.normal_shock.p2_over_p1",
+      "title": "Normal shock static pressure ratio",
+      "domain": "gas_dynamics",
+      "crate_name": "aero-codex-gasdynamics",
+      "version": "0.4.0",
+      "entry_kind": "calculation",
+      "evidence_status": "C3_reference_validated",
+      "callable": true,
+      "explainable": true,
+      "verifiable": true,
+      "input_schema_ref": "schemas/inputs/gasdyn.normal_shock.p2_over_p1.input.json",
+      "output_schema_ref": "schemas/outputs/gasdyn.normal_shock.p2_over_p1.output.json",
+      "cvt_refs": [
+        "cvt:gasdyn.normal_shock.p2_over_p1:v0.4.0"
+      ],
+      "capability_node": "node:gasdyn.normal_shock.p2_over_p1",
+      "deprecated": false,
+      "replacement": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+type: object
+required:
+  - exposed
+properties:
+  exposed:
+    type: boolean
+  tool_name:
+    type: string
+  capability_type:
+    enum:
+      - calculation
+      - model
+      - solver
+      - dataset
+      - theory_note
+      - workflow
+  aliases:
+    type: array
+    items: { type: string }
+  retrieval_text:
+    type: string
+  intent_examples:
+    type: array
+    items: { type: string }
+  should_not_use_when:
+    type: array
+    items: { type: string }
+  required_context:
+    type: array
+    items: { type: string }
+  optional_context:
+    type: array
+    items: { type: string }
+  explanation_level:
+    type: object
+    properties:
+      default: { type: string }
+      options:
+        type: array
+        items: { type: string }
+  safety_class:
+    type: object
+    required: [misuse_risk]
+    properties:
+      misuse_risk:
+        enum: [low, medium, high, restricted]
+      reason: { type: string }
+  retrieval_weight:
+    type: object
+    properties:
+      symbols: { enum: [low, medium, high] }
+      aliases: { enum: [low, medium, high] }
+      semantic: { enum: [low, medium, high] }
+      source: { enum: [low, medium, high] }
+if:
+  properties:
+    exposed:
+      const: true
+then:
+  required:
+    - tool_name
+    - capability_type
+    - aliases
+    - retrieval_text
+    - should_not_use_when
+    - safety_class

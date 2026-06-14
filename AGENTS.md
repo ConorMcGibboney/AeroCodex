@@ -10,6 +10,8 @@ Agents working in this repository must preserve the AeroCodex trust model.
 - Do not silently extrapolate beyond declared model validity.
 - Do not accept raw `f64` for public unit-bearing APIs when a typed quantity or strong dimensionless type is available.
 - Do not add a stable public calculation without an evidence card and tests.
+- Keep the public project phase at `0.001` until the Phase 0.001 exit gates in `docs/VERSIONING_PLAN.md` are satisfied.
+- Agents may plan, retrieve, explain, and route; Rust owns calculations, validation, units, traces, and reproducibility.
 
 ## Required checks before proposing a change
 
@@ -19,5 +21,7 @@ cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-features
 cargo run -p xtask -- verify --all
 cargo run -p xtask -- dependency-policy
+cargo run -p aero-codex-agent-cli -- build-index --check
+cargo run -p xtask -- agent-index
 cargo doc --workspace --all-features --no-deps
 ```

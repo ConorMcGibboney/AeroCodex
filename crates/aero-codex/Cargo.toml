@@ -9,7 +9,6 @@ repository.workspace = true
 authors.workspace = true
 publish = false
 
-
 [dependencies]
 aero-codex-core = { path = "../aero-codex-core" }
 aero-codex-units = { path = "../aero-codex-units" }
@@ -17,7 +16,16 @@ aero-codex-constants = { path = "../aero-codex-constants" }
 aero-codex-numerics = { path = "../aero-codex-numerics" }
 aero-codex-validation = { path = "../aero-codex-validation" }
 aero-codex-data = { path = "../aero-codex-data" }
+aero-codex-atmosphere = { path = "../aero-codex-atmosphere" }
+aero-codex-thermo = { path = "../aero-codex-thermo" }
 aero-codex-gasdynamics = { path = "../aero-codex-gasdynamics" }
+aero-codex-aerodynamics = { path = "../aero-codex-aerodynamics" }
+aero-codex-propulsion = { path = "../aero-codex-propulsion" }
+aero-codex-heat-transfer = { path = "../aero-codex-heat-transfer" }
+aero-codex-structures = { path = "../aero-codex-structures" }
+aero-codex-flight-dynamics = { path = "../aero-codex-flight-dynamics" }
+aero-codex-astrodynamics = { path = "../aero-codex-astrodynamics" }
+aero-codex-bioregen = { path = "../aero-codex-bioregen" }
 
 [lib]
 path = "src/lib.rs"

@@ -1,0 +1,33 @@
+id: bioregen.buffer.residence_time
+name: "Life-support buffer residence time"
+crate: aero-codex-bioregen
+project_phase: "0.001"
+source:
+  primary_source_id: nasa_life_support_bvad_2022
+  source_review_status: candidate_identified
+  note: "Phase 0.001 source record; review equation/table references before stable release."
+model:
+  assumptions:
+    - "starter equation or first-principles relation"
+    - "domain limits and source references require Phase 0.001 review before stable exposure"
+domain:
+  status: provisional
+  notes:
+    - "Inputs must satisfy typed constructor constraints."
+    - "No certification, mission-readiness, life-support-readiness, or flight-readiness claim."
+inputs:
+  status: typed_rust_api
+outputs:
+  status: typed_rust_api
+tests:
+  - type: implementation_unit_test
+    location: "crate unit tests"
+    tolerance: "documented in source test where applicable"
+  - type: source_review_backlog
+    status: "pending"
+failure_modes:
+  - invalid_input_returns_AeroError
+  - outside_validity_must_not_be_silent_when_validity_is_defined
+verification_status: implementation_verified
+validation_status: reference_model_only_pending_review
+release_status: experimental

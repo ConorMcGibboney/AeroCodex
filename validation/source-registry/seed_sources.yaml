@@ -1,0 +1,64 @@
+schema_version: "0.1"
+project_phase: "0.001"
+records:
+  - source_id: naca_tr_1135
+    title: "Equations, Tables, and Charts for Compressible Flow"
+    organization: "NACA / NASA archive"
+    source_tier: A
+    url: "https://www.nasa.gov/wp-content/uploads/2023/03/equations-tables-charts-compressibleflow-report-1135.pdf"
+    used_for:
+      - gasdyn.normal_shock.p2_over_p1
+      - gasdyn.isentropic.p0_over_p
+    review_status: candidate_identified
+    redistribution_notes: "Use as reference target; confirm redistribution rules before bundling extracted tables."
+  - source_id: us_standard_atmosphere_1976
+    title: "U.S. Standard Atmosphere, 1976"
+    organization: "NASA / NOAA / USAF committee publication"
+    source_tier: A
+    url: "https://ntrs.nasa.gov/citations/19770009539"
+    used_for:
+      - atmosphere.ideal_gas.density
+      - constants.air_specific_gas_constant
+    review_status: candidate_identified
+    redistribution_notes: "Use as atmospheric reference target; extracted tables require provenance and checksum records."
+  - source_id: nasa_cea
+    title: "Chemical Equilibrium with Applications"
+    organization: "NASA Glenn Research Center"
+    source_tier: A
+    url: "https://www.nasa.gov/glenn/research/chemical-equilibrium-with-applications/"
+    used_for:
+      - propulsion future equilibrium chemistry comparison
+      - thermo future equilibrium chemistry comparison
+    review_status: candidate_identified
+    redistribution_notes: "Comparison target only; no wrapper dependency in core."
+  - source_id: nasa_life_support_bvad_2022
+    title: "Life Support Baseline Values and Assumptions Document"
+    organization: "NASA Johnson Space Center"
+    source_tier: A
+    url: "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf"
+    used_for:
+      - bioregen.mass_balance.closed_loop_fraction
+      - bioregen.production.required_area
+      - bioregen.buffer.residence_time
+    review_status: candidate_identified
+    redistribution_notes: "Use for assumptions and baseline values; model-specific extraction must be reviewed."
+  - source_id: jpl_ssd_astrodynamic_parameters
+    title: "Astrodynamic Parameters"
+    organization: "JPL Solar System Dynamics"
+    source_tier: A
+    url: "https://ssd.jpl.nasa.gov/astro_par.html"
+    used_for:
+      - constants.earth_standard_gravitational_parameter
+      - astrodynamics.two_body.circular_orbit_speed
+      - astrodynamics.two_body.vis_viva_speed
+    review_status: candidate_identified
+    redistribution_notes: "Use as source for gravitational parameters; record epoch/version and uncertainty."
+  - source_id: naif_spice_frames
+    title: "NAIF SPICE Frames Documentation"
+    organization: "NASA/JPL NAIF"
+    source_tier: A
+    url: "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/C/req/frames.html"
+    used_for:
+      - future frame definitions and validation comparisons
+    review_status: candidate_identified
+    redistribution_notes: "Reference target only; SPICE is not a core dependency."

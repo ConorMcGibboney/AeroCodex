@@ -1,0 +1,12 @@
+Milestone,Version,Name,Exit Gate
+M0,0.001,Deployable Founder Repository,Repository deploys and deployment report is opened
+M1,0.001,Starter Equations Across Required Domains,Each required domain has Rust calculation plus test plus Codex ID
+M2,0.002,Source Verification Alpha,Every starter entry has source review task and source registry record
+M3,0.003,Multi-Domain Trust Loop,Several domains appear in generated validation reports
+M4,0.004,Numerics and Units Hardening,Public API eliminates ambiguous units and branches where possible
+M5,0.005,Agentic Vertical Slice,One calculation can be discovered invoked traced verified and replayed
+M6,0.01,Research Preview,Clean checkout reproduces examples and reports
+M7,0.1,Engineering Alpha,Major categories have source-reviewed internal APIs
+M8,0.5,Beta Candidate,Stable v1 surface proposed and architecture blockers closed
+M9,0.9,Release Candidate,API freeze candidate and release evidence report complete
+M10,1.0.0,First Stable Verified Core,Bounded stable API ships with evidence report and caveats

@@ -32,6 +32,7 @@ fn main() {
     let result = match command.as_deref() {
         Some("verify") => verify(),
         Some("dependency-policy") => dependency_policy(),
+        Some("agent-index") => agent_index_check(),
         Some("help") | Some("--help") | Some("-h") | None => {
             print_help();
             Ok(())
@@ -49,6 +50,7 @@ fn print_help() {
     println!("AeroCodex xtask commands:");
     println!("  verify [--all]          verify baseline evidence-card files");
     println!("  dependency-policy       scan Cargo.toml files for denied native dependencies");
+    println!("  agent-index             check agent schema/trace/index fixture directories");
 }
 
 fn repo_root() -> Result<PathBuf, String> {
@@ -125,6 +127,15 @@ fn dependency_policy() -> Result<(), String> {
         "dependency policy passed for {} Cargo.toml file(s)",
         cargo_tomls.len()
     );
+    Ok(())
+}
+
+fn agent_index_check() -> Result<(), String> {
+    let root = repo_root()?;
+    require_dir(&root.join("validation/schemas"))?;
+    require_dir(&root.join("validation/traces"))?;
+    require_dir(&root.join("validation/agent-index"))?;
+    println!("agent index scaffold checks passed");
     Ok(())
 }
 

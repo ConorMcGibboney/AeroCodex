@@ -1,0 +1,18 @@
+[package]
+name = "aero-codex-agent-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+
+[dependencies]
+aero-codex-agent-core = { path = "../aero-codex-agent-core" }
+aero-codex-agent-registry = { path = "../aero-codex-agent-registry" }
+aero-codex-agent-retrieval = { path = "../aero-codex-agent-retrieval" }
+aero-codex-agent-tools = { path = "../aero-codex-agent-tools" }
+aero-codex-agent-trace = { path = "../aero-codex-agent-trace" }
+clap.workspace = true
+serde_json.workspace = true

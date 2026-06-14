@@ -1,0 +1,52 @@
+{
+  "trace_id": "trace_2026_06_14_000001",
+  "created_at": "2026-06-14T00:00:00Z",
+  "aero_codex_version": "0.4.0",
+  "workspace_git_sha": null,
+  "invocation": {
+    "tool_name": "gasdyn.normal_shock.p2_over_p1",
+    "codex_id": "gasdyn.normal_shock.p2_over_p1",
+    "raw_input_json": {
+      "mach1": {
+        "value": 2.5
+      },
+      "gamma": {
+        "value": 1.4
+      }
+    },
+    "normalized_input_json": {
+      "mach1": 2.5,
+      "gamma": 1.4,
+      "units": "dimensionless"
+    },
+    "context": {
+      "mode": "Compute",
+      "trace_policy": "Write",
+      "extrapolation_policy": "Error"
+    }
+  },
+  "result": {
+    "success": true,
+    "raw_output_json": {
+      "value": 7.125,
+      "quantity": "pressure_ratio",
+      "unit": "dimensionless",
+      "validity": "valid"
+    },
+    "error": null,
+    "warnings": [],
+    "validity": "valid",
+    "duration_ms": 0
+  },
+  "evidence": {
+    "codex_id": "gasdyn.normal_shock.p2_over_p1",
+    "status": "C3_reference_validated",
+    "source": "NACA Report 1135"
+  },
+  "data_checksums": [],
+  "environment": {
+    "os": "unknown",
+    "arch": "unknown",
+    "rustc": "unknown"
+  }
+}

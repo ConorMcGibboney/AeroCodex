@@ -1,0 +1,44 @@
+name: Agentic CI Gates
+stages:
+  - format
+  - lint
+  - test
+  - validation
+  - agent-index
+  - agent-schema
+  - agent-retrieval
+  - agent-trace
+  - agent-server
+  - dependency-policy
+  - docs
+format:
+  command: cargo fmt --all -- --check
+lint:
+  command: cargo clippy --workspace --all-targets --all-features -- -D warnings
+test:
+  command: cargo test --workspace --all-features
+validation:
+  command: cargo run -p xtask -- verify --all
+agent-index:
+  command: cargo run -p aero-codex-agent-cli -- build-index --check
+agent-schema:
+  command: cargo run -p aero-codex-agent-cli -- doctor
+agent-retrieval:
+  command: cargo test -p aero-codex-agent-retrieval
+agent-trace:
+  command: cargo test -p aero-codex-agent-trace
+agent-server:
+  command: cargo test -p aero-codex-agent-server
+dependency-policy:
+  command: cargo run -p xtask -- dependency-policy
+docs:
+  command: cargo doc --workspace --all-features --no-deps
+release_gates:
+  - every exposed tool has schema
+  - every exposed tool has evidence
+  - every exposed tool has at least one companion vector token
+  - every CVT points to a valid Codex ID
+  - every callable tool has an invocation test
+  - every invocation test can write and replay a trace
+  - agent registry builds deterministically
+  - no forbidden native dependency is introduced

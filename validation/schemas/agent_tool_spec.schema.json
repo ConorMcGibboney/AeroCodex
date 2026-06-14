@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AgentToolSpec",
+  "type": "object",
+  "required": [
+    "name",
+    "codex_id",
+    "title",
+    "description",
+    "input_schema",
+    "output_schema",
+    "error_schema",
+    "evidence"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "codex_id": {
+      "type": "string"
+    },
+    "crate_name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "mode_support": {
+      "type": "object"
+    },
+    "input_schema": {
+      "type": "object"
+    },
+    "output_schema": {
+      "type": "object"
+    },
+    "error_schema": {
+      "type": "object"
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validity": {
+      "type": "object"
+    },
+    "branch_rules": {
+      "type": "array"
+    },
+    "evidence": {
+      "type": "object"
+    },
+    "examples": {
+      "type": "array"
+    },
+    "safety": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

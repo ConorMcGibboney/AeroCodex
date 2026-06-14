@@ -7,13 +7,32 @@ members = [
     "crates/aero-codex-numerics",
     "crates/aero-codex-validation",
     "crates/aero-codex-data",
+    "crates/aero-codex-atmosphere",
+    "crates/aero-codex-thermo",
     "crates/aero-codex-gasdynamics",
+    "crates/aero-codex-aerodynamics",
+    "crates/aero-codex-propulsion",
+    "crates/aero-codex-heat-transfer",
+    "crates/aero-codex-structures",
+    "crates/aero-codex-flight-dynamics",
+    "crates/aero-codex-astrodynamics",
+    "crates/aero-codex-bioregen",
+    "crates/aero-codex-agent-core",
+    "crates/aero-codex-agent-schema",
+    "crates/aero-codex-agent-registry",
+    "crates/aero-codex-agent-index",
+    "crates/aero-codex-agent-retrieval",
+    "crates/aero-codex-agent-tools",
+    "crates/aero-codex-agent-trace",
+    "crates/aero-codex-agent-server",
+    "crates/aero-codex-agent-cli",
+    "crates/aero-codex-macros",
     "xtask",
 ]
 resolver = "2"
 
 [workspace.package]
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 rust-version = "1.75"
 license = "MIT OR Apache-2.0"
@@ -21,7 +40,18 @@ repository = "https://github.com/ConorMcGibboney/AeroCodex"
 authors = ["AeroCodex contributors"]
 description = "Verified aerospace engineering mathematics in pure Rust."
 
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+schemars = { version = "0.8", features = ["derive"] }
+clap = { version = "4", features = ["derive"] }
+
 [workspace.metadata.aerocodex]
-status = "founder-baseline"
+project_phase_version = "0.001"
+cargo_semver_version = "0.0.1"
+status = "phase-0.001-research-and-starter-equations"
 no_wrapper_policy = true
 certification_claim = false
+agentic_layer = "planning-and-scaffold"
+versioning_note = "Keep public project phase at 0.001 until basic Rust equations, source cards, tests, and verification plans exist across core aerospace, bioregenerative life support, and astrodynamics categories. Cargo package versions remain SemVer-compatible."

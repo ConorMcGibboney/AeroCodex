@@ -1,0 +1,41 @@
+project: AeroCodex
+phase_version: "0.001"
+cargo_semver: "0.0.1"
+policy: "Remain at phase 0.001 until basic Rust equations, tests, and source-verification records exist across required domains."
+required_phase_0_001_domains:
+  - core
+  - units
+  - constants
+  - numerics
+  - validation
+  - atmosphere
+  - thermodynamics
+  - gas_dynamics
+  - aerodynamics
+  - propulsion
+  - heat_transfer
+  - structures
+  - flight_dynamics
+  - astrodynamics
+  - bioregenerative_life_support
+  - agentic_scaffold
+exit_gates:
+  - cargo_fmt_passes
+  - cargo_clippy_passes
+  - cargo_test_passes
+  - xtask_verify_passes
+  - xtask_dependency_policy_passes
+  - every_starter_equation_has_codex_id
+  - every_starter_equation_has_test
+  - every_starter_equation_has_evidence_or_source_backlog
+  - deployment_report_created
+next_phases:
+  "0.002": source_verification_alpha
+  "0.003": multi_domain_trust_loop_alpha
+  "0.004": numerics_and_units_hardening
+  "0.005": agentic_vertical_slice
+  "0.01": research_preview
+  "0.1": engineering_alpha
+  "0.5": beta_candidate
+  "0.9": release_candidate
+  "1.0.0": first_stable_verified_core

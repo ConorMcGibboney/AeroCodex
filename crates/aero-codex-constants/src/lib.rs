@@ -12,7 +12,7 @@ pub struct SourcedConstant {
 pub const STANDARD_GRAVITY: SourcedConstant = SourcedConstant {
     value: 9.806_65,
     unit: "m/s^2",
-    source: "standard gravity",
+    source: "standard gravity; source record pending final review",
     codex_id: "constants.standard_gravity",
 };
 
@@ -33,13 +33,27 @@ pub const AIR_SPECIFIC_GAS_CONSTANT: SourcedConstant = SourcedConstant {
 pub const SEA_LEVEL_STANDARD_PRESSURE: SourcedConstant = SourcedConstant {
     value: 101_325.0,
     unit: "Pa",
-    source: "standard atmosphere sea-level pressure",
+    source: "standard atmosphere sea-level pressure; source record pending final review",
     codex_id: "constants.sea_level_standard_pressure",
 };
 
 pub const SEA_LEVEL_STANDARD_TEMPERATURE: SourcedConstant = SourcedConstant {
     value: 288.15,
     unit: "K",
-    source: "standard atmosphere sea-level temperature",
+    source: "standard atmosphere sea-level temperature; source record pending final review",
     codex_id: "constants.sea_level_standard_temperature",
+};
+
+pub const STEFAN_BOLTZMANN_CONSTANT: SourcedConstant = SourcedConstant {
+    value: 5.670_374_419e-8,
+    unit: "W/(m^2*K^4)",
+    source: "SI exact constant; source record pending final review",
+    codex_id: "constants.stefan_boltzmann",
+};
+
+pub const EARTH_STANDARD_GRAVITATIONAL_PARAMETER: SourcedConstant = SourcedConstant {
+    value: 3.986_004_36e14,
+    unit: "m^3/s^2",
+    source: "JPL/NASA astrodynamic parameter source review pending",
+    codex_id: "constants.earth_standard_gravitational_parameter",
 };
