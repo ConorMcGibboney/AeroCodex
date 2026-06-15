@@ -38,6 +38,16 @@ The core repository is intentionally pure Rust. The repository does not include 
 
 Validation cards live under `validation/cards/`, source-registry seed files live under `validation/source_registry/`, and the Codex Card schema lives under `validation/schema/`. See `validation/README.md` for the Phase 0.001 validation scaffold and status ladder. Current cards and source-registry seeds intentionally remain conservative `research_required` artifacts unless exact source, test, and validation evidence has been reviewed. The Phase 0.001 non-example cards are planning artifacts only; they cover atmosphere, thermodynamics, gas dynamics, aerodynamics, propulsion, heat transfer, structures, flight dynamics, astrodynamics, and life-support mass-balance scaffolding. Their presence does not imply source validation, certification, flight readiness, mission readiness, or operational approval.
 
+## Citation guidelines
+
+These citation guidelines are part of the root README landing page and should remain visible on `main`.
+
+- Cite the original equation, dataset, standard, paper, report, or source material for any AeroCodex calculation you discuss or reuse; do not cite AeroCodex alone as the mathematical authority.
+- Cite the exact AeroCodex repository commit, crate, function, validation card, and source-registry entry used for reproducibility.
+- For thin-film BLSS work, also cite `citations/blss_thinfilm_refs.bib`, `data/thinfilm/equation_manifest.csv`, `data/thinfilm/source_verification.csv`, and the runtime source map in `crates/aero-codex-life-support/src/thinfilm_provenance.rs` when those materials support the claim.
+- Preserve the conservative status labels from the validation cards and source registry. Do not upgrade `research_required` or equation-traceable research kernels into certification, flight-readiness, mission-readiness, operational, medical, or habitat-safety claims.
+- When adding a new public calculation, add or update its source-registry entry, validation card, tests, evidence-card linkage, and README-facing citation guidance before treating it as stable.
+
 ## Recommended checks
 
 ```bash
