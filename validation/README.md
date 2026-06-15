@@ -5,6 +5,8 @@ This directory contains Phase 0.001 validation-planning artifacts. These files a
 ## Layout
 
 - `schema/codex_card.schema.json`: JSON Schema for Codex Cards after YAML-to-JSON conversion by downstream tooling.
+- `status_vocabulary.yaml`: machine-readable status vocabulary registry for validation cards, source-registry seeds, and data-governance fields.
+- `status_vocabulary.md`: human-facing status vocabulary guidance and forbidden readiness-claim notes.
 - `cards/`: validation-planning cards for implemented or planned engineering primitives.
 - `source_registry/`: conservative source-research seeds that cards can reference by source ID.
 
@@ -30,10 +32,12 @@ Run these from the repository root in a Rust-enabled environment:
 cargo run -p xtask -- verify --all
 cargo run -p xtask -- verify cards
 cargo run -p xtask -- verify source-registry
+cargo run -p xtask -- verify data-registry
+cargo run -p xtask -- verify status-vocabulary
 cargo run -p xtask -- dependency-policy
 ```
 
-The `xtask` checks intentionally avoid YAML/JSON parser dependencies in Phase 0.001. They check required top-level fields, nonempty list sections, known status/category strings, card-to-source-registry ID links, schema markers, forbidden readiness markers, and native-dependency policy. They are a scaffold, not a replacement for later schema validation, source review, numerical validation, or certification evidence.
+The `xtask` checks intentionally avoid YAML/JSON parser dependencies in Phase 0.001. They check required top-level fields, nonempty list sections, known status/category strings, card-to-source-registry ID links, schema markers, data-governance status vocabulary coverage, forbidden readiness markers, and native-dependency policy. They are a scaffold, not a replacement for later schema validation, source review, numerical validation, or certification evidence.
 
 ## Card authoring rules
 

@@ -144,6 +144,27 @@ const REQUIRED_DATA_REGISTRY_FIELDS: &[&str] = &[
     "notes",
 ];
 
+fn required_status_vocabulary_names() -> &'static [&'static str] {
+    &[
+        "verification_status",
+        "data_validation_status",
+        "hash_status",
+    ]
+}
+
+fn forbidden_status_vocabulary_values() -> &'static [&'static str] {
+    &[
+        "certified",
+        "flight_ready",
+        "mission_ready",
+        "operationally_approved",
+        "approved_for_operations",
+        "habitat_safe",
+        "medical_use",
+        "regulated_use_approved",
+    ]
+}
+
 fn main() {
     let args: Vec<String> = env::args().skip(1).collect();
     let arg_refs: Vec<&str> = args.iter().map(String::as_str).collect();
@@ -165,6 +186,10 @@ fn main() {
             let root = repo_root();
             verify_data_registry(&root).map(|_| ())
         }
+        ["verify", "status-vocabulary"] => {
+            let root = repo_root();
+            verify_status_vocabulary(&root)
+        }
         ["dependency-policy"] => dependency_policy(),
         ["help"] | ["--help"] | ["-h"] => {
             print_usage();
@@ -184,7 +209,7 @@ fn main() {
 
 fn print_usage() {
     eprintln!(
-        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- dependency-policy"
+        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- dependency-policy"
     );
 }
 
@@ -201,6 +226,7 @@ fn verify_all() -> Result<(), String> {
     let source_ids = verify_source_registry(&root)?;
     verify_cards(&root, Some(&source_ids))?;
     verify_data_registry(&root)?;
+    verify_status_vocabulary(&root)?;
     Ok(())
 }
 
@@ -679,6 +705,256 @@ fn has_unsafe_external_archive_decision(entry: &DataRegistryEntry) -> bool {
         .any(|value| blocked_markers.iter().any(|marker| value.contains(marker)))
 }
 
+fn verify_status_vocabulary(root: &Path) -> Result<(), String> {
+    let vocabulary_path = root.join("validation/status_vocabulary.yaml");
+    if !vocabulary_path.is_file() {
+        return Err(format!(
+            "missing status vocabulary: {}",
+            vocabulary_path.display()
+        ));
+    }
+    let vocabulary_text = fs::read_to_string(&vocabulary_path)
+        .map_err(|e| format!("{}: {e}", vocabulary_path.display()))?;
+
+    let mut card_texts: Vec<(String, String)> = Vec::new();
+    visit_yaml(&root.join("validation/cards"), &mut |path| {
+        let text = fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        card_texts.push((relative_display(root, path), text));
+        Ok(())
+    })?;
+    let card_refs: Vec<(&str, &str)> = card_texts
+        .iter()
+        .map(|(path, text)| (path.as_str(), text.as_str()))
+        .collect();
+
+    let mut source_texts: Vec<(String, String)> = Vec::new();
+    visit_yaml(&root.join("validation/source_registry"), &mut |path| {
+        let text = fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        source_texts.push((relative_display(root, path), text));
+        Ok(())
+    })?;
+    let source_refs: Vec<(&str, &str)> = source_texts
+        .iter()
+        .map(|(path, text)| (path.as_str(), text.as_str()))
+        .collect();
+
+    let data_registry_path = root.join("data-governance/DATA_REGISTRY.yaml");
+    let data_registry_text = fs::read_to_string(&data_registry_path)
+        .map_err(|e| format!("{}: {e}", data_registry_path.display()))?;
+
+    verify_status_vocabulary_text(
+        &vocabulary_path,
+        &vocabulary_text,
+        &card_refs,
+        &source_refs,
+        &data_registry_path,
+        &data_registry_text,
+    )?;
+
+    println!(
+        "verified status vocabulary against {} validation cards, {} source-registry seeds, and data-governance registry",
+        card_refs.len(),
+        source_refs.len()
+    );
+    Ok(())
+}
+
+fn verify_status_vocabulary_text(
+    vocabulary_path: &Path,
+    vocabulary_text: &str,
+    card_texts: &[(&str, &str)],
+    source_texts: &[(&str, &str)],
+    data_registry_path: &Path,
+    data_registry_text: &str,
+) -> Result<(), String> {
+    let vocabulary = parse_status_vocabulary(vocabulary_path, vocabulary_text)?;
+    for name in required_status_vocabulary_names() {
+        let values = vocabulary.get(*name).ok_or_else(|| {
+            format!(
+                "{} missing required status vocabulary `{name}`",
+                vocabulary_path.display()
+            )
+        })?;
+        if values.is_empty() {
+            return Err(format!(
+                "{} status vocabulary `{name}` has no allowed values",
+                vocabulary_path.display()
+            ));
+        }
+        for value in values {
+            if forbidden_status_vocabulary_values().contains(&value.as_str()) {
+                return Err(format!(
+                    "{} contains forbidden readiness status `{value}`",
+                    vocabulary_path.display()
+                ));
+            }
+        }
+    }
+
+    let verification_status = vocabulary.get("verification_status").unwrap();
+    for status in ALLOWED_STATUSES {
+        if !verification_status.contains(*status) {
+            return Err(format!(
+                "{} missing verification status `{status}`",
+                vocabulary_path.display()
+            ));
+        }
+    }
+    for status in verification_status {
+        if !ALLOWED_STATUSES.contains(&status.as_str()) {
+            return Err(format!(
+                "{} has unsupported verification status vocabulary value `{status}`",
+                vocabulary_path.display()
+            ));
+        }
+    }
+
+    let data_validation_status = vocabulary.get("data_validation_status").unwrap();
+    let hash_status = vocabulary.get("hash_status").unwrap();
+
+    for (name, text) in card_texts {
+        let path = Path::new(name);
+        let status = require_top_level_value(path, text, "status")?;
+        require_status_value(name, "status", status, verification_status)?;
+        let source_status = require_nested_value(path, text, "source", "status")?;
+        require_status_value(name, "source.status", source_status, verification_status)?;
+    }
+
+    for (name, text) in source_texts {
+        let path = Path::new(name);
+        let status = require_top_level_value(path, text, "status")?;
+        require_status_value(name, "status", status, verification_status)?;
+    }
+
+    let entries = verify_data_registry_text(data_registry_path, data_registry_text)?;
+    for entry in entries {
+        let id = entry.get("id").unwrap_or("<missing>");
+        let validation_status = entry.get("validation_status").unwrap_or_default();
+        if !data_validation_status.contains(validation_status) {
+            return Err(format!(
+                "data-registry entry `{id}` field `validation_status` has unsupported status `{validation_status}`"
+            ));
+        }
+        let entry_hash_status = entry.get("hash_status").unwrap_or_default();
+        if !hash_status.contains(entry_hash_status) && !is_pending_hash_status(entry_hash_status) {
+            return Err(format!(
+                "data-registry entry `{id}` field `hash_status` has unsupported status `{entry_hash_status}`"
+            ));
+        }
+    }
+
+    Ok(())
+}
+
+fn parse_status_vocabulary(
+    path: &Path,
+    text: &str,
+) -> Result<BTreeMap<String, BTreeSet<String>>, String> {
+    let mut vocabulary: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    let mut current_vocabulary: Option<String> = None;
+    let mut in_allowed_values = false;
+
+    for (index, raw_line) in text.lines().enumerate() {
+        let line_no = index + 1;
+        let trimmed = raw_line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            continue;
+        }
+        if is_top_level_line(raw_line) {
+            let Some(name) = trimmed.strip_suffix(':') else {
+                return Err(format!(
+                    "{} line {line_no}: malformed status vocabulary root `{trimmed}`",
+                    path.display()
+                ));
+            };
+            if name.is_empty()
+                || !name
+                    .chars()
+                    .all(|ch| ch.is_ascii_lowercase() || ch.is_ascii_digit() || ch == '_')
+            {
+                return Err(format!(
+                    "{} line {line_no}: invalid status vocabulary name `{name}`",
+                    path.display()
+                ));
+            }
+            current_vocabulary = Some(name.to_string());
+            in_allowed_values = false;
+            vocabulary.entry(name.to_string()).or_default();
+            continue;
+        }
+
+        if trimmed == "allowed_values:" {
+            if current_vocabulary.is_none() {
+                return Err(format!(
+                    "{} line {line_no}: `allowed_values:` appears before a vocabulary root",
+                    path.display()
+                ));
+            }
+            in_allowed_values = true;
+            continue;
+        }
+
+        if let Some(raw_value) = trimmed.strip_prefix("- ") {
+            let name = current_vocabulary.as_ref().ok_or_else(|| {
+                format!(
+                    "{} line {line_no}: status value appears before a vocabulary root",
+                    path.display()
+                )
+            })?;
+            if !in_allowed_values {
+                return Err(format!(
+                    "{} line {line_no}: status value appears outside `allowed_values:`",
+                    path.display()
+                ));
+            }
+            let value = clean_scalar(raw_value);
+            if value.is_empty() {
+                return Err(format!(
+                    "{} line {line_no}: empty status vocabulary value",
+                    path.display()
+                ));
+            }
+            vocabulary
+                .get_mut(name)
+                .expect("current vocabulary should exist")
+                .insert(value.to_string());
+            continue;
+        }
+
+        return Err(format!(
+            "{} line {line_no}: malformed status vocabulary line `{trimmed}`",
+            path.display()
+        ));
+    }
+
+    if vocabulary.is_empty() {
+        return Err(format!("{} has no status vocabularies", path.display()));
+    }
+    Ok(vocabulary)
+}
+
+fn require_status_value(
+    path: &str,
+    field: &str,
+    value: &str,
+    allowed: &BTreeSet<String>,
+) -> Result<(), String> {
+    if allowed.contains(value) {
+        Ok(())
+    } else {
+        Err(format!(
+            "{path} field `{field}` has unsupported status `{value}`"
+        ))
+    }
+}
+
+fn relative_display(root: &Path, path: &Path) -> String {
+    path.strip_prefix(root)
+        .unwrap_or(path)
+        .to_string_lossy()
+        .replace('\\', "/")
+}
+
 fn dependency_policy() -> Result<(), String> {
     let root = repo_root();
     let mut tomls = Vec::new();
@@ -1051,5 +1327,134 @@ mod tests {
                 "    bundling_decision: import archive into public crates\n",
             );
         assert_data_registry_error_contains(&text, "unsafe external archive import decision");
+    }
+
+    fn status_vocabulary_fixture() -> String {
+        "verification_status:\n  allowed_values:\n    - research_required\n    - equation_traceable\n    - implementation_verified\n    - reference_validated\n    - experiment_validated\ndata_validation_status:\n  allowed_values:\n    - registered_fixture_only\nhash_status:\n  allowed_values:\n    - sha256_verified\n".to_string()
+    }
+
+    #[test]
+    fn valid_status_vocabulary_fixture_passes() {
+        let vocabulary = status_vocabulary_fixture();
+        let cards = [(
+            "card.yaml",
+            "id: example.card\nstatus: research_required\nsource:\n  status: equation_traceable\n",
+        )];
+        let sources = [(
+            "source.yaml",
+            "id: source.example.card\nstatus: research_required\n",
+        )];
+        let data_registry = minimal_data_registry_entry("artifact.status_fixture");
+        verify_status_vocabulary_text(
+            Path::new("status_vocabulary.yaml"),
+            &vocabulary,
+            &cards,
+            &sources,
+            Path::new("DATA_REGISTRY.yaml"),
+            &data_registry,
+        )
+        .expect("fixture vocabulary should cover validation and data-registry statuses");
+    }
+
+    #[test]
+    fn status_vocabulary_missing_verification_value_fails() {
+        let vocabulary = status_vocabulary_fixture().replace("    - equation_traceable\n", "");
+        let cards = [(
+            "card.yaml",
+            "id: example.card\nstatus: research_required\nsource:\n  status: equation_traceable\n",
+        )];
+        let sources = [(
+            "source.yaml",
+            "id: source.example.card\nstatus: research_required\n",
+        )];
+        let data_registry = minimal_data_registry_entry("artifact.status_fixture");
+        let err = verify_status_vocabulary_text(
+            Path::new("status_vocabulary.yaml"),
+            &vocabulary,
+            &cards,
+            &sources,
+            Path::new("DATA_REGISTRY.yaml"),
+            &data_registry,
+        )
+        .expect_err("missing verification status should fail");
+        assert!(err.contains("missing verification status `equation_traceable`"));
+    }
+
+    #[test]
+    fn unknown_card_status_fails_status_vocabulary_check() {
+        let vocabulary = status_vocabulary_fixture();
+        let cards = [(
+            "card.yaml",
+            "id: example.card\nstatus: flight_ready\nsource:\n  status: research_required\n",
+        )];
+        let sources = [(
+            "source.yaml",
+            "id: source.example.card\nstatus: research_required\n",
+        )];
+        let data_registry = minimal_data_registry_entry("artifact.status_fixture");
+        let err = verify_status_vocabulary_text(
+            Path::new("status_vocabulary.yaml"),
+            &vocabulary,
+            &cards,
+            &sources,
+            Path::new("DATA_REGISTRY.yaml"),
+            &data_registry,
+        )
+        .expect_err("unknown card status should fail");
+        assert!(err.contains("card.yaml field `status` has unsupported status `flight_ready`"));
+    }
+
+    #[test]
+    fn unknown_data_registry_validation_status_fails_status_vocabulary_check() {
+        let vocabulary = status_vocabulary_fixture();
+        let cards = [(
+            "card.yaml",
+            "id: example.card\nstatus: research_required\nsource:\n  status: research_required\n",
+        )];
+        let sources = [(
+            "source.yaml",
+            "id: source.example.card\nstatus: research_required\n",
+        )];
+        let data_registry = minimal_data_registry_entry("artifact.status_fixture").replace(
+            "    validation_status: registered_fixture_only\n",
+            "    validation_status: surprise_status\n",
+        );
+        let err = verify_status_vocabulary_text(
+            Path::new("status_vocabulary.yaml"),
+            &vocabulary,
+            &cards,
+            &sources,
+            Path::new("DATA_REGISTRY.yaml"),
+            &data_registry,
+        )
+        .expect_err("unknown data-registry status should fail");
+        assert!(err.contains("data-registry entry `artifact.status_fixture` field `validation_status` has unsupported status `surprise_status`"));
+    }
+
+    #[test]
+    fn readiness_claim_in_allowed_status_vocabulary_fails() {
+        let vocabulary = status_vocabulary_fixture().replace(
+            "    - experiment_validated\n",
+            "    - experiment_validated\n    - certified\n",
+        );
+        let cards = [(
+            "card.yaml",
+            "id: example.card\nstatus: research_required\nsource:\n  status: research_required\n",
+        )];
+        let sources = [(
+            "source.yaml",
+            "id: source.example.card\nstatus: research_required\n",
+        )];
+        let data_registry = minimal_data_registry_entry("artifact.status_fixture");
+        let err = verify_status_vocabulary_text(
+            Path::new("status_vocabulary.yaml"),
+            &vocabulary,
+            &cards,
+            &sources,
+            Path::new("DATA_REGISTRY.yaml"),
+            &data_registry,
+        )
+        .expect_err("certification/readiness vocabulary values should fail");
+        assert!(err.contains("forbidden readiness status `certified`"));
     }
 }

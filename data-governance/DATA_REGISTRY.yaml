@@ -114,6 +114,34 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: refresh only through explicit source-material update chunks
     notes: Supports source traceability for research/preliminary-design material; not habitat-safe, medical-use, operational, or regulated-use evidence.
+  - id: in_repo.validation_status_vocabulary
+    title: Canonical validation/status vocabulary registry
+    local_path: validation/status_vocabulary.yaml
+    artifact_kind: repo_file_status_vocabulary
+    origin: current_repo
+    license: MIT OR Apache-2.0
+    sha256: 644996ef5a9665d58e1f510a46202325584875d7836fec11da535437e61c412b
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: canonical status vocabulary for validation cards, source-registry seeds, and data-governance fields only
+    bundling_decision: bundled repo-relative governance artifact; not implementation code and not certification evidence
+    validation_status: repository_tracked_status_vocabulary
+    owner: AeroCodex maintainers
+    update_cadence: refresh with explicit status-vocabulary governance chunks
+    notes: Stage 4 Chunk 2 status vocabulary normalization; does not upgrade any source material or validation card.
+  - id: in_repo.validation_status_vocabulary_guidance
+    title: Human-readable validation/status vocabulary guidance
+    local_path: validation/status_vocabulary.md
+    artifact_kind: repo_file_status_vocabulary_guidance
+    origin: current_repo
+    license: MIT OR Apache-2.0
+    sha256: dcadfd8222a9fa8fab1803b8db6f223c4887215931605631d86f737c9ddc9ba0
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: documentation of allowed status values and forbidden readiness claims only
+    bundling_decision: bundled repo-relative governance documentation; not implementation code and not certification evidence
+    validation_status: repository_tracked_status_vocabulary
+    owner: AeroCodex maintainers
+    update_cadence: refresh with explicit status-vocabulary governance chunks
+    notes: Human-facing companion for validation/status vocabulary registry.
   - id: stage4.aerocodex_main_reference.2026_06_15
     title: AeroCodex main reference archive
     local_path: external://stage4/AeroCodex-main (3).zip

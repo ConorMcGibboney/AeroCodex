@@ -21,6 +21,12 @@ AeroCodex remains research and preliminary-design software. It is not certified,
 
 Chunk 1 registers the in-repo manifests/directories and external Stage 4 archives in `data-governance/DATA_REGISTRY.yaml`. The companion data/source governance policy defines repo-relative versus `external://stage4/...` paths, directory aggregate SHA256 handling, license/status fields, quarantine decisions, and the dependency-free `cargo run -p xtask -- verify data-registry` gate.
 
+## Chunk 2 status vocabulary normalization
+
+Chunk 2 adds the canonical status vocabulary in `validation/status_vocabulary.yaml` and the human guidance in `validation/status_vocabulary.md`. The `cargo run -p xtask -- verify status-vocabulary` gate checks that validation cards, source-registry seeds, and data-governance `validation_status` / `hash_status` fields use documented status values and do not add readiness/certification claims as allowed statuses.
+
+No source bundle, validation card, source-registry seed, or data-governance artifact is promoted by this chunk.
+
 ## M07 astrodynamics release-candidate observations
 
 - The M07 artifact manifest reports 1,350 represented function rows.

@@ -1,0 +1,35 @@
+# Canonical AeroCodex validation/status vocabulary registry.
+# Stage 4 Chunk 2 normalizes status strings without promoting any capability,
+# source bundle, validation card, or data-governance artifact to certified,
+# flight-ready, mission-ready, habitat-safe, medical, operational, or
+# regulated-use status.
+
+verification_status:
+  allowed_values:
+    - research_required
+    - equation_traceable
+    - implementation_verified
+    - reference_validated
+    - experiment_validated
+
+data_validation_status:
+  allowed_values:
+    - governed_generated_inventory
+    - planning_material_registered_not_promoted
+    - planning_reference_compared_in_chunk0
+    - release_candidate_not_certified
+    - repository_tracked_citation_support
+    - repository_tracked_manifest
+    - repository_tracked_research_data
+    - repository_tracked_source_material
+    - repository_tracked_status_vocabulary
+    - source_material_registered_not_promoted
+    - verified_by_xtask_cards
+    - verified_by_xtask_source_registry
+
+hash_status:
+  allowed_values:
+    - aggregate_sha256_current_tracked_tree
+    - sha256_verified_current_repo_file
+    - sha256_verified_from_stage4_local_source
+    - pending_with_reason

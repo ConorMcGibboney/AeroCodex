@@ -6,7 +6,7 @@ AeroCodex is research and preliminary-design software. It is not certified, not 
 
 ## Registry contract
 
-The canonical Stage 4 registry is `data-governance/DATA_REGISTRY.yaml`. Each artifact entry records:
+The canonical Stage 4 registry is `data-governance/DATA_REGISTRY.yaml`. Its `validation_status` and `hash_status` fields use the vocabulary in `validation/status_vocabulary.yaml`. Each artifact entry records:
 
 - `id`: stable artifact identifier.
 - `title`: human-readable artifact name.
@@ -42,6 +42,7 @@ Run:
 
 ```text
 cargo run -p xtask -- verify data-registry
+cargo run -p xtask -- verify status-vocabulary
 cargo run -p xtask -- verify --all
 ```
 
