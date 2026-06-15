@@ -33,6 +33,12 @@ Chunk 3 defines the quarantined M07 formula-vault staging shape in `docs/assuran
 
 The M07 source artifact remains the registered external archive `stage4.m07_rust_port_v14.2026_06_15`; the formula-vault states are quarantine lifecycle labels only and do not upgrade validation or certification status.
 
+## Chunk 4 BioSim-RS license-bound architecture
+
+Chunk 4 defines the BioSim-RS license and source boundary in `docs/assurance/biosim_rs_license_architecture.md`, records the source-intake boundary in `docs/source_intake/biosim_rs_source_boundary.md`, and adds the README-only `biosim-rs/` placeholder. It does not import Java BioSim code, does not import the BioSim-RS bootstrap scaffold, and does not make any `biosim-*` crates members of the current AeroCodex workspace.
+
+The BioSim-RS source artifacts remain the registered external archives `stage4.biosim_rs_bootstrap.2026_06_15` and `stage4.biosim_java_reference.2026_06_15`. Later BioSim-RS slices must choose a GPL-compatible, permissioned, or clean-room path before implementation promotion.
+
 ## M07 astrodynamics release-candidate observations
 
 - The M07 artifact manifest reports 1,350 represented function rows.

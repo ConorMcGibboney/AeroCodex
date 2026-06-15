@@ -37,6 +37,8 @@ The M07 workspace reports 1,350 represented function rows and 188 Scilab equival
 
 BioSim-RS is a first-class Stage 4 candidate for life-support and habitat digital-twin modeling. It is also license-boundaried because the original Java BioSim source is GPL-3.0-or-later. No Java implementation code, translated code, or derivative GPL-bound implementation detail may be mixed into the current dual MIT/Apache AeroCodex core unless the project deliberately changes the licensing path or obtains appropriate permission.
 
+Chunk 4 records that boundary in `docs/assurance/biosim_rs_license_architecture.md`, `docs/source_intake/biosim_rs_source_boundary.md`, and the README-only `biosim-rs/` placeholder. Those files select no implementation path by themselves; they define the GPL-compatible, permissioned, and clean-room gates that later BioSim-RS slices must satisfy before code promotion.
+
 ### Lane D: Orekit reference-oracle lane
 
 Orekit is an Apache-2.0 reference source for space-flight-dynamics architecture and validation thinking. It may guide terminology, test-oracle selection, and architecture review. It must not be copied class-for-class or used to preserve Java inheritance structures in Rust.
@@ -49,7 +51,7 @@ Orekit is an Apache-2.0 reference source for space-flight-dynamics architecture 
 | 1 | Data/source governance skeleton | Define source IDs, intake manifests, quarantine states, evidence-card schema, and license-boundary labels. Chunk 1 adds the data/source governance policy, `data-governance/DATA_REGISTRY.yaml`, and the dependency-free `cargo run -p xtask -- verify data-registry` gate. | No feature code unless explicitly approved. |
 | 2 | Validation/status vocabulary normalization | Add the canonical status vocabulary registry, human guidance, and `cargo run -p xtask -- verify status-vocabulary` gate across validation cards, source-registry seeds, and data-governance fields. | None. Governance and verifier only. |
 | 3 | Formula-vault staging design | Plan quarantined M07 ingestion shape, equation contracts, tolerance policy, and certification queue. Chunk 3 adds `docs/assurance/formula_vault_staging.md`, `docs/source_intake/m07_formula_vault_intake.md`, and the empty `formula-vault/` skeleton. | No public API promotion; no M07 source-code import. |
-| 4 | BioSim-RS license-bound architecture | Define clean-room or GPL-compatible path, workspace boundary, and validation plan. | No dual-core mixing without a licensing decision. |
+| 4 | BioSim-RS license-bound architecture | Define clean-room, GPL-compatible, and permissioned paths; record workspace boundary and validation plan in `docs/assurance/biosim_rs_license_architecture.md`, `docs/source_intake/biosim_rs_source_boundary.md`, and the README-only `biosim-rs/` placeholder. | No dual-core mixing without a licensing decision; no implementation import. |
 | 5 | Orekit reference-oracle mapping | Define reference-oracle use, test families, and non-copying architecture notes. | No class hierarchy cloning. |
 | 6+ | Implementation slices | Only after governance, source IDs, validation status, and license boundaries are in place. | Bounded by per-slice gates. |
 
