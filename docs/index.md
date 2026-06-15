@@ -30,6 +30,7 @@ Start with:
 - [Validation scaffold README](../validation/README.md)
 - [Phase 0.001 version-lock audit](phase_0_001/version_lock_audit.md)
 - [Final microtasks 001-020 report](phase_0_001/final_microtasks_001_020_report.md)
+- [Phase 0.001 tracked task breakdown](phase_0_001/tracked_tasks.md)
 - [Source research backlog](phase_0_001/source_research_backlog.md)
 
 ## Version lock
