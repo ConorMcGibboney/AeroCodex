@@ -51,6 +51,12 @@ Chunk 6A adds the first clean-room implementation slice for BioSim-RS under `cra
 
 The slice does not import Java BioSim code, does not import the BioSim-RS scaffold crates, does not execute scenarios, does not add fixtures, and does not implement transaction commit, deterministic replay, resource ledgers, or O2-loop conservation. The validation status remains `research_required`.
 
+## Chunk 6B BioSim-RS atomic transaction commit
+
+Chunk 6B adds a clean-room atomic transaction commit primitive under `crates/aero-codex-life-support/src/biosim_resource_tick.rs`, plus validation card `life_support.biosim_rs.atomic_transaction_commit` and source seed `source.life_support.biosim_rs.transaction_commit_clean_room.research_required`. It applies finite resource deltas over a caller-supplied state at one validated consecutive tick boundary and rejects invalid commits before exposing committed output.
+
+The slice does not import Java BioSim code, does not import the BioSim-RS scaffold crates, does not execute scenarios, does not add fixtures, and does not implement deterministic replay, persistent resource ledgers, O2-loop conservation, or habitat-control behavior. The validation status remains `research_required`.
+
 ## M07 astrodynamics release-candidate observations
 
 - The M07 artifact manifest reports 1,350 represented function rows.

@@ -1,0 +1,47 @@
+id: life_support.biosim_rs.atomic_transaction_commit
+name: BioSim-RS clean-room atomic transaction commit
+category: life_support
+status: research_required
+source:
+  id: source.life_support.biosim_rs.transaction_commit_clean_room.research_required
+  status: research_required
+assumptions:
+  - resource states are caller-supplied clean-room balances over the Chunk 6A generic resource identities
+  - tick commit boundaries are accepted only after consecutive positive-duration tick validation
+  - each transaction contains at least one finite resource delta and at most one delta per resource kind
+  - a commit either returns the complete post-transaction snapshot or rejects before exposing a committed result
+  - ledger persistence, deterministic replay, conservation checks, and scenario execution are deferred to later chunks
+domain:
+  summary: "one-tick clean-room resource-delta commit over unique nonnegative balances and finite deltas"
+  bounds:
+    - resource state contains at least one unique resource balance
+    - each pre-commit balance is finite and nonnegative
+    - each delta is finite and references an existing resource balance
+    - post-commit balances must remain nonnegative
+    - next_tick_index = previous_tick_index + 1
+  excluded_cases:
+    - persistent resource ledger entries
+    - deterministic module ordering, digest, or replay proof
+    - O2-loop conservation, mass/energy closure validation, or biological dynamics
+    - CLI/API scenario execution
+inputs:
+  - previous validated BioSimTick
+  - next validated BioSimTick
+  - current clean-room BioSimResourceQuantity slice
+  - staged clean-room BioSimResourceDelta slice
+outputs:
+  - BioSimResourceTransactionCommit containing the validated tick boundary, post-commit balances, and applied delta count
+  - research_required verification metadata for life_support.biosim_rs.atomic_transaction_commit
+tests:
+  - valid resource deltas are applied at one consecutive tick boundary
+  - overdraft rejects without mutating caller state
+  - deltas for resources absent from the current state are rejected
+  - empty or duplicate state/delta cases are rejected through local domain checks
+failure_modes:
+  - empty resource state or empty delta set rejected as out of domain
+  - duplicate resource balances or duplicate deltas rejected as out of domain
+  - nonfinite balances or deltas rejected
+  - post-commit negative balances rejected
+  - nonconsecutive tick transition rejected by the Chunk 6A tick validator
+  - status must not be interpreted as external validation or readiness evidence
+notes: "Stage 4 Chunk 6B validation card for clean-room atomic transaction commit only. This card does not promote deterministic replay, persistent ledgers, conservation models, habitat-control, medical, operational, certification, or regulated-use behavior."

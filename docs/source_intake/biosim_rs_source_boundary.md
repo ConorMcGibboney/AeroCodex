@@ -1,6 +1,6 @@
 # BioSim-RS Source Boundary
 
-This source-intake note records the Stage 4 Chunk 4 boundary for BioSim-RS and the Chunk 6A clean-room implementation slice. It does not import any source archive, does not promote GPL-bound implementation code, and does not change AeroCodex's current dual `MIT OR Apache-2.0` core.
+This source-intake note records the Stage 4 Chunk 4 boundary for BioSim-RS, the Chunk 6A clean-room resource/tick slice, and the Chunk 6B clean-room atomic transaction commit slice. It does not import any source archive, does not promote GPL-bound implementation code, and does not change AeroCodex's current dual `MIT OR Apache-2.0` core.
 
 AeroCodex remains research and preliminary-design software. It is not certified, flight-ready, mission-ready, habitat-safe, medical, operational, or regulated-use approved.
 
@@ -29,7 +29,7 @@ The following labels are source-intake lifecycle labels for BioSim-RS. They do n
 | `clean_room_implementation_lane` | Implementation role builds from approved specs without inspecting GPL-bound implementation code. | Bounded code only after independence evidence |
 | `rejected_or_superseded` | The artifact or lane is no longer used. | Retain provenance note and block promotion |
 
-## Allowed planning and Chunk 6A use
+## Allowed planning and Chunk 6A/6B use
 
 Chunk 4 use remains limited to:
 
@@ -41,6 +41,8 @@ Chunk 4 use remains limited to:
 
 Chunk 6A adds only clean-room generic resource identities and local tick validation in `crates/aero-codex-life-support`, with source seed `source.life_support.biosim_rs.resource_tick_clean_room.research_required` and validation card `life_support.biosim_rs.resource_tick`. It uses no external BioSim archive contents, no GPL-bound scaffold crates, no fixtures, no scenarios, and no transaction or ledger behavior.
 
+Chunk 6B adds only clean-room atomic resource-delta commit behavior in `crates/aero-codex-life-support`, with source seed `source.life_support.biosim_rs.transaction_commit_clean_room.research_required` and validation card `life_support.biosim_rs.atomic_transaction_commit`. It uses no external BioSim archive contents, no GPL-bound scaffold crates, no fixtures, no scenarios, and no deterministic replay, persistent ledger, conservation, or habitat-control behavior.
+
 ## Blocked use now
 
 The following remain blocked:
@@ -50,7 +52,7 @@ The following remain blocked:
 - importing the BioSim-RS bootstrap scaffold as workspace crates;
 - using GPL-bound fixtures without a fixture license and hash record;
 - claiming habitat safety, medical suitability, operational readiness, certification, or regulated-use approval;
-- adding transaction commit, deterministic replay, resource-ledger, or conservation behavior without new slice-specific evidence;
+- adding deterministic replay, resource-ledger, conservation, scenario-execution, or habitat-control behavior without new slice-specific evidence;
 - merging any GPL-derived BioSim-RS implementation into the dual AeroCodex core before the license path and validation gates are accepted.
 
 ## Future intake records

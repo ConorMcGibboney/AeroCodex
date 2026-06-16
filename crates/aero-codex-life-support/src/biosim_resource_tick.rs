@@ -14,14 +14,33 @@ pub fn biosim_tick_validation_codex_id() -> &'static str {
     "life_support.biosim_rs.tick_validation"
 }
 
+/// Codex identifier for the clean-room BioSim-RS atomic transaction commit gate.
+#[must_use]
+pub fn biosim_transaction_commit_codex_id() -> &'static str {
+    "life_support.biosim_rs.atomic_transaction_commit"
+}
+
 /// Source-registry seed for the Chunk 6A clean-room resource/tick slice.
 #[must_use]
 pub fn biosim_resource_tick_clean_room_source_id() -> &'static str {
     "source.life_support.biosim_rs.resource_tick_clean_room.research_required"
 }
 
+/// Source-registry seed for the Chunk 6B clean-room transaction-commit slice.
+#[must_use]
+pub fn biosim_resource_transaction_clean_room_source_id() -> &'static str {
+    "source.life_support.biosim_rs.transaction_commit_clean_room.research_required"
+}
+
 fn biosim_resource_tick_sources() -> &'static [&'static str] {
     &["source.life_support.biosim_rs.resource_tick_clean_room.research_required"]
+}
+
+fn biosim_transaction_commit_sources() -> &'static [&'static str] {
+    &[
+        "source.life_support.biosim_rs.resource_tick_clean_room.research_required",
+        "source.life_support.biosim_rs.transaction_commit_clean_room.research_required",
+    ]
 }
 
 /// Minimal clean-room resource families for the first BioSim-RS validation slice.
@@ -61,6 +80,28 @@ pub struct BioSimTickAdvance {
     pub previous_index: u64,
     pub next_index: u64,
     pub next_duration_seconds: f64,
+}
+
+/// Resource quantity in a caller-supplied clean-room transaction state.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct BioSimResourceQuantity {
+    pub kind: BioSimResourceKind,
+    pub amount: f64,
+}
+
+/// Resource delta staged for one atomic clean-room transaction commit.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct BioSimResourceDelta {
+    pub kind: BioSimResourceKind,
+    pub delta_amount: f64,
+}
+
+/// Result of applying a complete resource-delta set at one validated tick boundary.
+#[derive(Debug, Clone, PartialEq)]
+pub struct BioSimResourceTransactionCommit {
+    pub tick: BioSimTickAdvance,
+    pub balances: Vec<BioSimResourceQuantity>,
+    pub delta_count: usize,
 }
 
 /// Conservative built-in resource catalog for future BioSim-RS slices.
@@ -125,7 +166,7 @@ pub const fn biosim_resource_identity(kind: BioSimResourceKind) -> BioSimResourc
     }
 }
 
-/// Conservative traceability metadata for the Chunk 6A clean-room slice.
+/// Conservative traceability metadata for the clean-room BioSim-RS resource/tick slices.
 #[must_use]
 pub fn biosim_resource_tick_verification_record(codex_id: &str) -> Option<VerificationRecord> {
     match codex_id {
@@ -139,6 +180,13 @@ pub fn biosim_resource_tick_verification_record(codex_id: &str) -> Option<Verifi
             biosim_resource_tick_sources(),
             "Clean-room tick validation implemented for positive-duration and consecutive-index checks; no transaction commit, ledger, replay, or external validation evidence is included.",
         )),
+        id if id == biosim_transaction_commit_codex_id() => Some(
+            VerificationRecord::research_required(
+                biosim_transaction_commit_codex_id(),
+                biosim_transaction_commit_sources(),
+                "Clean-room atomic resource-delta commit implemented for one validated tick boundary; no ledger persistence, replay proof, conservation model, or external BioSim validation evidence is included.",
+            ),
+        ),
         _ => None,
     }
 }
@@ -283,10 +331,118 @@ pub fn validate_biosim_tick_advance(
         "accepted transitions advance one discrete tick index at a time",
     )
     .with_assumption(
-        "biosim_rs.no_transaction_commit",
-        "Chunk 6A records tick ordering only; atomic transaction commit is deferred to Chunk 6B",
+        "biosim_rs.tick_validation_only",
+        "tick-advance validation records ordering only; transaction commits require commit_biosim_resource_transaction",
     )
     .with_validity(ValidityStatus::WithinDocumentedDomain))
+}
+
+/// Applies all resource deltas at one validated tick boundary or rejects the whole commit.
+///
+/// This helper is intentionally a pure, caller-state-in/caller-state-out atomic
+/// operation. It validates the input state and complete delta set before exposing
+/// a committed output snapshot. It does not persist a ledger, prove deterministic
+/// replay, validate mass conservation, execute scenarios, or model biological
+/// control behavior.
+pub fn commit_biosim_resource_transaction(
+    previous: BioSimTick,
+    next: BioSimTick,
+    current_state: &[BioSimResourceQuantity],
+    deltas: &[BioSimResourceDelta],
+) -> AeroResult<EngineeringResult<BioSimResourceTransactionCommit>> {
+    let tick = validate_biosim_tick_advance(previous, next)?.value;
+    validate_biosim_resource_state(current_state)?;
+    validate_biosim_resource_deltas(deltas)?;
+
+    let mut balances = current_state.to_vec();
+    for delta in deltas {
+        let balance = balances
+            .iter_mut()
+            .find(|balance| balance.kind == delta.kind)
+            .ok_or_else(|| {
+                out_of_domain(
+                    "resource_delta",
+                    deltas.len() as f64,
+                    "delta resource must exist in the current resource state",
+                )
+            })?;
+        let committed_amount = balance.amount + delta.delta_amount;
+        validation::ensure_finite("resource_balance", committed_amount)?;
+        if committed_amount < 0.0 {
+            return Err(out_of_domain(
+                "resource_balance",
+                committed_amount,
+                "nonnegative post-commit resource balance",
+            ));
+        }
+        balance.amount = committed_amount;
+    }
+
+    Ok(EngineeringResult::new(
+        BioSimResourceTransactionCommit {
+            tick,
+            balances,
+            delta_count: deltas.len(),
+        },
+        biosim_transaction_commit_codex_id(),
+        resource_tick_record(biosim_transaction_commit_codex_id()),
+    )
+    .with_assumption(
+        "biosim_rs.atomic_commit_only",
+        "all resource deltas are applied to an output snapshot or the transaction is rejected before exposing a commit",
+    )
+    .with_assumption(
+        "biosim_rs.no_ledger_or_replay_proof",
+        "commit output is not a persistent ledger entry, deterministic replay proof, or conservation validation",
+    )
+    .with_validity(ValidityStatus::WithinDocumentedDomain))
+}
+
+fn validate_biosim_resource_state(state: &[BioSimResourceQuantity]) -> AeroResult<()> {
+    if state.is_empty() {
+        return Err(out_of_domain(
+            "resource_state",
+            0.0,
+            "at least one resource balance before transaction commit",
+        ));
+    }
+
+    for (index, balance) in state.iter().enumerate() {
+        validation::ensure_nonnegative("resource_balance", balance.amount)?;
+        if state[..index]
+            .iter()
+            .any(|prior| prior.kind == balance.kind)
+        {
+            return Err(out_of_domain(
+                "resource_state",
+                index as f64,
+                "unique resource balances before transaction commit",
+            ));
+        }
+    }
+    Ok(())
+}
+
+fn validate_biosim_resource_deltas(deltas: &[BioSimResourceDelta]) -> AeroResult<()> {
+    if deltas.is_empty() {
+        return Err(out_of_domain(
+            "resource_delta",
+            0.0,
+            "at least one resource delta in an atomic transaction commit",
+        ));
+    }
+
+    for (index, delta) in deltas.iter().enumerate() {
+        validation::ensure_finite("resource_delta", delta.delta_amount)?;
+        if deltas[..index].iter().any(|prior| prior.kind == delta.kind) {
+            return Err(out_of_domain(
+                "resource_delta",
+                index as f64,
+                "at most one delta per resource in this clean-room transaction slice",
+            ));
+        }
+    }
+    Ok(())
 }
 
 #[cfg(test)]
@@ -376,5 +532,170 @@ mod tests {
             result.verification_status(),
             VerificationStatus::ResearchRequired
         );
+    }
+
+    #[test]
+    fn atomic_transaction_commit_applies_all_resource_deltas_at_one_tick_boundary() {
+        let previous = validate_biosim_tick(6, 60.0).unwrap().value;
+        let next = validate_biosim_tick(7, 60.0).unwrap().value;
+        let state = [
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::OxygenGas,
+                amount: 10.0,
+            },
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::PotableWater,
+                amount: 5.0,
+            },
+        ];
+        let deltas = [
+            BioSimResourceDelta {
+                kind: BioSimResourceKind::OxygenGas,
+                delta_amount: -1.5,
+            },
+            BioSimResourceDelta {
+                kind: BioSimResourceKind::PotableWater,
+                delta_amount: 2.0,
+            },
+        ];
+
+        let result = commit_biosim_resource_transaction(previous, next, &state, &deltas).unwrap();
+
+        assert_eq!(result.codex_id, biosim_transaction_commit_codex_id());
+        assert_eq!(
+            result.verification_status(),
+            VerificationStatus::ResearchRequired
+        );
+        assert_eq!(result.value.tick.previous_index, 6);
+        assert_eq!(result.value.tick.next_index, 7);
+        assert_eq!(result.value.delta_count, 2);
+        assert_eq!(
+            result
+                .value
+                .balances
+                .iter()
+                .find(|balance| balance.kind == BioSimResourceKind::OxygenGas)
+                .unwrap()
+                .amount,
+            8.5
+        );
+        assert_eq!(
+            result
+                .value
+                .balances
+                .iter()
+                .find(|balance| balance.kind == BioSimResourceKind::PotableWater)
+                .unwrap()
+                .amount,
+            7.0
+        );
+        assert!(result
+            .assumptions
+            .iter()
+            .any(|item| item.id == "biosim_rs.atomic_commit_only"));
+    }
+
+    #[test]
+    fn atomic_transaction_commit_rejects_overdraft_without_mutating_caller_state() {
+        let previous = validate_biosim_tick(10, 60.0).unwrap().value;
+        let next = validate_biosim_tick(11, 60.0).unwrap().value;
+        let state = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 1.0,
+        }];
+        let deltas = [BioSimResourceDelta {
+            kind: BioSimResourceKind::OxygenGas,
+            delta_amount: -2.0,
+        }];
+
+        let err = commit_biosim_resource_transaction(previous, next, &state, &deltas).unwrap_err();
+
+        assert_eq!(err.code(), "out_of_domain");
+        assert_eq!(err.parameter(), Some("resource_balance"));
+        assert_eq!(state[0].amount, 1.0);
+    }
+
+    #[test]
+    fn atomic_transaction_commit_rejects_unknown_delta_resource() {
+        let previous = validate_biosim_tick(1, 60.0).unwrap().value;
+        let next = validate_biosim_tick(2, 60.0).unwrap().value;
+        let state = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 1.0,
+        }];
+        let deltas = [BioSimResourceDelta {
+            kind: BioSimResourceKind::PotableWater,
+            delta_amount: 1.0,
+        }];
+
+        let err = commit_biosim_resource_transaction(previous, next, &state, &deltas).unwrap_err();
+
+        assert_eq!(err.code(), "out_of_domain");
+        assert_eq!(err.parameter(), Some("resource_delta"));
+    }
+
+    #[test]
+    fn atomic_transaction_commit_rejects_duplicate_state_resources() {
+        let previous = validate_biosim_tick(2, 60.0).unwrap().value;
+        let next = validate_biosim_tick(3, 60.0).unwrap().value;
+        let state = [
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::OxygenGas,
+                amount: 1.0,
+            },
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::OxygenGas,
+                amount: 2.0,
+            },
+        ];
+        let deltas = [BioSimResourceDelta {
+            kind: BioSimResourceKind::OxygenGas,
+            delta_amount: 1.0,
+        }];
+
+        let err = commit_biosim_resource_transaction(previous, next, &state, &deltas).unwrap_err();
+
+        assert_eq!(err.code(), "out_of_domain");
+        assert_eq!(err.parameter(), Some("resource_state"));
+    }
+
+    #[test]
+    fn atomic_transaction_commit_rejects_duplicate_delta_resources() {
+        let previous = validate_biosim_tick(4, 60.0).unwrap().value;
+        let next = validate_biosim_tick(5, 60.0).unwrap().value;
+        let state = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 3.0,
+        }];
+        let deltas = [
+            BioSimResourceDelta {
+                kind: BioSimResourceKind::OxygenGas,
+                delta_amount: 1.0,
+            },
+            BioSimResourceDelta {
+                kind: BioSimResourceKind::OxygenGas,
+                delta_amount: -1.0,
+            },
+        ];
+
+        let err = commit_biosim_resource_transaction(previous, next, &state, &deltas).unwrap_err();
+
+        assert_eq!(err.code(), "out_of_domain");
+        assert_eq!(err.parameter(), Some("resource_delta"));
+    }
+
+    #[test]
+    fn atomic_transaction_commit_rejects_empty_delta_set() {
+        let previous = validate_biosim_tick(6, 60.0).unwrap().value;
+        let next = validate_biosim_tick(7, 60.0).unwrap().value;
+        let state = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 3.0,
+        }];
+
+        let err = commit_biosim_resource_transaction(previous, next, &state, &[]).unwrap_err();
+
+        assert_eq!(err.code(), "out_of_domain");
+        assert_eq!(err.parameter(), Some("resource_delta"));
     }
 }

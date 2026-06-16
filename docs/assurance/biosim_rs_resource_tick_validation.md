@@ -77,7 +77,7 @@ Chunk 6A does not add:
 - BioSim archive import;
 - GPL-compatible distribution decision beyond this clean-room primitive slice.
 
-Those items remain future chunks. Chunk 6B is the next logical BioSim-RS step and should focus only on atomic transaction commit if the user explicitly authorizes it.
+Those items were outside Chunk 6A. Chunk 6B records atomic transaction commit in `docs/assurance/biosim_rs_atomic_transaction_commit_validation.md`; deterministic ordering, digest/replay proof, persistent ledgers, and conservation behavior remain future chunks.
 
 ## Gate expectations
 
