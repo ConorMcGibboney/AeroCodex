@@ -1,0 +1,23 @@
+id: source.validation.formula_vault_candidate_gate.research_required
+title: Formula-vault implementation-candidate gate source seed
+category: validation
+status: research_required
+intended_use:
+  - Traceability seed for the Stage 4 Chunk 7A formula-vault candidate-gate metadata package.
+  - Record that future formula implementation candidates require per-slice source locators, validation cards, source seeds, domain metadata, tolerance policy, and evidence plans.
+  - Preserve the existing M07 source boundary as external quarantine/reference-only material until a later explicit slice gate is authorized.
+requested_details:
+  - A bounded future formula family or formula list before any implementation candidate is proposed.
+  - Human-reviewable source equation, table, page, function-row, or file-local locators for that specific future slice.
+  - Variable, unit, coordinate-frame, time-scale, sign-convention, valid-domain, singularity, invalid-region, branch-behavior, and tolerance-rationale metadata for that future slice.
+  - Scilab equivalence, Simplified General Perturbations 4 reference checks, analytical identity checks, or other reference-oracle evidence before any status upgrade.
+implementation_notes:
+  - Chunk 7A adds a non-operative template and assurance doc only.
+  - No M07 source code, generated binaries, raw archives, fixtures, public Rust APIs, or replacement astrodynamics crate content are imported.
+  - The template is blocked by default and intentionally contains placeholders so it cannot be mistaken for an approved candidate.
+  - The current validation status remains research_required.
+limits:
+  - Not a formula implementation, source translation, generated code import, or public application programming interface.
+  - Not a Scilab execution result, SGP4 certification gate, external oracle fixture, or blanket M07 parity claim.
+  - Not evidence of certification, flight readiness, mission readiness, operational use, medical use, or regulated-use suitability.
+notes: "Stage 4 Chunk 7A source seed for a formula-vault implementation-candidate gate. Later chunks must add separate per-slice source seeds and validation cards before any formula implementation or status upgrade is considered."

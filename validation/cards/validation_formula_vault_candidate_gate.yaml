@@ -1,0 +1,44 @@
+id: validation.formula_vault.candidate_gate
+name: Formula-vault implementation-candidate slice gate
+category: validation
+status: research_required
+source:
+  id: source.validation.formula_vault_candidate_gate.research_required
+  status: research_required
+assumptions:
+  - Stage 4 Chunk 7A is metadata/governance only and does not select or implement a formula candidate
+  - formula-vault implementation candidates remain quarantined until each bounded slice has its own source seed and validation card
+  - M07 source material remains external and reference-only unless a later explicit slice gate authorizes a bounded promotion
+  - the template is non-operative and contains placeholders by design
+domain:
+  summary: "governance gate for future per-slice formula-vault implementation-candidate records"
+  bounds:
+    - applies to formula-vault metadata and candidate-readiness review only
+    - requires per-slice source locators, variable/unit/frame/time metadata, domain metadata, tolerance policy, and evidence plan
+    - keeps validation status at research_required until source traceability and equivalence/reference evidence exist
+    - blocks bulk M07 import and public application programming interface promotion by default
+  excluded_cases:
+    - formula implementation, generated code import, or public Rust API creation
+    - no Scilab execution, no SGP4 certification claim, no external oracle fixture import, and no source archive bundling
+    - no blanket approval for all M07 represented function rows
+    - no certification, no flight-readiness claim, no mission-readiness claim, no operational approval, no medical approval, and no regulated-use approval
+inputs:
+  - docs/assurance/formula_vault_candidate_gate.md
+  - formula-vault/templates/implementation_candidate_slice.yaml
+  - existing M07 data-governance artifact stage4.m07_rust_port_v14.2026_06_15
+outputs:
+  - non-operative formula-vault implementation-candidate slice template
+  - documented per-slice promotion prerequisites
+  - blocked-by-default future candidate gate
+  - research_required validation metadata for the gate itself
+tests:
+  - cargo run -p xtask -- verify cards
+  - cargo run -p xtask -- verify source-registry
+  - cargo run -p xtask -- verify data-registry
+  - final source-boundary scan confirms no M07 code, archive, fixture, public API, or local absolute path was promoted
+failure_modes:
+  - future candidate record omits source locators, variables, units, frames, time assumptions, domains, singularities, branches, or tolerance rationale
+  - future candidate attempts public implementation promotion without a matching source-registry seed and validation card
+  - future candidate must not treat the M07 archive as bundled implementation source rather than external quarantined reference material
+  - documentation is misread as certification, readiness, operational, medical, or regulated-use approval
+notes: "Stage 4 Chunk 7A validation card for formula-vault candidate-gate metadata only. This card does not implement formulas, import M07 code, create public APIs, run Scilab/SGP4 checks, or approve operational use."

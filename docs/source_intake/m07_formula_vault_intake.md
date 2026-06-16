@@ -38,9 +38,10 @@ M07 intake must stay inside these boundaries until a later verified chunk narrow
 5. Record source equation, table, page, function-row, or file-local references for human review.
 6. Record variables, units, coordinate/time assumptions, valid domain, and exclusions.
 7. Record numerical tolerance policy and reference-oracle/equivalence-test plan.
-8. Queue only bounded implementation candidates after contract review.
-9. Run Rust, Scilab equivalence, and SGP4 gates that apply to the candidate scope.
-10. Promote only after the promotion gate is satisfied and a chunk explicitly approves that bounded promotion.
+8. Add per-slice source-registry seed and validation card records before implementation work is proposed.
+9. Queue only bounded implementation candidates after contract review.
+10. Run Rust, Scilab equivalence, and SGP4 gates that apply to the candidate scope.
+11. Promote only after the promotion gate is satisfied and a chunk explicitly approves that bounded promotion.
 
 ## Formula-vault quarantine states
 
@@ -60,7 +61,7 @@ These are quarantine lifecycle labels. They do not replace the canonical validat
 
 ## First future metadata slice
 
-A later formula-vault metadata slice should add machine-readable contract drafts for a small, low-risk subset only. That slice should prefer a few representative astrodynamics formulas with clear source references, simple units, explicit domains, and independent reference values. It should not attempt to ingest all 1,350 represented rows at once.
+A later formula-vault metadata slice should copy and complete `formula-vault/templates/implementation_candidate_slice.yaml` for a small, low-risk subset only. That slice should prefer a few representative astrodynamics formulas with clear source references, simple units, explicit domains, and independent reference values. It should not attempt to ingest all 1,350 represented rows at once.
 
 The first metadata slice should produce:
 
@@ -85,4 +86,4 @@ The following are intentionally deferred beyond Chunk 3:
 - creating public AeroCodex APIs;
 - changing the astrodynamics crate;
 - executing the 188 Scilab equivalence jobs;
-- claiming SGP4 certification or any broader operational readiness.
+- no SGP4 certification claim and no broader operational-readiness claim.

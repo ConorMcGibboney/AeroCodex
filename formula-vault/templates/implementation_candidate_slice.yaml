@@ -1,0 +1,90 @@
+# AeroCodex formula-vault implementation-candidate slice template.
+#
+# This file is a non-operative record shape for future Stage 4 chunks. It is not
+# a formula candidate, not generated code, and not evidence of approval for
+# certification, flight readiness, mission readiness, operational use, or
+# regulated use.
+
+schema_version: formula_vault_candidate_slice.v1
+record_status: template_only
+
+slice:
+  id: pending.formula_vault.slice_id
+  title: Replace with bounded formula-family title
+  lifecycle_label: implementation_candidate
+  stage4_chunk: pending_explicit_chunk_authorization
+  public_api_surface: blocked_until_slice_gate_passes
+  notes:
+    - Template only; copy into a reviewed slice record before use.
+    - The slice must stay bounded to one formula family or explicitly named formula list.
+
+sources:
+  source_artifact_ids:
+    - stage4.m07_rust_port_v14.2026_06_15
+  source_registry_seed_id: pending.source_registry.seed.id
+  validation_card_id: pending.validation.card.id
+  human_review_locators:
+    function_rows: []
+    source_files: []
+    equations: []
+    tables: []
+    pages: []
+  source_boundary:
+    m07_archive_status: external_quarantine_reference_only
+    import_policy: no_bulk_import_no_generated_binary_no_raw_source_promotion
+    astrodynamics_crate_policy: do_not_overwrite_existing_crate_without_explicit_slice_gate
+
+formula_contract:
+  formula_ids: []
+  variables: []
+  units: []
+  coordinate_frames: []
+  time_scales: []
+  sign_conventions: []
+  valid_domain: []
+  singularities: []
+  invalid_regions: []
+  branch_behavior: []
+  tolerance_policy:
+    absolute_tolerance: pending
+    relative_tolerance: pending
+    rationale: pending
+
+validation_records:
+  required_source_registry_seed: pending
+  required_validation_card: pending
+  status: research_required
+  status_upgrade_policy: blocked_without_equivalence_and_reference_evidence
+
+evidence_plan:
+  rust_gates: []
+  scilab_equivalence_jobs: []
+  sgp4_reference_checks: []
+  analytical_identity_checks: []
+  reference_oracle_checks: []
+  fixture_hashes: []
+  tolerance_rationale: pending
+
+promotion_gate:
+  default_state: blocked
+  required_before_promotion:
+    - source_registry_seed_exists
+    - validation_card_exists
+    - source_locators_are_human_reviewable
+    - variables_units_frames_time_scales_are_complete
+    - valid_domain_singularities_invalid_regions_and_branch_behavior_are_complete
+    - tolerance_policy_has_rationale
+    - applicable_equivalence_or_reference_oracle_plan_exists
+    - no_raw_m07_source_or_generated_binary_promoted
+    - no_public_application_programming_interface_promoted_without_explicit_slice_authorization
+    - no_local_absolute_paths_or_evidence_logs_in_repo
+    - research_and_preliminary_design_caveat_repeated
+
+non_claims:
+  no_certification_evidence: true
+  no_flight_readiness: true
+  no_mission_readiness: true
+  no_operational_approval: true
+  no_regulated_use_approval: true
+  no_bulk_m07_import: true
+  no_external_parity_claim_without_evidence: true

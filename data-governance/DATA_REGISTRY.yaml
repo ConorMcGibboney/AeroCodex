@@ -50,7 +50,7 @@ artifacts:
     artifact_kind: repo_directory_validation_cards
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: cd008b5b7a5026c2da48c92a7891af5d02e7dd62f84a14b00c9d009692ab6f24
+    sha256: 3c68821b9c2425a7601f70a14bae00ebb4841d71fc296eef6bfac7db0754c248
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: validation-card metadata and source-status tracking only
     bundling_decision: bundled repo-relative validation metadata; no external archive import
@@ -64,7 +64,7 @@ artifacts:
     artifact_kind: repo_directory_source_registry
     origin: current_repo
     license: MIT OR Apache-2.0 metadata with cited-source boundaries
-    sha256: eef0f71ee7bca91c5ec8aae36bafbedf6c44d76a42898eb2f749a9ce065b04f2
+    sha256: 7b40f80438fcec0ec45806d740d1662be9cc39337f51f0f25309f88074e17b8c
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: source seed registry and validation-card linkage only
     bundling_decision: bundled repo-relative source metadata; not external source-code import
@@ -72,6 +72,20 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: refresh when source-registry seeds change
     notes: Source IDs support traceability; cited sources remain authoritative for licensing, equations, limits, and use restrictions.
+  - id: in_repo.formula_vault
+    title: Formula-vault metadata directory
+    local_path: formula-vault/
+    artifact_kind: repo_directory_formula_vault_metadata
+    origin: current_repo
+    license: MIT OR Apache-2.0 metadata with source-boundary caveats
+    sha256: 5b9e8a4df30f06c91e6a69110448de62afc7d33de634ddbdab297264f9ee8b7c
+    hash_status: aggregate_sha256_current_tracked_tree
+    allowed_use: quarantined formula-vault planning metadata and future per-slice gate templates only
+    bundling_decision: bundled repo-relative metadata; no external M07 source-code import, generated binary, fixture, or public API promotion
+    validation_status: repository_tracked_formula_vault_metadata
+    owner: AeroCodex maintainers
+    update_cadence: refresh when formula-vault metadata or templates change
+    notes: Formula-vault metadata supports research/preliminary-design gate planning only; not certification, flight-readiness, mission-readiness, operational, medical, or regulated-use evidence.
   - id: in_repo.nomenclature_generated
     title: Generated nomenclature and acronym inventories
     local_path: nomenclature/generated/
@@ -120,7 +134,7 @@ artifacts:
     artifact_kind: repo_file_status_vocabulary
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: 644996ef5a9665d58e1f510a46202325584875d7836fec11da535437e61c412b
+    sha256: 3b76fed5d35e3d025ed85ff909f4570090e1be8cc999343047a871ecdfe95165
     hash_status: sha256_verified_current_repo_file
     allowed_use: canonical status vocabulary for validation cards, source-registry seeds, and data-governance fields only
     bundling_decision: bundled repo-relative governance artifact; not implementation code and not certification evidence
@@ -134,7 +148,7 @@ artifacts:
     artifact_kind: repo_file_status_vocabulary_guidance
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: dcadfd8222a9fa8fab1803b8db6f223c4887215931605631d86f737c9ddc9ba0
+    sha256: 482722179e54429d0c1df95fa262499421d17abe0ff295e828a677694c4084dd
     hash_status: sha256_verified_current_repo_file
     allowed_use: documentation of allowed status values and forbidden readiness claims only
     bundling_decision: bundled repo-relative governance documentation; not implementation code and not certification evidence

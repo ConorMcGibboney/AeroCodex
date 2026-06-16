@@ -11,6 +11,13 @@ Stage 4 Chunk 3 defines the vault shape in documentation only:
 - `docs/assurance/formula_vault_staging.md`
 - `docs/source_intake/m07_formula_vault_intake.md`
 
+Stage 4 Chunk 7A adds the first candidate-gate metadata package without selecting or implementing a formula:
+
+- `docs/assurance/formula_vault_candidate_gate.md`
+- `formula-vault/templates/implementation_candidate_slice.yaml`
+- validation card `validation.formula_vault.candidate_gate`
+- source seed `source.validation.formula_vault_candidate_gate.research_required`
+
 The M07 source artifact remains registered externally as `stage4.m07_rust_port_v14.2026_06_15` in `data-governance/DATA_REGISTRY.yaml`.
 
 ## Future allowed contents

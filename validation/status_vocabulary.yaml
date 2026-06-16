@@ -23,6 +23,7 @@ data_validation_status:
     - repository_tracked_research_data
     - repository_tracked_source_material
     - repository_tracked_status_vocabulary
+    - repository_tracked_formula_vault_metadata
     - source_material_registered_not_promoted
     - verified_by_xtask_cards
     - verified_by_xtask_source_registry

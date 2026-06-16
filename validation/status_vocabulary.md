@@ -34,6 +34,7 @@ These values are used by `data-governance/DATA_REGISTRY.yaml` in `validation_sta
 - `governed_generated_inventory`
 - `repository_tracked_source_material`
 - `repository_tracked_status_vocabulary`
+- `repository_tracked_formula_vault_metadata`
 - `planning_reference_compared_in_chunk0`
 - `release_candidate_not_certified`
 - `source_material_registered_not_promoted`

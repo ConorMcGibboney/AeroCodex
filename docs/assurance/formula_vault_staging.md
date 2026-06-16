@@ -77,6 +77,10 @@ No M07 formula may become public AeroCodex code until a later chunk records all 
 
 Public API promotion remains blocked by default. Stage 4 Chunk 3 does not authorize implementation promotion.
 
+## Chunk 7A candidate gate
+
+Chunk 7A extends this staging design with `docs/assurance/formula_vault_candidate_gate.md` and non-operative template `formula-vault/templates/implementation_candidate_slice.yaml`. That gate requires future per-slice source-registry seeds, validation cards, human-reviewable source locators, variables, units, frames, time assumptions, valid domains, singularities, branch behavior, tolerance rationale, and equivalence/reference evidence plans before any implementation-candidate promotion is proposed. It does not approve any formula implementation, public application programming interface, Scilab execution, SGP4 certification, archive import, or readiness claim.
+
 ## Future machine checks
 
 This chunk intentionally does not add an `xtask` verifier because it adds only design documentation and an empty vault skeleton. A later chunk that adds machine-readable contract files should extend `cargo run -p xtask -- verify --all` with a formula-vault check that rejects:

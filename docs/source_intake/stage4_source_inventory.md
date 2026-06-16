@@ -75,6 +75,12 @@ Chunk 6E adds a static clean-room smoke/reporting slice under `crates/aero-codex
 
 The slice does not import Java BioSim code, does not import the BioSim-RS scaffold crates, does not execute scenarios, does not add external fixtures, and does not implement persistent command surfaces, biological dynamics, habitat-control behavior, or external BioSim parity. The validation status remains `research_required`.
 
+## Chunk 7A formula-vault implementation-candidate gate
+
+Chunk 7A adds a metadata-only gate for future formula-vault implementation candidates: `docs/assurance/formula_vault_candidate_gate.md`, non-operative template `formula-vault/templates/implementation_candidate_slice.yaml`, validation card `validation.formula_vault.candidate_gate`, and source seed `source.validation.formula_vault_candidate_gate.research_required`.
+
+The gate requires future per-slice source locators, variable/unit/frame/time metadata, domain/singularity/branch/tolerance records, evidence plans, and blocked-by-default promotion status before any formula implementation is proposed. It does not import M07 code, does not add archives or fixtures, does not run Scilab or SGP4 checks, does not create public APIs, and does not make certification, readiness, operational, medical, or regulated-use claims. The validation status remains `research_required`.
+
 ## M07 astrodynamics release-candidate observations
 
 - The M07 artifact manifest reports 1,350 represented function rows.
