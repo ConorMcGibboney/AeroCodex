@@ -50,7 +50,7 @@ artifacts:
     artifact_kind: repo_directory_validation_cards
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: b4c32ba2ef57d8e50ef9ab3fdd484e4fe799328c39af1129fa140fe99bfb9569
+    sha256: ad22183bf715db4c9323158728ea3384edb368d7a3f7f3a98b66d5211bbc0545
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: validation-card metadata and source-status tracking only
     bundling_decision: bundled repo-relative validation metadata; no external archive import
