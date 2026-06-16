@@ -93,6 +93,12 @@ Chunk 7C adds a dependency-free verifier for formula-vault candidate metadata: `
 
 The verifier checks required candidate sections, existing validation/source cross-links, duplicate slice/formula identifiers, blocked promotion state, required non-claim booleans, and absence of local evidence paths. It does not import M07 code, does not add archives or fixtures, does not execute Scilab, does not implement formulas, does not create public application programming interfaces, and does not make certification, readiness, operational, medical, or regulated-use claims. The validation status remains `research_required`.
 
+## Chunk 7D formula-vault per-candidate manifest/reference-link depth
+
+Chunk 7D adds metadata-only reference depth for the existing M00 candidate: `formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml`, assurance note `docs/assurance/formula_vault_m00_reference_manifest.md`, validation card `validation.formula_vault.m00_reference_manifest`, and source seed `source.formula_vault.m00_reference_manifest.research_required`.
+
+The manifest links each selected formula identifier to its candidate function alias, source-function alias, release-gate row alias, equivalence-job alias, source-file locator, pending source-expression review status, variable/unit/domain review status, and blocked implementation status. It does not import M07 code, does not copy source expressions, does not add archives or fixtures, does not execute Scilab, does not implement formulas, does not create public application programming interfaces, and does not make certification, readiness, operational, medical, or regulated-use claims. The validation status remains `research_required`.
+
 ## M07 observations
 
 - The M07 artifact manifest reports 1,350 represented function rows.

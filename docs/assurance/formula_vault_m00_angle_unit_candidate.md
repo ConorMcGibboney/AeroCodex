@@ -6,7 +6,7 @@ Stage 4 Chunk 7B adds the first bounded formula-vault candidate metadata record 
 - `app_rad2deg` / `foa_app_ast_app_rad2deg`;
 - `app_wrap2pi` / `foa_app_ast_app_wrap2pi`.
 
-The machine-readable record is `formula-vault/candidates/m00_angle_unit_conversions.yaml`.
+The machine-readable record is `formula-vault/candidates/m00_angle_unit_conversions.yaml`. Stage 4 Chunk 7D adds the companion per-candidate manifest `formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml` to deepen row/function/source-file reference links without implementing formulas.
 
 ## Source grounding
 

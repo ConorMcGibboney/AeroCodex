@@ -1,0 +1,44 @@
+id: validation.formula_vault.m00_reference_manifest
+name: Formula-vault M00 per-candidate manifest/reference-link metadata
+category: validation
+status: research_required
+source:
+  id: source.formula_vault.m00_reference_manifest.research_required
+  status: research_required
+assumptions:
+  - Stage 4 Chunk 7D deepens formula-vault metadata links for the existing M00 angle/unit conversion candidate only
+  - the manifest is metadata-only and does not implement formulas or translate M07 source expressions
+  - M07 source material remains external and quarantine/reference-only
+  - source-expression review, tolerances, executable equivalence evidence, and public application programming interface shape remain blocked until a future explicitly authorized implementation chunk
+domain:
+  summary: "metadata-only per-candidate manifest/reference-link record for the M00 angle/unit conversion candidate"
+  bounds:
+    - applies only to formula_vault.m00.angle.deg2rad, formula_vault.m00.angle.rad2deg, and formula_vault.m00.angle.wrap2pi
+    - records candidate-to-manifest path, row aliases, source-function aliases, source-file locator, source/validation cross-links, and blocked review status
+    - status remains research_required until source review, equivalence evidence, and Rust tests exist
+  excluded_cases:
+    - no formula implementation, no source translation, no generated code import, and no public application programming interface creation
+    - no Scilab execution result, no SGP4 certification claim, no external oracle fixture import, and no source archive bundling
+    - no coverage claim for all M00 rows or all 1,350 M07 represented function rows
+    - no certification evidence, no flight-readiness claim, no mission-readiness claim, no operational approval, no medical approval, and no regulated-use approval
+inputs:
+  - formula-vault/candidates/m00_angle_unit_conversions.yaml
+  - formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml
+  - docs/assurance/formula_vault_m00_reference_manifest.md
+  - existing M07 data-governance artifact stage4.m07_rust_port_v14.2026_06_15
+outputs:
+  - per-candidate manifest/reference-link record for the M00 angle/unit conversion candidate
+  - cross-links from candidate metadata to manifest, assurance, validation, source-registry, verifier, and intake records
+  - blocked-by-default future review checklist for source-expression and equivalence evidence
+tests:
+  - cargo run -p xtask -- verify formula-vault
+  - cargo run -p xtask -- verify cards
+  - cargo run -p xtask -- verify source-registry
+  - cargo run -p xtask -- verify data-registry
+  - final source-boundary scan confirms no M07 code, archive, fixture, public application programming interface, crate, or local absolute path was promoted
+failure_modes:
+  - future implementation treats the manifest as approval without source-review and equivalence evidence
+  - future candidate treats equivalence job 002 as completed Scilab evidence rather than a pending locator
+  - future candidate must not treat the M07 archive as bundled implementation source
+  - documentation is misread even though it provides no certification evidence, no readiness evidence, no operational approval, no medical approval, and no regulated-use approval
+notes: "Stage 4 Chunk 7D validation card for per-candidate manifest/reference-link depth. This card does not implement formulas, import M07 code, run Scilab/SGP4 checks, create public application programming interfaces, or approve operational use."

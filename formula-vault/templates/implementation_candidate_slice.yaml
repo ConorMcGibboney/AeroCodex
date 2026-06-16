@@ -34,6 +34,18 @@ sources:
     import_policy: no_bulk_import_no_generated_binary_no_raw_source_promotion
     astrodynamics_crate_policy: do_not_overwrite_existing_crate_without_explicit_slice_gate
 
+candidate_manifest:
+  manifest_id: pending.formula_vault.manifest_id
+  manifest_path: formula-vault/manifests/pending_slice_manifest.yaml
+  manifest_status: metadata_only_research_required
+  review_depth_required:
+    - candidate-to-manifest path link
+    - formula identifiers linked to source row aliases and source-function aliases
+    - source-file locators recorded without copying source expressions
+    - source-expression review status marked pending until future authorization
+    - validation-card, source-registry, assurance, verifier, and intake records cross-linked
+  formula_reference_links: []
+
 formula_contract:
   formula_ids: []
   variables: []

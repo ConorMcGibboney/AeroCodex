@@ -18,7 +18,7 @@ The command is also included in:
 cargo run -p xtask -- verify --all
 ```
 
-The verifier currently scans only `formula-vault/candidates/*.yaml`. It does not parse or import the registered external M07 archive, and it does not inspect source code inside quarantined source bundles.
+The verifier currently scans only `formula-vault/candidates/*.yaml`. It does not parse or import the registered external M07 archive, and it does not inspect source code inside quarantined source bundles. Per-candidate manifests added under `formula-vault/manifests/` remain governance metadata and are linked from candidate records, not executable inputs.
 
 ## Checked metadata
 

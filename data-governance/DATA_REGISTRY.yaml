@@ -50,7 +50,7 @@ artifacts:
     artifact_kind: repo_directory_validation_cards
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: 2d1486e9837b0d615deaf198325727be02feb5d618e5c70398c7cd4bef702dbb
+    sha256: 464d712de61a9988ce74556d7057bd8636f195db20c1b62af66c92a32e637afe
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: validation-card metadata and source-status tracking only
     bundling_decision: bundled repo-relative validation metadata; no external archive import
@@ -64,7 +64,7 @@ artifacts:
     artifact_kind: repo_directory_source_registry
     origin: current_repo
     license: MIT OR Apache-2.0 metadata with cited-source boundaries
-    sha256: 7502ee26dac0db14abfb0a356a43f23c3ed506af53853733dfc095d16a78eed0
+    sha256: 930caa66e7457610aa78900dbc03a8d6619993569f7d2ef00f29cffbefce9b59
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: source seed registry and validation-card linkage only
     bundling_decision: bundled repo-relative source metadata; not external source-code import
@@ -78,10 +78,10 @@ artifacts:
     artifact_kind: repo_directory_formula_vault_metadata
     origin: current_repo
     license: MIT OR Apache-2.0 metadata with source-boundary caveats
-    sha256: 538278f5968c19bfcc212138f6181a16c1e2ad0d6c2c380ef14c635ab0fd7212
+    sha256: 2541bd1a04763f140b79f9f37d257796bae0edbb0cbe1d5022ab933cd5ecb779
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: quarantined formula-vault planning metadata and future per-slice gate templates only
-    bundling_decision: bundled repo-relative metadata; no external M07 source-code import, generated binary, fixture, or public API promotion
+    bundling_decision: bundled repo-relative metadata; no external M07 source-code import, generated binary, fixture, or public application programming interface promotion
     validation_status: repository_tracked_formula_vault_metadata
     owner: AeroCodex maintainers
     update_cadence: refresh when formula-vault metadata or templates change

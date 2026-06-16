@@ -57,6 +57,35 @@ sources:
     import_policy: no_bulk_import_no_generated_binary_no_raw_source_promotion
     astrodynamics_crate_policy: no_replacement_and_no_public_api_without_explicit_future_gate
 
+candidate_manifest:
+  manifest_id: formula_vault.manifest.m00_angle_unit_conversions.v1
+  manifest_path: formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml
+  manifest_status: metadata_only_research_required
+  stage4_chunk: stage4_chunk7d_formula_vault_manifest_reference_depth
+  review_depth_added:
+    - candidate record linked to a per-candidate manifest path
+    - each selected formula identifier linked to a release-gate row alias, source-function alias, source-file locator, and pending source-expression review status
+    - candidate, assurance, validation-card, source-registry, verifier, and intake documents cross-referenced
+  formula_reference_links:
+    - formula_id: formula_vault.m00.angle.deg2rad
+      release_gate_row_alias: release-gate status csv row 3
+      source_function_alias: foa_app_ast_app_deg2rad
+      equivalence_job_alias: equivalence job 002
+      source_expression_status: pending_future_human_review_no_source_import
+      implementation_status: blocked_no_formula_implementation
+    - formula_id: formula_vault.m00.angle.rad2deg
+      release_gate_row_alias: release-gate status csv row 4
+      source_function_alias: foa_app_ast_app_rad2deg
+      equivalence_job_alias: equivalence job 002
+      source_expression_status: pending_future_human_review_no_source_import
+      implementation_status: blocked_no_formula_implementation
+    - formula_id: formula_vault.m00.angle.wrap2pi
+      release_gate_row_alias: release-gate status csv row 5
+      source_function_alias: foa_app_ast_app_wrap2pi
+      equivalence_job_alias: equivalence job 002
+      source_expression_status: pending_future_human_review_no_source_import
+      implementation_status: blocked_no_formula_implementation
+
 formula_contract:
   formula_ids:
     - formula_vault.m00.angle.deg2rad

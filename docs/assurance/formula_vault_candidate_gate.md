@@ -42,9 +42,10 @@ Chunk 7A adds a non-operative template at `formula-vault/templates/implementatio
 Required template sections are:
 
 - `slice` for slice identity and quarantine lifecycle state;
-- `sources` for source artifact IDs and human-reviewable locators;
+- `sources` for source artifact identifiers and human-reviewable locators;
+- `candidate_manifest` for per-candidate manifest path, formula reference links, pending source-expression review status, and cross-links to assurance/validation/source records;
 - `formula_contract` for variables, units, frames, time assumptions, domains, singularities, invalid regions, and branch behavior;
-- `validation_records` for the required source-registry seed and validation-card IDs;
+- `validation_records` for the required source-registry seed and validation-card identifiers;
 - `evidence_plan` for Rust gates, Scilab equivalence, SGP4 checks, reference-oracle plans, and tolerance rationale;
 - `promotion_gate` for blocked-by-default checklist state;
 - `non_claims` for explicit no-certification, no-readiness, no-operational-use, and no-bulk-import caveats.
@@ -67,3 +68,9 @@ Chunk 7A does not itself authorize any formula implementation, validation-status
 Chunk 7C adds `cargo run -p xtask -- verify formula-vault` as a dependency-free scaffold check for candidate metadata. The verifier checks required candidate sections, existing source/validation cross-links, duplicate slice/formula identifiers, blocked promotion state, required non-claim booleans, and absence of local evidence paths. It is included in `cargo run -p xtask -- verify --all`.
 
 The verifier is not numerical validation, source-equivalence evidence, certification evidence, readiness evidence, or implementation approval.
+
+## Chunk 7D per-candidate manifest/reference-link depth
+
+Chunk 7D adds the first per-candidate manifest at `formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml` and links it from the existing M00 candidate record. The manifest is a review index only. It records row/function/source-file aliases, pending source-expression review status, and cross-links to the candidate, assurance note, validation card, source seed, verifier note, and intake note.
+
+The manifest does not change the implementation gate. It does not import M07 source, copy source expressions, execute Scilab, add fixtures, implement formulas, create a public application programming interface, or upgrade validation status.

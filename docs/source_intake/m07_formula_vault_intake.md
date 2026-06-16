@@ -76,6 +76,12 @@ The first metadata slice records:
 - planned reference-oracle or Scilab equivalence checks;
 - a promotion-gate field that remains blocked until evidence exists.
 
+## First per-candidate manifest/reference-link depth
+
+Stage 4 Chunk 7D adds a metadata-only per-candidate manifest at `formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml` for the same bounded M00 slice. The manifest is a review index only: it links candidate formula identifiers to release-gate row aliases, source-function aliases, equivalence-job aliases, source-file locators, candidate/assurance/validation/source records, and pending review statuses.
+
+The manifest does not copy M07 source expressions, does not import source files, does not execute Scilab, does not add fixtures or generated outputs, does not implement formulas, and does not promote a public application programming interface. Its status remains `research_required`.
+
 ## Deferred items
 
 The following are intentionally deferred beyond Chunk 3:

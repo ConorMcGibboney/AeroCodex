@@ -36,6 +36,15 @@ Stage 4 Chunk 7C adds the first dependency-free candidate metadata verifier with
 
 The Chunk 7C verifier checks required metadata fields, cross-links, duplicate slice/formula identifiers, blocked promotion state, non-claim booleans, and absence of local evidence paths. It is included in `cargo run -p xtask -- verify --all`.
 
+Stage 4 Chunk 7D adds the first per-candidate manifest/reference-link package without implementing formulas:
+
+- `formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml`
+- `docs/assurance/formula_vault_m00_reference_manifest.md`
+- validation card `validation.formula_vault.m00_reference_manifest`
+- source seed `source.formula_vault.m00_reference_manifest.research_required`
+
+The Chunk 7D manifest links each selected formula identifier to row/function/source-file aliases, pending source-expression review status, and assurance/validation/source/intake records. It does not copy source expressions, import M07 source, execute Scilab, promote fixtures, implement formulas, or create public application programming interfaces.
+
 The M07 source artifact remains registered externally as `stage4.m07_rust_port_v14.2026_06_15` in `data-governance/DATA_REGISTRY.yaml`.
 
 ## Future allowed contents

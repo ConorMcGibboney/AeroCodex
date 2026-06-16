@@ -1,0 +1,110 @@
+# Stage 4 Chunk 7D formula-vault per-candidate manifest.
+#
+# Metadata only: this manifest adds review-depth and reference-link structure for
+# the existing M00 angle/unit candidate. It has no formula implementation code,
+# no generated Rust, no Scilab execution output, and no certification evidence.
+# no flight readiness, no mission readiness, no operational approval, and no regulated-use approval.
+
+schema_version: formula_vault_candidate_manifest.v1
+manifest_status: metadata_only_research_required
+
+candidate:
+  slice_id: formula_vault.m00_angle_unit_conversions.v1
+  candidate_record: formula-vault/candidates/m00_angle_unit_conversions.yaml
+  assurance_doc: docs/assurance/formula_vault_m00_angle_unit_candidate.md
+  validation_card_id: validation.formula_vault.m00_angle_unit_conversions
+  source_registry_seed_id: source.formula_vault.m00_angle_unit_conversions.research_required
+  verifier_command: cargo run -p xtask -- verify formula-vault
+  manifest_chunk: stage4_chunk7d_formula_vault_manifest_reference_depth
+  manifest_lifecycle_label: reference_links_deepened_metadata_only
+
+source_artifacts:
+  - artifact_id: stage4.m07_rust_port_v14.2026_06_15
+    registry_path: data-governance/DATA_REGISTRY.yaml
+    archive_status: external_quarantine_reference_only
+    registered_sha256: 15b1ca3a39267187167c43ea1228f28fd4736c4456f65d072dc42a32a7b19190
+    docs_nested_zip_sha256: 5f228a2f885bbe67b2c280fb18d3bbd0c2386435f9758112e487ba6f9dc0142e
+    bundling_policy: no_archive_source_fixture_or_generated_output_bundled_in_repo
+
+review_links:
+  source_boundary:
+    m07_archive: external_quarantine_reference_only
+    source_expression_review: pending_future_human_review_without_bulk_source_import
+    implementation_status: blocked_no_formula_implementation
+    public_surface_status: blocked_no_public_application_programming_interface
+  shared_archive_locators:
+    release_gate_table_alias: release-gate status csv
+    equivalence_jobs_table_alias: Scilab equivalence jobs csv
+    source_file_alias: appendices_scilab_astrodynamics constants conversion source file
+  linked_repo_records:
+    candidate_gate_doc: docs/assurance/formula_vault_candidate_gate.md
+    candidate_verifier_doc: docs/assurance/formula_vault_candidate_verifier.md
+    m07_intake_doc: docs/source_intake/m07_formula_vault_intake.md
+    formula_vault_readme: formula-vault/README.md
+    validation_readme: validation/README.md
+
+formula_reference_links:
+  - formula_id: formula_vault.m00.angle.deg2rad
+    candidate_function_alias: app_deg2rad
+    source_function_alias: foa_app_ast_app_deg2rad
+    release_gate_row_alias: release-gate status csv row 3
+    equivalence_job_alias: equivalence job 002
+    source_file_locator: Bate, Mueller, and White - Fundamentals of Astrodynamics/fundamentals_astrodynamics_scilab_cleaned_all/fundamentals_astrodynamics_scilab_cleaned_all/namespaced/appendices_scilab_astrodynamics/src/constants/ast_app_constants_conversions.sci
+    source_expression_status: pending_future_human_review_no_source_import
+    variable_review_status: angle_degrees finite real scalar metadata recorded
+    unit_review_status: degree input and radian output relationship pending future implementation evidence
+    domain_review_status: finite real scalar input only; non-finite input excluded
+    tolerance_review_status: pending future equivalence evidence
+    implementation_status: blocked_no_formula_implementation
+  - formula_id: formula_vault.m00.angle.rad2deg
+    candidate_function_alias: app_rad2deg
+    source_function_alias: foa_app_ast_app_rad2deg
+    release_gate_row_alias: release-gate status csv row 4
+    equivalence_job_alias: equivalence job 002
+    source_file_locator: Bate, Mueller, and White - Fundamentals of Astrodynamics/fundamentals_astrodynamics_scilab_cleaned_all/fundamentals_astrodynamics_scilab_cleaned_all/namespaced/appendices_scilab_astrodynamics/src/constants/ast_app_constants_conversions.sci
+    source_expression_status: pending_future_human_review_no_source_import
+    variable_review_status: angle_radians finite real scalar metadata recorded
+    unit_review_status: radian input and degree output relationship pending future implementation evidence
+    domain_review_status: finite real scalar input only; non-finite input excluded
+    tolerance_review_status: pending future equivalence evidence
+    implementation_status: blocked_no_formula_implementation
+  - formula_id: formula_vault.m00.angle.wrap2pi
+    candidate_function_alias: app_wrap2pi
+    source_function_alias: foa_app_ast_app_wrap2pi
+    release_gate_row_alias: release-gate status csv row 5
+    equivalence_job_alias: equivalence job 002
+    source_file_locator: Bate, Mueller, and White - Fundamentals of Astrodynamics/fundamentals_astrodynamics_scilab_cleaned_all/fundamentals_astrodynamics_scilab_cleaned_all/namespaced/appendices_scilab_astrodynamics/src/constants/ast_app_constants_conversions.sci
+    source_expression_status: pending_future_human_review_no_source_import
+    variable_review_status: angle_radians finite real scalar metadata recorded
+    unit_review_status: radian input and radian output relationship pending future implementation evidence
+    domain_review_status: finite real scalar input only; non-finite input excluded
+    branch_review_status: endpoint and interval branch behavior pending future source review
+    tolerance_review_status: pending future equivalence evidence
+    implementation_status: blocked_no_formula_implementation
+
+review_checklist:
+  completed_in_chunk7d:
+    - candidate record is linked to a per-candidate manifest path
+    - each selected formula identifier has a row alias, source-function alias, source-file locator, and pending source-expression review status
+    - candidate, assurance, validation-card, source-registry, verifier, and intake documents are cross-referenced
+    - no external archive contents, source expressions, fixtures, generated outputs, or local absolute paths are bundled
+  blocked_until_future_explicit_authorization:
+    - source expression transcription or translation
+    - implementation code or generated Rust
+    - executable equivalence fixture import
+    - Scilab execution result capture in repo
+    - public application programming interface promotion
+    - validation status upgrade beyond research_required
+
+non_claims:
+  no_formula_implementation: true
+  no_source_translation: true
+  no_scilab_execution_result: true
+  no_sgp4_certification_claim: true
+  no_certification_evidence: true
+  no_flight_readiness: true
+  no_mission_readiness: true
+  no_operational_approval: true
+  no_regulated_use_approval: true
+  no_bulk_m07_import: true
+  no_external_parity_claim_without_evidence: true

@@ -12,6 +12,7 @@ Start with:
 - [Formula-vault staging design](assurance/formula_vault_staging.md)
 - [Formula-vault candidate gate](assurance/formula_vault_candidate_gate.md)
 - [Formula-vault M00 angle/unit conversion metadata slice](assurance/formula_vault_m00_angle_unit_candidate.md)
+- [Formula-vault M00 per-candidate manifest/reference-link depth](assurance/formula_vault_m00_reference_manifest.md)
 - [Formula-vault candidate verifier](assurance/formula_vault_candidate_verifier.md)
 - [M07 formula-vault intake](source_intake/m07_formula_vault_intake.md)
 - [BioSim-RS license-bound architecture](assurance/biosim_rs_license_architecture.md)
