@@ -72,6 +72,20 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: refresh when source-registry seeds change
     notes: Source IDs support traceability; cited sources remain authoritative for licensing, equations, limits, and use restrictions.
+  - id: in_repo.equation_inventory
+    title: Equation inventory and readiness dashboard
+    local_path: validation/equation_inventory.tsv
+    artifact_kind: repo_file_validation_inventory
+    origin: current_repo
+    license: MIT OR Apache-2.0 metadata
+    sha256: d08b8583d823f9451e0e79fc623c0ebe8bae63b21456db7b9ce0d324c8347678
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: machine-readable equation inventory and readiness-dashboard counts only
+    bundling_decision: bundled repo-relative validation metadata; no formula implementation, source archive import, generated code, fixture, or public application programming interface promotion
+    validation_status: repository_tracked_manifest
+    owner: AeroCodex maintainers
+    update_cadence: refresh when public equation/helper surfaces, formula-vault candidates, validation cards, or source-registry seeds change
+    notes: Stage 4 Chunk 7E inventory rows remain blocked with explicit reasons; not certification, flight-readiness, mission-readiness, operational, medical, or regulated-use evidence.
   - id: in_repo.formula_vault
     title: Formula-vault metadata directory
     local_path: formula-vault/
@@ -232,7 +246,7 @@ artifacts:
     artifact_kind: external_archive_planning_notes
     origin: stage4_external_materials
     license: planning_material_license_pending_review
-    sha256: fef17836f1074602b40850ad1fe4a821ae9fa589b2fae14b9bc160df11fc5c18
+    sha256: 6cfd6d9a3ff5f19f4147174dfacb23fc9598a411d32119be2a0f40d7b25a72c2
     hash_status: sha256_verified_from_stage4_local_source
     allowed_use: planning context and governance reference only
     bundling_decision: not bundled in repo; not implementation code and not promoted as AeroCodex API source

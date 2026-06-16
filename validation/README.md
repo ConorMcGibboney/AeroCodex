@@ -9,6 +9,7 @@ This directory contains Phase 0.001 validation-planning artifacts. These files a
 - `status_vocabulary.md`: human-facing status vocabulary guidance and forbidden readiness-claim notes.
 - `cards/`: validation-planning cards for implemented or planned engineering primitives.
 - `source_registry/`: conservative source-research seeds that cards can reference by source ID.
+- `equation_inventory.tsv`: machine-readable equation inventory/readiness dashboard for executable research equations, formula-vault metadata candidates, external M07 backlog rows, validation-card-only records, and helper algorithms.
 
 ## Verification status ladder
 
@@ -22,7 +23,7 @@ Cards and source-registry entries use the same canonical status strings as the R
 
 Phase 0.001 keeps the current cards and source-registry entries at `research_required` unless a later source-review pull request supplies the necessary evidence.
 
-Current non-example cards include atmosphere troposphere planning, thermodynamics perfect-gas planning, gas-dynamics isentropic-flow, normal-shock, Mach-angle/Prandtl-Meyer expansion-flow, branch-explicit oblique-shock planning, aerodynamics basic force/coefficient planning, propulsion rocket/nozzle bookkeeping planning, heat-transfer radiation/convection/conduction planning, structures beam/buckling planning, flight-dynamics level-turn/performance planning, astrodynamics two-body and Hohmann/celestial-helper planning, bio-regenerative life-support closure-fraction, required-production-area, buffer-residence-time, crew/daily-balance, optional O2/CO2/water mass-balance planning, BioSim-RS clean-room resource identity/tick validation planning, BioSim-RS clean-room atomic transaction commit planning, BioSim-RS clean-room deterministic ordering/digest/replay planning, BioSim-RS clean-room resource-ledger/minimal oxygen-loop conservation planning, BioSim-RS clean-room CLI/API smoke/friend-test reporting, formula-vault implementation-candidate gate planning, formula-vault M00 angle/unit conversion metadata planning, formula-vault candidate-verifier planning, and formula-vault M00 per-candidate manifest/reference-link planning. Their presence does not imply source validation.
+Current non-example cards include atmosphere troposphere planning, thermodynamics perfect-gas planning, gas-dynamics isentropic-flow, normal-shock, Mach-angle/Prandtl-Meyer expansion-flow, branch-explicit oblique-shock planning, aerodynamics basic force/coefficient planning, propulsion rocket/nozzle bookkeeping planning, heat-transfer radiation/convection/conduction planning, structures beam/buckling planning, flight-dynamics level-turn/performance planning, astrodynamics two-body and Hohmann/celestial-helper planning, bio-regenerative life-support closure-fraction, required-production-area, buffer-residence-time, crew/daily-balance, optional O2/CO2/water mass-balance planning, BioSim-RS clean-room resource identity/tick validation planning, BioSim-RS clean-room atomic transaction commit planning, BioSim-RS clean-room deterministic ordering/digest/replay planning, BioSim-RS clean-room resource-ledger/minimal oxygen-loop conservation planning, BioSim-RS clean-room CLI/API smoke/friend-test reporting, formula-vault implementation-candidate gate planning, formula-vault M00 angle/unit conversion metadata planning, formula-vault candidate-verifier planning, formula-vault M00 per-candidate manifest/reference-link planning, and equation-inventory/readiness-dashboard planning. Their presence does not imply source validation.
 
 ## Local scaffold checks
 
@@ -35,10 +36,11 @@ cargo run -p xtask -- verify source-registry
 cargo run -p xtask -- verify data-registry
 cargo run -p xtask -- verify status-vocabulary
 cargo run -p xtask -- verify formula-vault
+cargo run -p xtask -- verify equation-inventory
 cargo run -p xtask -- dependency-policy
 ```
 
-The `xtask` checks intentionally avoid YAML/JSON parser dependencies in Phase 0.001. They check required top-level fields, nonempty list sections, known status/category strings, card-to-source-registry ID links, schema markers, formula-vault candidate metadata cross-links, data-governance status vocabulary coverage, forbidden readiness markers, and native-dependency policy. They are a scaffold, not a replacement for later schema validation, source review, numerical validation, or certification evidence.
+The `xtask` checks intentionally avoid YAML/JSON parser dependencies in Phase 0.001. They check required top-level fields, nonempty list sections, known status/category strings, card-to-source-registry ID links, schema markers, formula-vault candidate metadata cross-links, equation-inventory counts/block reasons, data-governance status vocabulary coverage, forbidden readiness markers, and native-dependency policy. They are a scaffold, not a replacement for later schema validation, source review, numerical validation, or certification evidence.
 
 ## Card authoring rules
 

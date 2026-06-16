@@ -36,7 +36,7 @@ The core repository is intentionally pure Rust. The repository does not include 
 
 ## Validation artifacts
 
-Validation cards live under `validation/cards/`, source-registry seed files live under `validation/source_registry/`, and the Codex Card schema lives under `validation/schema/`. See `validation/README.md` for the Phase 0.001 validation scaffold and status ladder. Current cards and source-registry seeds intentionally remain conservative `research_required` artifacts unless exact source, test, and validation evidence has been reviewed. The Phase 0.001 non-example cards are planning artifacts only; they cover atmosphere, thermodynamics, gas dynamics, aerodynamics, propulsion, heat transfer, structures, flight dynamics, astrodynamics, and life-support mass-balance scaffolding. Their presence does not imply source validation, certification, flight readiness, mission readiness, or operational approval.
+Validation cards live under `validation/cards/`, source-registry seed files live under `validation/source_registry/`, the equation inventory/readiness dashboard lives at `validation/equation_inventory.tsv`, and the Codex Card schema lives under `validation/schema/`. See `validation/README.md` for the Phase 0.001 validation scaffold and status ladder. Current cards and source-registry seeds intentionally remain conservative `research_required` artifacts unless exact source, test, and validation evidence has been reviewed. The Phase 0.001 non-example cards are planning artifacts only; they cover atmosphere, thermodynamics, gas dynamics, aerodynamics, propulsion, heat transfer, structures, flight dynamics, astrodynamics, and life-support mass-balance scaffolding. Their presence does not imply source validation, certification, flight readiness, mission readiness, or operational approval.
 
 
 ## Nomenclature and acronym policy
@@ -71,6 +71,7 @@ cargo run -p xtask -- verify --all
 cargo run -p xtask -- verify cards
 cargo run -p xtask -- verify source-registry
 cargo run -p xtask -- verify formula-vault
+cargo run -p xtask -- verify equation-inventory
 cargo run -p xtask -- dependency-policy
 python nomenclature/tooling/aerocodex_nom_lint.py --root nomenclature
 python nomenclature/tooling/aerocodex_acronym_inventory.py --repo-root . --nomenclature-root nomenclature --check-new --baseline nomenclature/generated/current_repo_acronym_baseline.json

@@ -1,0 +1,21 @@
+id: source.validation.equation_inventory.readiness_dashboard.research_required
+title: Equation inventory and readiness dashboard source seed
+category: validation
+status: research_required
+intended_use:
+  - Register the Stage 4 Chunk 7E equation inventory and readiness dashboard verifier as governance metadata.
+  - Preserve the distinction between executable research kernels, metadata-only formula-vault candidates, external M07 backlog rows, validation-card-only records, and helper algorithms.
+requested_details:
+  - Machine-readable inventory row coverage for current public Rust functions.
+  - Formula-vault metadata-only candidate count cross-check.
+  - External M07 backlog aggregate count cross-check.
+  - Validation-card and source-registry seed count cross-checks.
+implementation_notes:
+  - Dependency-free xtask verifier only.
+  - No formula implementation is introduced.
+  - No M07 source code, fixture, generated binary, or Scilab execution output is imported.
+limits:
+  - Does not certify or validate any formula for flight, mission, habitat, medical, operational, or regulated use.
+  - Does not authorize a public application programming interface or runtime surface.
+  - Does not inspect external M07 archive contents beyond already-registered aggregate row-count metadata.
+notes: Stage 4 Chunk 7E source seed for inventory/readiness governance only; all rows remain blocked with row-local block reasons.

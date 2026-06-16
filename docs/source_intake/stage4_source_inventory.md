@@ -97,7 +97,13 @@ The verifier checks required candidate sections, existing validation/source cros
 
 Chunk 7D adds metadata-only reference depth for the existing M00 candidate: `formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml`, assurance note `docs/assurance/formula_vault_m00_reference_manifest.md`, validation card `validation.formula_vault.m00_reference_manifest`, and source seed `source.formula_vault.m00_reference_manifest.research_required`.
 
-The manifest links each selected formula identifier to its candidate function alias, source-function alias, release-gate row alias, equivalence-job alias, source-file locator, pending source-expression review status, variable/unit/domain review status, and blocked implementation status. It does not import M07 code, does not copy source expressions, does not add archives or fixtures, does not execute Scilab, does not implement formulas, does not create public application programming interfaces, and does not make certification, readiness, operational, medical, or regulated-use claims. The validation status remains `research_required`.
+The manifest links each selected formula identifier to its candidate function alias, source-function alias, release-gate row alias, equivalence-job alias, source-file locator, candidate/assurance/validation/source records, and pending review statuses. It does not import M07 code, does not copy source expressions, does not add archives or fixtures, does not execute Scilab, does not implement formulas, does not create public application programming interfaces, and does not make certification, readiness, operational, medical, or regulated-use claims. The validation status remains `research_required`.
+
+## Chunk 7E equation inventory/readiness dashboard
+
+Chunk 7E adds the machine-readable inventory `validation/equation_inventory.tsv`, assurance note `docs/assurance/equation_inventory_readiness_dashboard.md`, validation card `validation.equation_inventory.readiness_dashboard`, source seed `source.validation.equation_inventory.readiness_dashboard.research_required`, and dependency-free verifier `cargo run -p xtask -- verify equation-inventory`.
+
+The inventory distinguishes executable research equations, metadata-only formula-vault candidates, external M07 backlog rows, validation-card-only records, source-registry seeds, and helper algorithms. Every inventory row remains blocked with an explicit block reason. The chunk does not implement formulas, does not import M07 code, does not add generated formula code or fixtures, does not create public application programming interfaces, and does not make certification, readiness, operational, medical, or regulated-use claims. The validation status remains `research_required`.
 
 ## M07 observations
 

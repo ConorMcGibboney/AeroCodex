@@ -208,6 +208,22 @@ const REQUIRED_DATA_REGISTRY_FIELDS: &[&str] = &[
     "notes",
 ];
 
+fn equation_inventory_path() -> &'static str {
+    "validation/equation_inventory.tsv"
+}
+
+fn equation_inventory_header() -> &'static str {
+    "category\tid\tsource_path\tline\tfunction_or_ref\tstatus\tblocked\tblock_reason\trow_count"
+}
+
+fn m07_represented_function_rows() -> usize {
+    1_350
+}
+
+fn governed_executable_research_equation_count() -> usize {
+    112
+}
+
 fn required_status_vocabulary_names() -> &'static [&'static str] {
     &[
         "verification_status",
@@ -258,6 +274,10 @@ fn main() {
             let root = repo_root();
             verify_formula_vault(&root)
         }
+        ["verify", "equation-inventory"] => {
+            let root = repo_root();
+            verify_equation_inventory(&root).map(|_| ())
+        }
         ["dependency-policy"] => dependency_policy(),
         ["help"] | ["--help"] | ["-h"] => {
             print_usage();
@@ -277,7 +297,7 @@ fn main() {
 
 fn print_usage() {
     eprintln!(
-        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- verify formula-vault\n  cargo run -p xtask -- dependency-policy"
+        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- verify formula-vault\n  cargo run -p xtask -- verify equation-inventory\n  cargo run -p xtask -- dependency-policy"
     );
 }
 
@@ -296,6 +316,7 @@ fn verify_all() -> Result<(), String> {
     verify_data_registry(&root)?;
     verify_status_vocabulary(&root)?;
     verify_formula_vault(&root)?;
+    verify_equation_inventory(&root)?;
     Ok(())
 }
 
@@ -1028,6 +1049,488 @@ fn relative_display(root: &Path, path: &Path) -> String {
 struct FormulaVaultCandidateSummary {
     slice_id: String,
     formula_ids: BTreeSet<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+struct PublicFunctionRef {
+    source_path: String,
+    line: usize,
+    function: String,
+}
+
+impl PublicFunctionRef {
+    fn new(source_path: String, line: usize, function: String) -> Self {
+        Self {
+            source_path,
+            line,
+            function,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct EquationInventoryExpectedCounts {
+    executable_research_equations: usize,
+    metadata_only_candidates: usize,
+    external_m07_backlog_rows: usize,
+    validation_cards: usize,
+    source_registry_seeds: usize,
+    validation_card_only_records: usize,
+    helper_algorithms: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+struct EquationInventorySummary {
+    executable_research_equations: usize,
+    metadata_only_candidates: usize,
+    external_m07_backlog_rows: usize,
+    validation_cards: usize,
+    source_registry_seeds: usize,
+    validation_card_only_records: usize,
+    helper_algorithms: usize,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct EquationInventoryRow {
+    line_no: usize,
+    category: String,
+    id: String,
+    source_path: String,
+    line: usize,
+    function_or_ref: String,
+    status: String,
+    blocked: String,
+    block_reason: String,
+    row_count: usize,
+}
+
+fn verify_equation_inventory(root: &Path) -> Result<EquationInventorySummary, String> {
+    let inventory_path = root.join(equation_inventory_path());
+    if !inventory_path.is_file() {
+        return Err(format!(
+            "missing equation inventory: {}",
+            inventory_path.display()
+        ));
+    }
+
+    let text = fs::read_to_string(&inventory_path)
+        .map_err(|e| format!("{}: {e}", inventory_path.display()))?;
+    let public_functions = collect_public_functions(root)?;
+    let metadata_only_candidates = collect_formula_vault_formula_ids(root)?.len();
+    let validation_cards = count_yaml_files(&root.join("validation/cards"))?;
+    let source_registry_seeds = count_yaml_files(&root.join("validation/source_registry"))?;
+    let governed_executable_count = governed_executable_research_equation_count();
+    let helper_algorithms = public_functions
+        .len()
+        .checked_sub(governed_executable_count)
+        .ok_or_else(|| {
+            format!(
+                "public function count {} is below governed executable equation count {}",
+                public_functions.len(),
+                governed_executable_count
+            )
+        })?;
+    let expected = EquationInventoryExpectedCounts {
+        executable_research_equations: governed_executable_count,
+        metadata_only_candidates,
+        external_m07_backlog_rows: m07_represented_function_rows()
+            .checked_sub(metadata_only_candidates)
+            .ok_or_else(|| "metadata candidate count exceeds m07 represented rows".to_string())?,
+        validation_cards,
+        source_registry_seeds,
+        validation_card_only_records: validation_cards,
+        helper_algorithms,
+    };
+
+    let summary =
+        verify_equation_inventory_text(&inventory_path, &text, &expected, Some(&public_functions))?;
+    println!(
+        "verified equation inventory: executable_research_equations={}; metadata_only_candidates={}; external_m07_backlog_rows={}; validation_cards={}; source_registry_seeds={}; validation_card_only_records={}; helper_algorithms={}",
+        summary.executable_research_equations,
+        summary.metadata_only_candidates,
+        summary.external_m07_backlog_rows,
+        summary.validation_cards,
+        summary.source_registry_seeds,
+        summary.validation_card_only_records,
+        summary.helper_algorithms
+    );
+    Ok(summary)
+}
+
+fn verify_equation_inventory_text(
+    path: &Path,
+    text: &str,
+    expected: &EquationInventoryExpectedCounts,
+    public_functions: Option<&BTreeSet<PublicFunctionRef>>,
+) -> Result<EquationInventorySummary, String> {
+    verify_no_forbidden_readiness_markers(path, text)?;
+    let rows = parse_equation_inventory_rows(path, text)?;
+    if rows.is_empty() {
+        return Err(format!("{} has no inventory rows", path.display()));
+    }
+
+    let mut ids = BTreeSet::new();
+    let mut public_rows = BTreeSet::new();
+    let mut summary = EquationInventorySummary {
+        validation_cards: expected.validation_cards,
+        source_registry_seeds: expected.source_registry_seeds,
+        ..EquationInventorySummary::default()
+    };
+
+    for row in &rows {
+        if !ids.insert(row.id.clone()) {
+            return Err(format!(
+                "{} line {} duplicate equation inventory id `{}`",
+                path.display(),
+                row.line_no,
+                row.id
+            ));
+        }
+        if !is_valid_artifact_id(&row.id) {
+            return Err(format!(
+                "{} line {} invalid equation inventory id `{}`",
+                path.display(),
+                row.line_no,
+                row.id
+            ));
+        }
+        require_allowed(path, "status", &row.status, ALLOWED_STATUSES)?;
+        if row.blocked != "true" {
+            return Err(format!(
+                "{} line {} inventory item `{}` must remain blocked",
+                path.display(),
+                row.line_no,
+                row.id
+            ));
+        }
+        if row.block_reason.is_empty() {
+            return Err(format!(
+                "{} line {} inventory item `{}` missing block_reason",
+                path.display(),
+                row.line_no,
+                row.id
+            ));
+        }
+        if row.row_count == 0 {
+            return Err(format!(
+                "{} line {} inventory item `{}` row_count must be positive",
+                path.display(),
+                row.line_no,
+                row.id
+            ));
+        }
+
+        match row.category.as_str() {
+            "executable_research_equation" => {
+                require_unit_row_count(path, row)?;
+                require_repo_source_path(path, row, "crates/")?;
+                require_positive_line(path, row)?;
+                summary.executable_research_equations += row.row_count;
+                public_rows.insert(PublicFunctionRef::new(
+                    row.source_path.clone(),
+                    row.line,
+                    row.function_or_ref.clone(),
+                ));
+            }
+            "metadata_only_formula_vault_candidate" => {
+                require_unit_row_count(path, row)?;
+                require_repo_source_path(path, row, "formula-vault/candidates/")?;
+                if !row.function_or_ref.starts_with("formula_vault.") {
+                    return Err(format!(
+                        "{} line {} metadata candidate `{}` must reference a formula_vault id",
+                        path.display(),
+                        row.line_no,
+                        row.id
+                    ));
+                }
+                summary.metadata_only_candidates += row.row_count;
+            }
+            "external_m07_backlog_row" => {
+                if !row.source_path.starts_with("external://stage4/") {
+                    return Err(format!(
+                        "{} line {} external backlog `{}` must use an external://stage4 path",
+                        path.display(),
+                        row.line_no,
+                        row.id
+                    ));
+                }
+                summary.external_m07_backlog_rows += row.row_count;
+            }
+            "validation_card_only_record" => {
+                require_unit_row_count(path, row)?;
+                require_repo_source_path(path, row, "validation/cards/")?;
+                summary.validation_card_only_records += row.row_count;
+            }
+            "helper_algorithm" => {
+                require_unit_row_count(path, row)?;
+                require_repo_source_path(path, row, "crates/")?;
+                require_positive_line(path, row)?;
+                summary.helper_algorithms += row.row_count;
+                public_rows.insert(PublicFunctionRef::new(
+                    row.source_path.clone(),
+                    row.line,
+                    row.function_or_ref.clone(),
+                ));
+            }
+            other => {
+                return Err(format!(
+                    "{} line {} unsupported equation inventory category `{other}`",
+                    path.display(),
+                    row.line_no
+                ));
+            }
+        }
+    }
+
+    if summary.executable_research_equations != expected.executable_research_equations {
+        return Err(format!(
+            "{} executable_research_equation count {} does not match expected {}",
+            path.display(),
+            summary.executable_research_equations,
+            expected.executable_research_equations
+        ));
+    }
+    if summary.metadata_only_candidates != expected.metadata_only_candidates {
+        return Err(format!(
+            "{} metadata_only_formula_vault_candidate count {} does not match expected {}",
+            path.display(),
+            summary.metadata_only_candidates,
+            expected.metadata_only_candidates
+        ));
+    }
+    if summary.external_m07_backlog_rows != expected.external_m07_backlog_rows {
+        return Err(format!(
+            "{} external_m07_backlog_row count {} does not match expected {}",
+            path.display(),
+            summary.external_m07_backlog_rows,
+            expected.external_m07_backlog_rows
+        ));
+    }
+    if summary.validation_card_only_records != expected.validation_card_only_records {
+        return Err(format!(
+            "{} validation_card_only_record count {} does not match expected {}",
+            path.display(),
+            summary.validation_card_only_records,
+            expected.validation_card_only_records
+        ));
+    }
+    if summary.helper_algorithms != expected.helper_algorithms {
+        return Err(format!(
+            "{} helper_algorithm count {} does not match expected {}",
+            path.display(),
+            summary.helper_algorithms,
+            expected.helper_algorithms
+        ));
+    }
+
+    if let Some(expected_public_functions) = public_functions {
+        for function_ref in expected_public_functions {
+            if !public_rows.contains(function_ref) {
+                return Err(format!(
+                    "{} missing public function inventory row for {}:{}:{}",
+                    path.display(),
+                    function_ref.source_path,
+                    function_ref.line,
+                    function_ref.function
+                ));
+            }
+        }
+        for function_ref in &public_rows {
+            if !expected_public_functions.contains(function_ref) {
+                return Err(format!(
+                    "{} has inventory row for unknown public function {}:{}:{}",
+                    path.display(),
+                    function_ref.source_path,
+                    function_ref.line,
+                    function_ref.function
+                ));
+            }
+        }
+    }
+
+    Ok(summary)
+}
+
+fn parse_equation_inventory_rows(
+    path: &Path,
+    text: &str,
+) -> Result<Vec<EquationInventoryRow>, String> {
+    let mut lines = text.lines().filter(|line| !line.trim().is_empty());
+    let header = lines
+        .next()
+        .ok_or_else(|| format!("{} missing equation inventory header", path.display()))?;
+    if header != equation_inventory_header() {
+        return Err(format!(
+            "{} has unsupported equation inventory header `{header}`",
+            path.display()
+        ));
+    }
+
+    let mut rows = Vec::new();
+    for (index, line) in text.lines().enumerate().skip(1) {
+        let line_no = index + 1;
+        if line.trim().is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let fields: Vec<&str> = line.split('\t').collect();
+        if fields.len() != 9 {
+            return Err(format!(
+                "{} line {line_no} expected 9 tab-separated fields, found {}",
+                path.display(),
+                fields.len()
+            ));
+        }
+        let line_field = fields[3].parse::<usize>().map_err(|e| {
+            format!(
+                "{} line {line_no} has invalid source line `{}`: {e}",
+                path.display(),
+                fields[3]
+            )
+        })?;
+        let row_count = fields[8].parse::<usize>().map_err(|e| {
+            format!(
+                "{} line {line_no} has invalid row_count `{}`: {e}",
+                path.display(),
+                fields[8]
+            )
+        })?;
+        rows.push(EquationInventoryRow {
+            line_no,
+            category: fields[0].trim().to_string(),
+            id: fields[1].trim().to_string(),
+            source_path: fields[2].trim().to_string(),
+            line: line_field,
+            function_or_ref: fields[4].trim().to_string(),
+            status: fields[5].trim().to_string(),
+            blocked: fields[6].trim().to_string(),
+            block_reason: fields[7].trim().to_string(),
+            row_count,
+        });
+    }
+    Ok(rows)
+}
+
+fn require_unit_row_count(path: &Path, row: &EquationInventoryRow) -> Result<(), String> {
+    if row.row_count == 1 {
+        Ok(())
+    } else {
+        Err(format!(
+            "{} line {} inventory item `{}` must use row_count 1 for category `{}`",
+            path.display(),
+            row.line_no,
+            row.id,
+            row.category
+        ))
+    }
+}
+
+fn require_repo_source_path(
+    path: &Path,
+    row: &EquationInventoryRow,
+    prefix: &str,
+) -> Result<(), String> {
+    if row.source_path.starts_with(prefix) && !row.source_path.contains("..") {
+        Ok(())
+    } else {
+        Err(format!(
+            "{} line {} inventory item `{}` source_path `{}` must start with `{prefix}`",
+            path.display(),
+            row.line_no,
+            row.id,
+            row.source_path
+        ))
+    }
+}
+
+fn require_positive_line(path: &Path, row: &EquationInventoryRow) -> Result<(), String> {
+    if row.line > 0 {
+        Ok(())
+    } else {
+        Err(format!(
+            "{} line {} inventory item `{}` must record a positive source line",
+            path.display(),
+            row.line_no,
+            row.id
+        ))
+    }
+}
+
+fn count_yaml_files(dir: &Path) -> Result<usize, String> {
+    let mut count = 0usize;
+    visit_yaml(dir, &mut |_| {
+        count += 1;
+        Ok(())
+    })?;
+    Ok(count)
+}
+
+fn collect_formula_vault_formula_ids(root: &Path) -> Result<BTreeSet<String>, String> {
+    let source_ids = collect_source_registry_ids(root)?;
+    let card_ids = collect_validation_card_ids(root)?;
+    let candidates_dir = root.join("formula-vault/candidates");
+    let mut candidate_texts: Vec<(String, String)> = Vec::new();
+    visit_yaml(&candidates_dir, &mut |path| {
+        let text = fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        candidate_texts.push((relative_display(root, path), text));
+        Ok(())
+    })?;
+    let candidate_refs: Vec<(&str, &str)> = candidate_texts
+        .iter()
+        .map(|(path, text)| (path.as_str(), text.as_str()))
+        .collect();
+    let summaries = verify_formula_vault_candidate_texts(&candidate_refs, &source_ids, &card_ids)?;
+    let mut formula_ids = BTreeSet::new();
+    for summary in summaries {
+        for formula_id in summary.formula_ids {
+            formula_ids.insert(formula_id);
+        }
+    }
+    Ok(formula_ids)
+}
+
+fn collect_public_functions(root: &Path) -> Result<BTreeSet<PublicFunctionRef>, String> {
+    let crates_dir = root.join("crates");
+    let mut functions = BTreeSet::new();
+    visit_files(&crates_dir, &mut |path| {
+        if !path
+            .extension()
+            .and_then(|ext| ext.to_str())
+            .is_some_and(|ext| ext == "rs")
+        {
+            return Ok(());
+        }
+        if !path
+            .components()
+            .any(|component| component.as_os_str() == "src")
+        {
+            return Ok(());
+        }
+        let text = fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        let rel = relative_display(root, path);
+        for (index, line) in text.lines().enumerate() {
+            if let Some(function) = parse_pub_fn_name(line) {
+                functions.insert(PublicFunctionRef::new(rel.clone(), index + 1, function));
+            }
+        }
+        Ok(())
+    })?;
+    Ok(functions)
+}
+
+fn parse_pub_fn_name(line: &str) -> Option<String> {
+    let trimmed = line.trim_start();
+    let rest = trimmed
+        .strip_prefix("pub fn ")
+        .or_else(|| trimmed.strip_prefix("pub const fn "))?;
+    let name: String = rest
+        .chars()
+        .take_while(|ch| ch.is_ascii_alphanumeric() || *ch == '_')
+        .collect();
+    if name.is_empty() {
+        None
+    } else {
+        Some(name)
+    }
 }
 
 fn verify_formula_vault(root: &Path) -> Result<(), String> {
@@ -1774,6 +2277,97 @@ mod tests {
         )
         .expect_err("duplicate slice ids should fail");
         assert!(err.contains("duplicate formula-vault slice id"));
+    }
+
+    fn minimal_equation_inventory_fixture() -> String {
+        "category\tid\tsource_path\tline\tfunction_or_ref\tstatus\tblocked\tblock_reason\trow_count\n\
+executable_research_equation\texecutable.fixture.dynamic_pressure\tcrates/aero-codex-aerodynamics/src/lib.rs\t130\tdynamic_pressure\tresearch_required\ttrue\tresearch_preliminary_only_no_certification_or_operational_evidence\t1\n\
+metadata_only_formula_vault_candidate\tformula_vault.m00.angle.fixture\tformula-vault/candidates/fixture.yaml\t0\tformula_vault.m00.angle.fixture\tresearch_required\ttrue\tmetadata_only_no_formula_implementation_no_source_import_no_public_interface\t1\n\
+external_m07_backlog_row\tstage4.m07.remaining_backlog.fixture\texternal://stage4/aerocodex_rust_port_v14_m07_final_bundle.zip\t0\tremaining_m07_rows_after_metadata_candidates\tresearch_required\ttrue\texternal_quarantine_m07_rows_not_imported_minus_selected_metadata_candidates\t2\n\
+validation_card_only_record\tvalidation.fixture.card\tvalidation/cards/fixture.yaml\t0\tvalidation.fixture.card\tresearch_required\ttrue\tvalidation_metadata_only_not_formula_implementation\t1\n\
+helper_algorithm\thelper.fixture.ensure_finite\tcrates/aero-codex-core/src/validation.rs\t2\tensure_finite\tresearch_required\ttrue\tsupport_algorithm_not_counted_as_executable_research_equation\t1\n".to_string()
+    }
+
+    fn equation_inventory_expected_counts() -> EquationInventoryExpectedCounts {
+        EquationInventoryExpectedCounts {
+            executable_research_equations: 1,
+            metadata_only_candidates: 1,
+            external_m07_backlog_rows: 2,
+            validation_cards: 1,
+            source_registry_seeds: 1,
+            validation_card_only_records: 1,
+            helper_algorithms: 1,
+        }
+    }
+
+    #[test]
+    fn valid_equation_inventory_fixture_passes() {
+        let public_functions = BTreeSet::from([
+            PublicFunctionRef::new(
+                "crates/aero-codex-aerodynamics/src/lib.rs".to_string(),
+                130,
+                "dynamic_pressure".to_string(),
+            ),
+            PublicFunctionRef::new(
+                "crates/aero-codex-core/src/validation.rs".to_string(),
+                2,
+                "ensure_finite".to_string(),
+            ),
+        ]);
+        let summary = verify_equation_inventory_text(
+            Path::new("validation/equation_inventory.tsv"),
+            &minimal_equation_inventory_fixture(),
+            &equation_inventory_expected_counts(),
+            Some(&public_functions),
+        )
+        .expect("minimal equation inventory should pass");
+        assert_eq!(summary.executable_research_equations, 1);
+        assert_eq!(summary.external_m07_backlog_rows, 2);
+    }
+
+    #[test]
+    fn equation_inventory_missing_block_reason_fails() {
+        let text = minimal_equation_inventory_fixture().replace(
+            "research_preliminary_only_no_certification_or_operational_evidence",
+            "",
+        );
+        let err = verify_equation_inventory_text(
+            Path::new("validation/equation_inventory.tsv"),
+            &text,
+            &equation_inventory_expected_counts(),
+            None,
+        )
+        .expect_err("missing block reason should fail");
+        assert!(err.contains("missing block_reason"));
+    }
+
+    #[test]
+    fn equation_inventory_public_function_coverage_fails() {
+        let public_functions = BTreeSet::from([
+            PublicFunctionRef::new(
+                "crates/aero-codex-aerodynamics/src/lib.rs".to_string(),
+                130,
+                "dynamic_pressure".to_string(),
+            ),
+            PublicFunctionRef::new(
+                "crates/aero-codex-core/src/validation.rs".to_string(),
+                2,
+                "ensure_finite".to_string(),
+            ),
+            PublicFunctionRef::new(
+                "crates/aero-codex-core/src/validation.rs".to_string(),
+                14,
+                "ensure_positive".to_string(),
+            ),
+        ]);
+        let err = verify_equation_inventory_text(
+            Path::new("validation/equation_inventory.tsv"),
+            &minimal_equation_inventory_fixture(),
+            &equation_inventory_expected_counts(),
+            Some(&public_functions),
+        )
+        .expect_err("missing public function coverage should fail");
+        assert!(err.contains("missing public function inventory row"));
     }
 
     fn status_vocabulary_fixture() -> String {

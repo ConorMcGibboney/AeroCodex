@@ -82,6 +82,12 @@ Stage 4 Chunk 7D adds a metadata-only per-candidate manifest at `formula-vault/m
 
 The manifest does not copy M07 source expressions, does not import source files, does not execute Scilab, does not add fixtures or generated outputs, does not implement formulas, and does not promote a public application programming interface. Its status remains `research_required`.
 
+## Equation inventory/readiness dashboard
+
+Stage 4 Chunk 7E adds `validation/equation_inventory.tsv` and `cargo run -p xtask -- verify equation-inventory` so the repository can answer current counts for executable research equations, metadata-only formula-vault candidates, external M07 backlog rows, validation-card-only records, source-registry seeds, helper algorithms, and blocked reasons.
+
+The external M07 backlog remains an aggregate row in quarantine: it represents the registered 1,350 M07 rows minus the three metadata-only M00 candidate rows already represented. The dashboard does not import M07 code, does not inspect or copy source expressions, does not execute Scilab, does not add fixtures or generated outputs, does not implement formulas, and does not promote a public application programming interface. Its status remains `research_required`.
+
 ## Deferred items
 
 The following are intentionally deferred beyond Chunk 3:
