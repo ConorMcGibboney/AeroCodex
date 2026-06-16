@@ -57,6 +57,12 @@ Chunk 6B adds a clean-room atomic transaction commit primitive under `crates/aer
 
 The slice does not import Java BioSim code, does not import the BioSim-RS scaffold crates, does not execute scenarios, does not add fixtures, and does not implement deterministic replay, persistent resource ledgers, O2-loop conservation, or habitat-control behavior. The validation status remains `research_required`.
 
+## Chunk 6C BioSim-RS deterministic ordering, digest, and replay proof
+
+Chunk 6C adds clean-room deterministic ordering and digest helpers under `crates/aero-codex-life-support/src/biosim_resource_tick.rs`, plus validation card `life_support.biosim_rs.deterministic_ordering_digest_replay` and source seed `source.life_support.biosim_rs.deterministic_replay_clean_room.research_required`. It canonicalizes caller-supplied resource states and deltas by static resource ID, emits dependency-free fnv-1a before/after digests, and returns one-tick replay proof evidence after the atomic commit succeeds.
+
+The slice does not import Java BioSim code, does not import the BioSim-RS scaffold crates, does not execute scenarios, does not add fixtures, and does not implement persistent resource ledgers, O2-loop conservation, biological dynamics, or habitat-control behavior. The validation status remains `research_required`.
+
 ## M07 astrodynamics release-candidate observations
 
 - The M07 artifact manifest reports 1,350 represented function rows.

@@ -1,3 +1,5 @@
+use std::collections::BTreeMap;
+
 use aero_codex_core::{
     validation, AeroError, AeroResult, EngineeringResult, ValidityStatus, VerificationRecord,
 };
@@ -20,6 +22,12 @@ pub fn biosim_transaction_commit_codex_id() -> &'static str {
     "life_support.biosim_rs.atomic_transaction_commit"
 }
 
+/// Codex identifier for the clean-room BioSim-RS deterministic ordering/digest gate.
+#[must_use]
+pub fn biosim_deterministic_replay_codex_id() -> &'static str {
+    "life_support.biosim_rs.deterministic_ordering_digest_replay"
+}
+
 /// Source-registry seed for the Chunk 6A clean-room resource/tick slice.
 #[must_use]
 pub fn biosim_resource_tick_clean_room_source_id() -> &'static str {
@@ -32,6 +40,12 @@ pub fn biosim_resource_transaction_clean_room_source_id() -> &'static str {
     "source.life_support.biosim_rs.transaction_commit_clean_room.research_required"
 }
 
+/// Source-registry seed for the Chunk 6C clean-room deterministic replay slice.
+#[must_use]
+pub fn biosim_resource_replay_clean_room_source_id() -> &'static str {
+    "source.life_support.biosim_rs.deterministic_replay_clean_room.research_required"
+}
+
 fn biosim_resource_tick_sources() -> &'static [&'static str] {
     &["source.life_support.biosim_rs.resource_tick_clean_room.research_required"]
 }
@@ -40,6 +54,14 @@ fn biosim_transaction_commit_sources() -> &'static [&'static str] {
     &[
         "source.life_support.biosim_rs.resource_tick_clean_room.research_required",
         "source.life_support.biosim_rs.transaction_commit_clean_room.research_required",
+    ]
+}
+
+fn biosim_deterministic_replay_sources() -> &'static [&'static str] {
+    &[
+        "source.life_support.biosim_rs.resource_tick_clean_room.research_required",
+        "source.life_support.biosim_rs.transaction_commit_clean_room.research_required",
+        "source.life_support.biosim_rs.deterministic_replay_clean_room.research_required",
     ]
 }
 
@@ -102,6 +124,28 @@ pub struct BioSimResourceTransactionCommit {
     pub tick: BioSimTickAdvance,
     pub balances: Vec<BioSimResourceQuantity>,
     pub delta_count: usize,
+}
+
+/// Deterministic clean-room digest over an ordered BioSim-RS resource snapshot.
+///
+/// This is a dependency-free fnv-1a smoke-test digest for replay comparison, not
+/// a cryptographic hash, not a persisted ledger key, and not validation evidence
+/// for habitat-control, medical, or operational use.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct BioSimResourceDigest {
+    pub algorithm: &'static str,
+    pub tick_index: u64,
+    pub value: String,
+}
+
+/// Deterministic before/after replay proof for one clean-room resource commit.
+#[derive(Debug, Clone, PartialEq)]
+pub struct BioSimResourceReplayProof {
+    pub tick: BioSimTickAdvance,
+    pub before_digest: BioSimResourceDigest,
+    pub after_digest: BioSimResourceDigest,
+    pub delta_digest: BioSimResourceDigest,
+    pub ordered_delta_count: usize,
 }
 
 /// Conservative built-in resource catalog for future BioSim-RS slices.
@@ -185,6 +229,13 @@ pub fn biosim_resource_tick_verification_record(codex_id: &str) -> Option<Verifi
                 biosim_transaction_commit_codex_id(),
                 biosim_transaction_commit_sources(),
                 "Clean-room atomic resource-delta commit implemented for one validated tick boundary; no ledger persistence, replay proof, conservation model, or external BioSim validation evidence is included.",
+            ),
+        ),
+        id if id == biosim_deterministic_replay_codex_id() => Some(
+            VerificationRecord::research_required(
+                biosim_deterministic_replay_codex_id(),
+                biosim_deterministic_replay_sources(),
+                "Clean-room deterministic resource ordering plus fnv-1a before/after digest proof implemented for one caller-supplied transaction; no persistent ledger, scenario engine, conservation model, or external BioSim validation evidence is included.",
             ),
         ),
         _ => None,
@@ -333,6 +384,198 @@ pub fn validate_biosim_tick_advance(
     .with_assumption(
         "biosim_rs.tick_validation_only",
         "tick-advance validation records ordering only; transaction commits require commit_biosim_resource_transaction",
+    )
+    .with_validity(ValidityStatus::WithinDocumentedDomain))
+}
+
+fn biosim_resource_state_digest_algorithm() -> &'static str {
+    "fnv1a64:biosim_resource_state:v1"
+}
+
+fn biosim_resource_delta_digest_algorithm() -> &'static str {
+    "fnv1a64:biosim_resource_delta:v1"
+}
+
+fn fnv1a64_offset_basis() -> u64 {
+    0xcbf2_9ce4_8422_2325
+}
+
+fn fnv1a64_prime() -> u64 {
+    0x0000_0100_0000_01b3
+}
+
+fn fnv1a64_update(hash: &mut u64, bytes: &[u8]) {
+    for byte in bytes {
+        *hash ^= u64::from(*byte);
+        *hash = hash.wrapping_mul(fnv1a64_prime());
+    }
+}
+
+fn fnv1a64_field(hash: &mut u64, label: &str, value: &str) {
+    fnv1a64_update(hash, label.as_bytes());
+    fnv1a64_update(hash, b"=\0");
+    fnv1a64_update(hash, value.as_bytes());
+    fnv1a64_update(hash, b"\n");
+}
+
+fn canonical_f64_bits(value: f64) -> u64 {
+    if value == 0.0 {
+        0.0_f64.to_bits()
+    } else {
+        value.to_bits()
+    }
+}
+
+fn ordered_biosim_resource_state(
+    state: &[BioSimResourceQuantity],
+) -> AeroResult<Vec<BioSimResourceQuantity>> {
+    validate_biosim_resource_state(state)?;
+    let mut ordered = BTreeMap::new();
+    for balance in state {
+        ordered.insert(
+            biosim_resource_identity(balance.kind).canonical_id,
+            *balance,
+        );
+    }
+    Ok(ordered.into_values().collect())
+}
+
+fn ordered_biosim_resource_deltas(
+    deltas: &[BioSimResourceDelta],
+) -> AeroResult<Vec<BioSimResourceDelta>> {
+    validate_biosim_resource_deltas(deltas)?;
+    let mut ordered = BTreeMap::new();
+    for delta in deltas {
+        ordered.insert(biosim_resource_identity(delta.kind).canonical_id, *delta);
+    }
+    Ok(ordered.into_values().collect())
+}
+
+fn digest_ordered_resource_state(
+    tick_index: u64,
+    ordered_state: &[BioSimResourceQuantity],
+) -> BioSimResourceDigest {
+    let mut hash = fnv1a64_offset_basis();
+    fnv1a64_field(
+        &mut hash,
+        "algorithm",
+        biosim_resource_state_digest_algorithm(),
+    );
+    fnv1a64_field(&mut hash, "schema", "resource_state_v1");
+    fnv1a64_field(&mut hash, "tick_index", &tick_index.to_string());
+    for balance in ordered_state {
+        let identity = biosim_resource_identity(balance.kind);
+        fnv1a64_field(&mut hash, "resource_id", identity.canonical_id);
+        fnv1a64_field(&mut hash, "unit", identity.canonical_unit);
+        fnv1a64_field(
+            &mut hash,
+            "amount_bits",
+            &format!("{:016x}", canonical_f64_bits(balance.amount)),
+        );
+    }
+
+    BioSimResourceDigest {
+        algorithm: biosim_resource_state_digest_algorithm(),
+        tick_index,
+        value: format!("{hash:016x}"),
+    }
+}
+
+fn digest_ordered_resource_deltas(
+    tick_index: u64,
+    ordered_deltas: &[BioSimResourceDelta],
+) -> BioSimResourceDigest {
+    let mut hash = fnv1a64_offset_basis();
+    fnv1a64_field(
+        &mut hash,
+        "algorithm",
+        biosim_resource_delta_digest_algorithm(),
+    );
+    fnv1a64_field(&mut hash, "schema", "resource_delta_v1");
+    fnv1a64_field(&mut hash, "tick_index", &tick_index.to_string());
+    for delta in ordered_deltas {
+        let identity = biosim_resource_identity(delta.kind);
+        fnv1a64_field(&mut hash, "resource_id", identity.canonical_id);
+        fnv1a64_field(&mut hash, "unit", identity.canonical_unit);
+        fnv1a64_field(
+            &mut hash,
+            "delta_bits",
+            &format!("{:016x}", canonical_f64_bits(delta.delta_amount)),
+        );
+    }
+
+    BioSimResourceDigest {
+        algorithm: biosim_resource_delta_digest_algorithm(),
+        tick_index,
+        value: format!("{hash:016x}"),
+    }
+}
+
+/// Computes a deterministic digest for a caller-supplied clean-room resource state.
+///
+/// Resource balances are ordered by canonical resource ID before hashing so that
+/// callers can compare exact replay evidence without relying on input slice order
+/// or hash-map iteration order. The digest is fnv-1a 64-bit and non-cryptographic.
+pub fn digest_biosim_resource_state(
+    tick: BioSimTick,
+    state: &[BioSimResourceQuantity],
+) -> AeroResult<EngineeringResult<BioSimResourceDigest>> {
+    validation::ensure_positive("tick_duration_seconds", tick.duration_seconds)?;
+    let ordered_state = ordered_biosim_resource_state(state)?;
+    let digest = digest_ordered_resource_state(tick.index, &ordered_state);
+
+    Ok(EngineeringResult::new(
+        digest,
+        biosim_deterministic_replay_codex_id(),
+        resource_tick_record(biosim_deterministic_replay_codex_id()),
+    )
+    .with_assumption(
+        "biosim_rs.deterministic_resource_order",
+        "resource states are canonicalized by static resource ID before digest generation",
+    )
+    .with_assumption(
+        "biosim_rs.non_cryptographic_digest",
+        "fnv-1a 64-bit digest supports replay smoke comparisons only and is not a security checksum",
+    )
+    .with_validity(ValidityStatus::WithinDocumentedDomain))
+}
+
+/// Produces deterministic before/after replay evidence for one clean-room commit.
+///
+/// This helper composes Chunk 6A tick validation and Chunk 6B atomic commit with
+/// deterministic ordering plus before/after state digests. It does not persist a
+/// ledger, execute a scenario, validate conservation, or import GPL BioSim code.
+pub fn prove_biosim_resource_replay(
+    previous: BioSimTick,
+    next: BioSimTick,
+    current_state: &[BioSimResourceQuantity],
+    deltas: &[BioSimResourceDelta],
+) -> AeroResult<EngineeringResult<BioSimResourceReplayProof>> {
+    let tick = validate_biosim_tick_advance(previous, next)?.value;
+    let before_digest = digest_biosim_resource_state(previous, current_state)?.value;
+    let ordered_deltas = ordered_biosim_resource_deltas(deltas)?;
+    let delta_digest = digest_ordered_resource_deltas(next.index, &ordered_deltas);
+    let commit = commit_biosim_resource_transaction(previous, next, current_state, deltas)?.value;
+    let after_digest = digest_biosim_resource_state(next, &commit.balances)?.value;
+
+    Ok(EngineeringResult::new(
+        BioSimResourceReplayProof {
+            tick,
+            before_digest,
+            after_digest,
+            delta_digest,
+            ordered_delta_count: ordered_deltas.len(),
+        },
+        biosim_deterministic_replay_codex_id(),
+        resource_tick_record(biosim_deterministic_replay_codex_id()),
+    )
+    .with_assumption(
+        "biosim_rs.deterministic_replay_digest_only",
+        "proof covers deterministic ordering and before/after digests for one caller-supplied resource transaction only",
+    )
+    .with_assumption(
+        "biosim_rs.no_ledger_or_conservation_claim",
+        "proof is not a persistent ledger, O2-loop conservation check, scenario execution, or habitat-control validation",
     )
     .with_validity(ValidityStatus::WithinDocumentedDomain))
 }
@@ -697,5 +940,119 @@ mod tests {
 
         assert_eq!(err.code(), "out_of_domain");
         assert_eq!(err.parameter(), Some("resource_delta"));
+    }
+
+    #[test]
+    fn resource_state_digest_is_stable_for_unsorted_equivalent_state() {
+        let tick = validate_biosim_tick(12, 60.0).unwrap().value;
+        let state_a = [
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::PotableWater,
+                amount: 4.25,
+            },
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::OxygenGas,
+                amount: 8.5,
+            },
+        ];
+        let state_b = [state_a[1], state_a[0]];
+
+        let digest_a = digest_biosim_resource_state(tick, &state_a).unwrap();
+        let digest_b = digest_biosim_resource_state(tick, &state_b).unwrap();
+
+        assert_eq!(digest_a.codex_id, biosim_deterministic_replay_codex_id());
+        assert_eq!(digest_a.value, digest_b.value);
+        assert_eq!(digest_a.value.algorithm, "fnv1a64:biosim_resource_state:v1");
+        assert_eq!(digest_a.value.tick_index, 12);
+        assert_eq!(digest_a.value.value.len(), 16);
+        assert_eq!(
+            digest_a.verification_status(),
+            VerificationStatus::ResearchRequired
+        );
+    }
+
+    #[test]
+    fn resource_state_digest_changes_when_initial_level_changes() {
+        let tick = validate_biosim_tick(0, 60.0).unwrap().value;
+        let base = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 8.5,
+        }];
+        let changed = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 8.75,
+        }];
+
+        let base_digest = digest_biosim_resource_state(tick, &base).unwrap();
+        let changed_digest = digest_biosim_resource_state(tick, &changed).unwrap();
+
+        assert_ne!(base_digest.value.value, changed_digest.value.value);
+    }
+
+    #[test]
+    fn replay_proof_is_stable_for_equivalent_unsorted_inputs() {
+        let previous = validate_biosim_tick(7, 60.0).unwrap().value;
+        let next = validate_biosim_tick(8, 60.0).unwrap().value;
+        let state_a = [
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::PotableWater,
+                amount: 4.25,
+            },
+            BioSimResourceQuantity {
+                kind: BioSimResourceKind::OxygenGas,
+                amount: 8.5,
+            },
+        ];
+        let state_b = [state_a[1], state_a[0]];
+        let deltas_a = [
+            BioSimResourceDelta {
+                kind: BioSimResourceKind::OxygenGas,
+                delta_amount: -1.0,
+            },
+            BioSimResourceDelta {
+                kind: BioSimResourceKind::PotableWater,
+                delta_amount: 2.0,
+            },
+        ];
+        let deltas_b = [deltas_a[1], deltas_a[0]];
+
+        let proof_a = prove_biosim_resource_replay(previous, next, &state_a, &deltas_a).unwrap();
+        let proof_b = prove_biosim_resource_replay(previous, next, &state_b, &deltas_b).unwrap();
+
+        assert_eq!(proof_a.codex_id, biosim_deterministic_replay_codex_id());
+        assert_eq!(proof_a.value, proof_b.value);
+        assert_eq!(proof_a.value.tick.previous_index, 7);
+        assert_eq!(proof_a.value.tick.next_index, 8);
+        assert_eq!(proof_a.value.before_digest.tick_index, 7);
+        assert_eq!(proof_a.value.after_digest.tick_index, 8);
+        assert_eq!(proof_a.value.ordered_delta_count, 2);
+        assert_ne!(proof_a.value.before_digest, proof_a.value.after_digest);
+        assert!(proof_a
+            .assumptions
+            .iter()
+            .any(|item| item.id == "biosim_rs.deterministic_replay_digest_only"));
+    }
+
+    #[test]
+    fn failed_replay_proof_preserves_caller_state_digest_and_tick() {
+        let previous = validate_biosim_tick(9, 60.0).unwrap().value;
+        let next = validate_biosim_tick(10, 60.0).unwrap().value;
+        let state = [BioSimResourceQuantity {
+            kind: BioSimResourceKind::OxygenGas,
+            amount: 1.0,
+        }];
+        let deltas = [BioSimResourceDelta {
+            kind: BioSimResourceKind::OxygenGas,
+            delta_amount: -2.0,
+        }];
+        let before_digest = digest_biosim_resource_state(previous, &state).unwrap();
+
+        let err = prove_biosim_resource_replay(previous, next, &state, &deltas).unwrap_err();
+        let after_digest = digest_biosim_resource_state(previous, &state).unwrap();
+
+        assert_eq!(err.code(), "out_of_domain");
+        assert_eq!(before_digest.value, after_digest.value);
+        assert_eq!(previous.index, 9);
+        assert_eq!(state[0].amount, 1.0);
     }
 }

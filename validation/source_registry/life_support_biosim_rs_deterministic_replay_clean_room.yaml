@@ -1,0 +1,22 @@
+id: source.life_support.biosim_rs.deterministic_replay_clean_room.research_required
+title: BioSim-RS clean-room deterministic ordering and replay digest source seed
+category: life_support
+status: research_required
+intended_use:
+  - Clean-room source seed for deterministic ordering, resource-state digests, and one-tick replay proof evidence.
+  - Traceability anchor for Stage 4 Chunk 6C implementation in the existing life-support crate.
+  - Boundary record showing that GPL Java BioSim source, GPL-bound BioSim-RS scaffold code, fixtures, and scenarios were not imported.
+requested_details:
+  - Future reviewed clean-room specification package for broader BioSim deterministic engine semantics.
+  - Resource ledger and conservation evidence before ledger or O2-loop behavior is promoted.
+  - CLI/API smoke evidence before user-facing BioSim run or replay commands are promoted.
+implementation_notes:
+  - Current implementation canonicalizes caller-supplied resource states and deltas by static resource ID before digest generation.
+  - It uses a documented dependency-free fnv-1a 64-bit digest for deterministic replay smoke comparison only.
+  - It composes the existing clean-room consecutive tick validator and atomic commit helper to produce previous and next tick digests for one transaction.
+  - Status remains research_required pending source review and external validation evidence.
+limits:
+  - Not a habitat controller or life-support simulator.
+  - Not a persistent resource ledger, conservation model, module scheduler, scenario executor, or cryptographic integrity system.
+  - Not evidence of operational, crew-safety, medical, certification, or regulated-use suitability.
+notes: "Stage 4 Chunk 6C clean-room source seed. Later chunks must add separate cards and evidence before persistent ledgers, conservation behavior, CLI/API scenario execution, or habitat-control behavior is promoted."

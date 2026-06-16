@@ -43,7 +43,7 @@ The validation status remains `research_required`.
 
 ## Explicit non-scope
 
-Chunk 6B does not add:
+Chunk 6B itself does not add:
 
 - deterministic module ordering;
 - digest generation;
@@ -56,7 +56,7 @@ Chunk 6B does not add:
 - BioSim archive import;
 - GPL-compatible distribution decision beyond this clean-room primitive slice.
 
-Those remain future chunks. Chunk 6C is the next logical BioSim-RS step and should focus only on deterministic ordering, digest, and replay proof if explicitly authorized.
+Chunk 6C now records the follow-on deterministic ordering, digest, and one-tick replay proof slice in `docs/assurance/biosim_rs_deterministic_replay_validation.md`. Persistent ledgers, conservation behavior, and scenario execution remain future chunks.
 
 ## Gate expectations
 

@@ -8,14 +8,15 @@ intended_use:
   - Boundary record showing that GPL Java BioSim source and GPL-bound BioSim-RS scaffold code were not imported.
 requested_details:
   - Future reviewed clean-room specification package for broader BioSim transaction semantics.
-  - Deterministic module ordering and replay proof evidence before replay claims are made.
+  - Broader deterministic engine evidence before claims beyond the Chunk 6C one-tick digest proof are made.
   - Resource ledger and conservation evidence before ledger or O2-loop behavior is promoted.
 implementation_notes:
   - Current implementation accepts a caller-supplied resource state, a validated consecutive tick boundary, and one finite delta per resource.
-  - It exposes either a complete output snapshot or an error; it does not mutate caller state, persist a ledger, or produce replay evidence.
+  - It exposes either a complete output snapshot or an error; it does not mutate caller state or persist a ledger.
+  - Chunk 6C adds a separate deterministic ordering, digest, and one-tick replay-proof card/source seed.
   - Status remains research_required pending source review and external validation evidence.
 limits:
   - Not a habitat controller or life-support simulator.
-  - Not a deterministic replay engine, resource ledger, conservation model, or scenario executor.
+  - Not a persistent resource ledger, conservation model, or scenario executor.
   - Not evidence of operational, crew-safety, medical, or regulated-use suitability.
-notes: "Stage 4 Chunk 6B clean-room source seed. Later chunks must add separate cards and evidence before deterministic replay, ledger persistence, or conservation behavior is promoted."
+notes: "Stage 4 Chunk 6B clean-room source seed. Separate Chunk 6C evidence covers deterministic ordering, digest, and one-tick replay proof only; later chunks must add separate cards before ledger persistence or conservation behavior is promoted."

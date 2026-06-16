@@ -1,0 +1,48 @@
+id: life_support.biosim_rs.deterministic_ordering_digest_replay
+name: BioSim-RS clean-room deterministic ordering, digest, and replay proof
+category: life_support
+status: research_required
+source:
+  id: source.life_support.biosim_rs.deterministic_replay_clean_room.research_required
+  status: research_required
+assumptions:
+  - resource states and deltas are caller-supplied clean-room values over the Chunk 6A generic resource identities
+  - resource states and resource deltas are canonicalized by static resource IDs before digest generation
+  - before digests use the previous tick index and after digests use the next tick index after a successful atomic commit
+  - fnv-1a 64-bit digests are deterministic replay smoke evidence only and are not cryptographic checksums
+  - persistent ledgers, conservation accounting, BioSim scenarios, and habitat-control behavior are deferred to later chunks
+domain:
+  summary: "one-tick deterministic replay proof over unique nonnegative resource balances and finite resource deltas"
+  bounds:
+    - previous and next ticks must pass consecutive positive-duration tick validation
+    - resource state contains at least one unique finite nonnegative resource balance
+    - each resource delta is finite and at most one delta is supplied per resource kind
+    - each delta references an existing resource balance and post-commit balances remain nonnegative
+    - canonical ordering is by static clean-room resource ID, independent of caller slice order
+  excluded_cases:
+    - persistent resource ledger entries
+    - O2-loop conservation, mass/energy closure validation, or biological dynamics
+    - module scheduler execution, BioSim scenario execution, or CLI/API smoke tests
+    - external BioSim reference validation or GPL source import
+inputs:
+  - previous validated BioSimTick
+  - next validated BioSimTick
+  - current clean-room BioSimResourceQuantity slice
+  - staged clean-room BioSimResourceDelta slice
+outputs:
+  - BioSimResourceDigest for the previous tick resource state
+  - BioSimResourceReplayProof containing previous and next tick indexes, before/after state digests, ordered delta digest, and ordered delta count
+  - research_required verification metadata for life_support.biosim_rs.deterministic_ordering_digest_replay
+tests:
+  - equivalent states with different caller order produce the same state digest
+  - changed initial resource level changes the state digest
+  - equivalent resource states and deltas with different caller order produce the same replay proof
+  - failed replay proof preserves caller state digest and tick index
+failure_modes:
+  - empty or duplicate resource state rejected through the Chunk 6B state checks
+  - empty or duplicate resource deltas rejected through the Chunk 6B delta checks
+  - nonfinite balances or deltas rejected
+  - post-commit negative balances rejected before proof output is exposed
+  - nonconsecutive tick transition rejected by the Chunk 6A tick validator
+  - status must not be interpreted as external validation, habitat safety, or readiness evidence
+notes: "Stage 4 Chunk 6C validation card for clean-room deterministic ordering, digest, and one-tick replay proof only. This card does not promote persistent ledgers, conservation models, BioSim scenario execution, habitat-control, medical, operational, certification, or regulated-use behavior."

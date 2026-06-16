@@ -1,6 +1,6 @@
 # BioSim-RS Source Boundary
 
-This source-intake note records the Stage 4 Chunk 4 boundary for BioSim-RS, the Chunk 6A clean-room resource/tick slice, and the Chunk 6B clean-room atomic transaction commit slice. It does not import any source archive, does not promote GPL-bound implementation code, and does not change AeroCodex's current dual `MIT OR Apache-2.0` core.
+This source-intake note records the Stage 4 Chunk 4 boundary for BioSim-RS, the Chunk 6A clean-room resource/tick slice, the Chunk 6B clean-room atomic transaction commit slice, and the Chunk 6C clean-room deterministic ordering/digest slice. It does not import any source archive, does not promote GPL-bound implementation code, and does not change AeroCodex's current dual `MIT OR Apache-2.0` core.
 
 AeroCodex remains research and preliminary-design software. It is not certified, flight-ready, mission-ready, habitat-safe, medical, operational, or regulated-use approved.
 
@@ -29,7 +29,7 @@ The following labels are source-intake lifecycle labels for BioSim-RS. They do n
 | `clean_room_implementation_lane` | Implementation role builds from approved specs without inspecting GPL-bound implementation code. | Bounded code only after independence evidence |
 | `rejected_or_superseded` | The artifact or lane is no longer used. | Retain provenance note and block promotion |
 
-## Allowed planning and Chunk 6A/6B use
+## Allowed planning and Chunk 6A/6B/6C use
 
 Chunk 4 use remains limited to:
 
@@ -43,6 +43,8 @@ Chunk 6A adds only clean-room generic resource identities and local tick validat
 
 Chunk 6B adds only clean-room atomic resource-delta commit behavior in `crates/aero-codex-life-support`, with source seed `source.life_support.biosim_rs.transaction_commit_clean_room.research_required` and validation card `life_support.biosim_rs.atomic_transaction_commit`. It uses no external BioSim archive contents, no GPL-bound scaffold crates, no fixtures, no scenarios, and no deterministic replay, persistent ledger, conservation, or habitat-control behavior.
 
+Chunk 6C adds only clean-room deterministic resource ordering and fnv-1a before/after digest evidence in `crates/aero-codex-life-support`, with source seed `source.life_support.biosim_rs.deterministic_replay_clean_room.research_required` and validation card `life_support.biosim_rs.deterministic_ordering_digest_replay`. It uses no external BioSim archive contents, no GPL-bound scaffold crates, no fixtures, no scenarios, and no persistent ledger, conservation, biological-dynamics, or habitat-control behavior.
+
 ## Blocked use now
 
 The following remain blocked:
@@ -52,7 +54,7 @@ The following remain blocked:
 - importing the BioSim-RS bootstrap scaffold as workspace crates;
 - using GPL-bound fixtures without a fixture license and hash record;
 - claiming habitat safety, medical suitability, operational readiness, certification, or regulated-use approval;
-- adding deterministic replay, resource-ledger, conservation, scenario-execution, or habitat-control behavior without new slice-specific evidence;
+- adding persistent resource-ledger, conservation, scenario-execution, or habitat-control behavior without new slice-specific evidence;
 - merging any GPL-derived BioSim-RS implementation into the dual AeroCodex core before the license path and validation gates are accepted.
 
 ## Future intake records
@@ -66,7 +68,7 @@ Before any later BioSim-RS implementation slice lands, create or update a slice-
 5. resource and unit assumptions;
 6. tick and transaction semantics;
 7. mass/energy ledger expectations;
-8. deterministic replay proof plan;
+8. broader deterministic replay proof plan;
 9. validation status vocabulary value;
 10. promotion gate and explicit non-certification caveat.
 

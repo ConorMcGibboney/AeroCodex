@@ -72,7 +72,7 @@ Future slices should be sequenced as:
 4. resource ledger and minimal O2-loop conservation;
 5. CLI/API smoke tests and friend-test report.
 
-Each slice must carry its own source IDs, license-path reference, validation status, unit/domain assumptions, mass/energy ledger expectations, deterministic replay evidence, and conservative research caveat. Chunk 6A intentionally carries no transaction, ledger, replay, or conservation evidence. Chunk 6B carries only atomic resource-delta commit evidence; deterministic replay, persistent ledger, and conservation expectations remain future work.
+Each slice must carry its own source IDs, license-path reference, validation status, unit/domain assumptions, mass/energy ledger expectations, deterministic replay evidence, and conservative research caveat. Chunk 6A intentionally carries no transaction, ledger, replay, or conservation evidence. Chunk 6B carries only atomic resource-delta commit evidence. Chunk 6C carries deterministic ordering, fnv-1a digest, and one-tick replay proof evidence only; persistent ledger and conservation expectations remain future work.
 
 ## Clean-room evidence package for future chunks
 

@@ -77,7 +77,7 @@ Chunk 6A does not add:
 - BioSim archive import;
 - GPL-compatible distribution decision beyond this clean-room primitive slice.
 
-Those items were outside Chunk 6A. Chunk 6B records atomic transaction commit in `docs/assurance/biosim_rs_atomic_transaction_commit_validation.md`; deterministic ordering, digest/replay proof, persistent ledgers, and conservation behavior remain future chunks.
+Those items were outside Chunk 6A. Chunk 6B records atomic transaction commit in `docs/assurance/biosim_rs_atomic_transaction_commit_validation.md`; Chunk 6C records deterministic ordering, digest, and one-tick replay proof in `docs/assurance/biosim_rs_deterministic_replay_validation.md`. Persistent ledgers and conservation behavior remain future chunks.
 
 ## Gate expectations
 
