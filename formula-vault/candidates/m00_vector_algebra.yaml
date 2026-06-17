@@ -1,0 +1,217 @@
+# Stage 4 M00 vector-algebra formula-vault candidate expansion.
+#
+# Metadata only: this file has no copied M07 source, no generated Rust, no
+# Scilab execution output, no certification evidence, no flight-readiness claim,
+# no mission-readiness claim, no operational approval, and no regulated-use
+# approval.
+
+schema_version: formula_vault_candidate_slice.v1
+record_status: metadata_only_research_required
+
+slice:
+  id: formula_vault.m00_vector_algebra.v1
+  title: M00 vector algebra candidate metadata expansion
+  lifecycle_label: equation_contract_drafted
+  stage4_chunk: stage4_chunk8a_m00_vector_equation_expansion
+  public_api_surface: blocked_research_rust_functions_only_no_application_interface_promotion
+  implementation_surface: bounded_research_kernel_candidate
+  notes:
+    - Adds the remaining low-risk M00 vector helper rows as a bounded formula-vault candidate slice.
+    - Does not import or translate the M07 implementation source.
+    - Excludes app_resolve_coplanar because least-squares rank policy needs a separate contract.
+
+sources:
+  source_artifact_ids:
+    - stage4.m07_rust_port_v14.2026_06_15
+  source_archive_sha256: 15b1ca3a39267187167c43ea1228f28fd4736c4456f65d072dc42a32a7b19190
+  docs_nested_zip_sha256: 5f228a2f885bbe67b2c280fb18d3bbd0c2386435f9758112e487ba6f9dc0142e
+  source_registry_seed_id: source.formula_vault.m00_vector_algebra.research_required
+  validation_card_id: validation.formula_vault.m00_vector_algebra
+  human_review_locators:
+    release_gate_csv: release-gate status csv; exact archive path captured outside repo
+    release_gate_rows:
+      - row_number_1_based_with_header: 14
+        milestone: M00
+        rust_function: app_dot
+        scilab_function: foa_app_ast_app_dot
+      - row_number_1_based_with_header: 15
+        milestone: M00
+        rust_function: app_norm
+        scilab_function: foa_app_ast_app_norm
+      - row_number_1_based_with_header: 16
+        milestone: M00
+        rust_function: app_cross
+        scilab_function: foa_app_ast_app_cross
+      - row_number_1_based_with_header: 17
+        milestone: M00
+        rust_function: app_unit
+        scilab_function: foa_app_ast_app_unit
+      - row_number_1_based_with_header: 18
+        milestone: M00
+        rust_function: app_angle
+        scilab_function: foa_app_ast_app_angle
+      - row_number_1_based_with_header: 19
+        milestone: M00
+        rust_function: app_projection
+        scilab_function: foa_app_ast_app_projection
+      - row_number_1_based_with_header: 20
+        milestone: M00
+        rust_function: app_scalar_triple
+        scilab_function: foa_app_ast_app_scalar_triple
+      - row_number_1_based_with_header: 21
+        milestone: M00
+        rust_function: app_vector_triple
+        scilab_function: foa_app_ast_app_vector_triple
+      - row_number_1_based_with_header: 22
+        milestone: M00
+        rust_function: app_vector_triple_bac_cab
+        scilab_function: foa_app_ast_app_vector_triple_bac_cab
+      - row_number_1_based_with_header: 23
+        milestone: M00
+        rust_function: app_is_collinear
+        scilab_function: foa_app_ast_app_is_collinear
+      - row_number_1_based_with_header: 24
+        milestone: M00
+        rust_function: app_is_coplanar
+        scilab_function: foa_app_ast_app_is_coplanar
+      - row_number_1_based_with_header: 26
+        milestone: M00
+        rust_function: app_tangent_from_dr_ds
+        scilab_function: foa_app_ast_app_tangent_from_dr_ds
+      - row_number_1_based_with_header: 27
+        milestone: M00
+        rust_function: app_velocity_from_arc_rate
+        scilab_function: foa_app_ast_app_velocity_from_arc_rate
+      - row_number_1_based_with_header: 28
+        milestone: M00
+        rust_function: app_distance
+        scilab_function: foa_app_ast_app_distance
+    source_file_alias: M00 vector review source file
+    source_line_spans_reviewed_without_source_copy:
+      - formula_id: formula_vault.m00.vector.dot
+        reviewed_line_span: lines 3 through 7
+      - formula_id: formula_vault.m00.vector.norm
+        reviewed_line_span: lines 9 through 11
+      - formula_id: formula_vault.m00.vector.cross
+        reviewed_line_span: lines 13 through 22
+      - formula_id: formula_vault.m00.vector.unit
+        reviewed_line_span: lines 24 through 30
+      - formula_id: formula_vault.m00.vector.angle
+        reviewed_line_span: lines 32 through 41
+      - formula_id: formula_vault.m00.vector.projection
+        reviewed_line_span: lines 43 through 49
+      - formula_id: formula_vault.m00.vector.scalar_triple
+        reviewed_line_span: lines 51 through 53
+      - formula_id: formula_vault.m00.vector.vector_triple
+        reviewed_line_span: lines 55 through 58
+      - formula_id: formula_vault.m00.vector.vector_triple_bac_cab
+        reviewed_line_span: lines 60 through 62
+      - formula_id: formula_vault.m00.vector.is_collinear
+        reviewed_line_span: lines 64 through 68
+      - formula_id: formula_vault.m00.vector.is_coplanar
+        reviewed_line_span: lines 70 through 75
+      - formula_id: formula_vault.m00.vector.tangent_from_dr_ds
+        reviewed_line_span: lines 83 through 85
+      - formula_id: formula_vault.m00.vector.velocity_from_arc_rate
+        reviewed_line_span: lines 87 through 89
+      - formula_id: formula_vault.m00.vector.distance
+        reviewed_line_span: lines 91 through 93
+    scilab_equivalence_job: equivalence job 007 for ast_app_vector_review.sci
+  source_boundary:
+    m07_archive_status: external_quarantine_reference_only
+    import_policy: no_bulk_import_no_raw_source_no_generated_code_no_external_fixture
+    astrodynamics_crate_policy: bounded independent research implementation only
+
+formula_contract:
+  formula_ids:
+    - formula_vault.m00.vector.dot
+    - formula_vault.m00.vector.norm
+    - formula_vault.m00.vector.cross
+    - formula_vault.m00.vector.unit
+    - formula_vault.m00.vector.angle
+    - formula_vault.m00.vector.projection
+    - formula_vault.m00.vector.scalar_triple
+    - formula_vault.m00.vector.vector_triple
+    - formula_vault.m00.vector.vector_triple_bac_cab
+    - formula_vault.m00.vector.is_collinear
+    - formula_vault.m00.vector.is_coplanar
+    - formula_vault.m00.vector.tangent_from_dr_ds
+    - formula_vault.m00.vector.velocity_from_arc_rate
+    - formula_vault.m00.vector.distance
+  variables:
+    - finite 3-vector inputs named a, b, and c as applicable
+    - finite scalar tolerance for predicate helpers
+    - finite signed arc-rate scalar for velocity helper
+  units:
+    - vector component units propagate according to dot, cross, scalar multiplication, and norm rules
+    - angle output in radians
+    - predicates output booleans
+  coordinate_frames:
+    - frame-agnostic 3-vector algebra; all input vectors for a call must share a consistent frame
+  time_scales:
+    - not_time_scale_dependent except velocity_from_arc_rate requires caller-supplied arc-rate units
+  sign_conventions:
+    - right-handed cross product orientation
+    - nonnegative Euclidean norm and distance
+    - signed scalar triple product by right-handed orientation
+  valid_domain:
+    - finite real 3-vector components
+    - nonzero vectors for unit, angle, projection target, tangent, and velocity direction operations
+    - nonnegative finite tolerance for collinearity and coplanarity predicates
+  singularities:
+    - zero vector in normalization-like operations
+    - zero projection target for projection
+    - unresolved rank-deficient least-squares case excluded by leaving app_resolve_coplanar out of this slice
+  invalid_regions:
+    - non-finite vector components
+    - negative or non-finite tolerance
+    - non-finite arc rate
+  branch_behavior:
+    - single analytical branch for dot, norm, cross, projection, triple products, tangent, velocity, and distance
+    - boolean threshold branch for collinearity and coplanarity predicates
+  tolerance_policy:
+    absolute_tolerance: 1.0e-12 for deterministic unit tests unless scale requires looser review
+    relative_tolerance: 1.0e-12 for nonzero scalar/vector magnitudes in future equivalence work
+    rationale: independent IEEE-754 regression checks first; Scilab equivalence remains pending
+
+validation_records:
+  required_source_registry_seed: source.formula_vault.m00_vector_algebra.research_required
+  required_validation_card: validation.formula_vault.m00_vector_algebra
+  status: research_required
+  status_upgrade_policy: blocked_without_source_review_equivalence_and_reference_evidence
+
+evidence_plan:
+  rust_gates:
+    - cargo test -p aero-codex-astrodynamics m00_vector
+    - cargo test --workspace --all-features
+  scilab_equivalence_jobs:
+    - equivalence job 007 remains pending external Scilab runner evidence
+  sgp4_reference_checks: []
+  analytical_identity_checks:
+    - dot orthogonality and distributive smoke checks
+    - norm Pythagorean vector checks
+    - cross-product right-handed basis check
+    - scalar triple determinant check
+    - BAC-CAB identity agreement with nested cross product
+  reference_oracle_checks: []
+  fixture_hashes: []
+  tolerance_rationale: bounded independent analytical test vectors before any equivalence-status upgrade
+
+promotion_gate:
+  default_state: blocked
+  required_before_promotion:
+    - source_registry_seed_exists
+    - validation_card_exists
+    - independent_contract_and_test_vectors_exist
+    - rust_unit_tests_pass
+    - no_raw_m07_source_or_generated_binary_promoted
+    - no_application_interface_promoted_without_explicit_review
+
+non_claims:
+  no_certification_evidence: true
+  no_flight_readiness: true
+  no_mission_readiness: true
+  no_operational_approval: true
+  no_regulated_use_approval: true
+  no_bulk_m07_import: true
+  no_external_parity_claim_without_evidence: true

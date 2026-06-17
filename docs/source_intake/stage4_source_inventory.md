@@ -140,3 +140,9 @@ The inventory distinguishes executable research equations, metadata-only formula
 3. Keep raw archives out of the repository unless a future chunk explicitly approves a source-material import.
 4. Do not promote external source code into public AeroCodex API without equation contracts, tests, tolerances, validation status, docs, and release-gate evidence.
 5. Preserve the one-canonical-`main` rule and the non-certification caveat in all source-intake outputs.
+
+## Chunk 8A M00 vector-equation expansion
+
+The Chunk 8A handoff expands the M00 formula-vault slice with `formula-vault/candidates/m00_vector_algebra.yaml`, `formula-vault/contracts/m00_vector_algebra_contract.yaml`, assurance note `docs/assurance/formula_vault_m00_vector_equation_expansion.md`, validation card `validation.formula_vault.m00_vector_algebra`, and source seed `source.formula_vault.m00_vector_algebra.research_required`.
+
+The slice covers fourteen finite 3-vector helpers and intentionally excludes `app_resolve_coplanar` until least-squares rank and singularity policy is reviewed. It also authorizes implementation of the already-contracted `deg2rad` and `rad2deg` helpers. It does not import raw M07 source, does not add Scilab outputs or fixtures, does not implement `wrap2pi`, does not create an application interface, and does not make certification, readiness, operational, medical, habitat-safety, or regulated-use claims.

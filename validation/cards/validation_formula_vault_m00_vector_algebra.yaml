@@ -1,0 +1,37 @@
+id: validation.formula_vault.m00_vector_algebra
+name: Formula-vault M00 vector-algebra equation expansion
+category: validation
+status: research_required
+source:
+  id: source.formula_vault.m00_vector_algebra.research_required
+  status: research_required
+assumptions:
+  - The slice is limited to finite 3-vector algebra helpers from the registered M07 M00 vector review locator.
+  - The implementation uses independently written vector algebra and must not copy raw M07 source text or control flow.
+  - app_resolve_coplanar is intentionally excluded because least-squares rank and singularity policy needs a separate review.
+  - The release-candidate M07 artifact remains not certified and not promoted as a bulk public API source.
+domain:
+  discipline: astrodynamics
+  scope: M00 vector algebra helpers for research/preliminary-design use only
+  exclusions:
+    - non-finite vector components
+    - zero-vector normalization where explicitly rejected
+    - external Scilab equivalence or certification claims
+inputs:
+  - finite 3-vector scalar components
+  - finite nonnegative tolerance for collinearity and coplanarity predicates
+  - finite signed arc-rate scalar for velocity helper
+outputs:
+  - dot product, norm, cross product, unit vector, angle, projection, triple products, predicates, tangent, velocity, and distance research-kernel outputs
+tests:
+  - cargo test -p aero-codex-astrodynamics m00_vector
+  - cargo test --workspace --all-features
+  - cargo run -p xtask -- verify formula-vault
+  - cargo run -p xtask -- verify equation-inventory
+failure_modes:
+  - non-finite input is accepted instead of rejected
+  - zero vector is accepted for normalization, angle, projection target, tangent, or velocity direction
+  - right-handed cross-product orientation is reversed
+  - vector triple product disagrees with the BAC-CAB identity
+  - formula-vault candidate counts or equation-inventory counts drift from the added metadata/code
+notes: Research-required formula-vault expansion and implementation-readiness card only; no certification, flight readiness, mission readiness, operational approval, medical-use approval, habitat-safety approval, regulated-use approval, external Scilab parity, or M07 release certification is claimed.

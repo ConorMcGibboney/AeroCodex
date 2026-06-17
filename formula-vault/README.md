@@ -27,6 +27,16 @@ Stage 4 Chunk 7B adds the first bounded metadata-only candidate slice without im
 
 The Chunk 7B slice is limited to three M00 release-gate rows: `app_deg2rad`, `app_rad2deg`, and `app_wrap2pi`. It does not promote exact expressions, wrap endpoint behavior, tolerances, executable code, or public application programming interfaces.
 
+Stage 4 Chunk 8A handoff expands the formula-vault with a bounded M00 vector-algebra slice and implementation-ready research-kernel patch:
+
+- `formula-vault/candidates/m00_vector_algebra.yaml`
+- `formula-vault/contracts/m00_vector_algebra_contract.yaml`
+- `docs/assurance/formula_vault_m00_vector_equation_expansion.md`
+- validation card `validation.formula_vault.m00_vector_algebra`
+- source seed `source.formula_vault.m00_vector_algebra.research_required`
+
+The handoff covers fourteen finite 3-vector helpers, plus implementation of the already-contracted `deg2rad` and `rad2deg` helpers. `wrap2pi` and `app_resolve_coplanar` remain blocked for separate endpoint/rank-policy chunks.
+
 Stage 4 Chunk 7C adds the first dependency-free candidate metadata verifier without implementing formulas:
 
 - command `cargo run -p xtask -- verify formula-vault`

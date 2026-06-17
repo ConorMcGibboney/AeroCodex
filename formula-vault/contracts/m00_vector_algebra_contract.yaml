@@ -1,0 +1,343 @@
+# Stage 4 M00 vector-algebra independent contract and test-vector plan.
+#
+# Metadata/test-contract only. The mathematical summaries below are independent
+# vector-algebra statements; this file does not copy raw M07 source and does not
+# provide certification, flight-readiness, mission-readiness, operational,
+# medical-use, habitat-safety, or regulated-use evidence.
+
+schema_version: formula_vault_source_expression_contract.v1
+record_status: metadata_test_contract_research_required
+stage4_chunk: stage4_chunk8a_m00_vector_equation_expansion
+source_artifact_id: stage4.m07_rust_port_v14.2026_06_15
+source_boundary:
+  m07_archive_status: external_quarantine_reference_only
+  review_method: inspected_registered_archive_without_committing_raw_source
+  import_policy: no_bulk_import_no_raw_source_no_generated_code_no_external_fixture
+  validation_status: research_required
+  m07_facts:
+    represented_function_rows: 1350
+    scilab_equivalence_jobs: 188
+    release_status: release_candidate_not_certified
+
+formulas:
+  - formula_id: formula_vault.m00.vector.dot
+    rust_function_alias: app_dot
+    scilab_function_alias: foa_app_ast_app_dot
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 14
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 3 through 7 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: a · b
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: dimensionless_or_component_product
+    branch_or_endpoint_behavior: single branch finite 3-vector dot product
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.norm
+    rust_function_alias: app_norm
+    scilab_function_alias: foa_app_ast_app_norm
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 15
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 9 through 11 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: sqrt(a · a)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: same_as_input_component_unit
+    branch_or_endpoint_behavior: nonnegative Euclidean norm
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.cross
+    rust_function_alias: app_cross
+    scilab_function_alias: foa_app_ast_app_cross
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 16
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 13 through 22 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: a × b
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: component_product_unit
+    branch_or_endpoint_behavior: right-handed 3-vector cross product
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.unit
+    rust_function_alias: app_unit
+    scilab_function_alias: foa_app_ast_app_unit
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 17
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 24 through 30 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: a / ||a||
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: dimensionless_unit_direction
+    branch_or_endpoint_behavior: zero vector rejected
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.angle
+    rust_function_alias: app_angle
+    scilab_function_alias: foa_app_ast_app_angle
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 18
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 32 through 41 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: acos(clamp((a · b)/(||a|| ||b||), -1, 1))
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: radian
+    branch_or_endpoint_behavior: zero vectors rejected
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.projection
+    rust_function_alias: app_projection
+    scilab_function_alias: foa_app_ast_app_projection
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 19
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 43 through 49 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: ((a · b)/(b · b)) b
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: same_as_input_vector_unit
+    branch_or_endpoint_behavior: projection target must be nonzero
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.scalar_triple
+    rust_function_alias: app_scalar_triple
+    scilab_function_alias: foa_app_ast_app_scalar_triple
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 20
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 51 through 53 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: a · (b × c)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: triple_product_component_unit
+    branch_or_endpoint_behavior: single branch determinant-like scalar
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.vector_triple
+    rust_function_alias: app_vector_triple
+    scilab_function_alias: foa_app_ast_app_vector_triple
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 21
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 55 through 58 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: a × (b × c)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: triple_product_component_unit
+    branch_or_endpoint_behavior: single branch vector triple product
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.vector_triple_bac_cab
+    rust_function_alias: app_vector_triple_bac_cab
+    scilab_function_alias: foa_app_ast_app_vector_triple_bac_cab
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 22
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 60 through 62 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: (a · c)b - (a · b)c
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: triple_product_component_unit
+    branch_or_endpoint_behavior: BAC-CAB identity form
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.is_collinear
+    rust_function_alias: app_is_collinear
+    scilab_function_alias: foa_app_ast_app_is_collinear
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 23
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 64 through 68 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: ||a × b|| <= tolerance max(1, ||a|| ||b||)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: boolean
+    branch_or_endpoint_behavior: explicit nonnegative tolerance
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.is_coplanar
+    rust_function_alias: app_is_coplanar
+    scilab_function_alias: foa_app_ast_app_is_coplanar
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 24
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 70 through 75 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: abs(a · (b × c)) <= tolerance max(1, ||a|| ||b|| ||c||)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: boolean
+    branch_or_endpoint_behavior: explicit nonnegative tolerance
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.tangent_from_dr_ds
+    rust_function_alias: app_tangent_from_dr_ds
+    scilab_function_alias: foa_app_ast_app_tangent_from_dr_ds
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 26
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 83 through 85 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: unit(dr/ds)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: dimensionless_unit_direction
+    branch_or_endpoint_behavior: zero derivative rejected
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.velocity_from_arc_rate
+    rust_function_alias: app_velocity_from_arc_rate
+    scilab_function_alias: foa_app_ast_app_velocity_from_arc_rate
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 27
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 87 through 89 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: ds/dt times unit(tangent)
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: distance_per_time
+    branch_or_endpoint_behavior: finite signed arc rate
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval
+
+  - formula_id: formula_vault.m00.vector.distance
+    rust_function_alias: app_distance
+    scilab_function_alias: foa_app_ast_app_distance
+    source_locator:
+      release_gate_table_alias: release-gate status csv row 28
+      source_file_alias: M00 vector review source file
+      reviewed_line_span: lines 91 through 93 in the registered M07 source locator
+    source_expression_review_status: reviewed_without_source_copy
+    independent_mathematical_contract:
+      expression_summary: ||a - b||
+      domain_summary: finite real 3-vector inputs with operation-specific exclusions
+    units_summary: same_as_input_component_unit
+    branch_or_endpoint_behavior: single branch Euclidean distance
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+      relative_tolerance: 1.0e-12 for nonzero future equivalence tests
+    implementation_status: bounded_research_kernel_candidate_in_handoff_patch
+    promotion_gate: blocked_until_agent_runs_full_workspace_gates_and_ci
+    non_claim_caveats:
+      - no_certification_evidence
+      - no_external_scilab_equivalence_claim
+      - no_operational_approval

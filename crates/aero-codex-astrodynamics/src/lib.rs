@@ -42,6 +42,41 @@ pub const CODEX_ID_HOHMANN_TRANSFER_TIME: &str = "astrodynamics.transfer.hohmann
 /// Codex identifier for sphere-of-influence radius.
 pub const CODEX_ID_SPHERE_OF_INFLUENCE: &str = "astrodynamics.celestial.sphere_of_influence_radius";
 
+/// Codex identifier for M00 degree-to-radian conversion.
+pub const CODEX_ID_M00_DEG2RAD: &str = "formula_vault.m00.angle.deg2rad";
+/// Codex identifier for M00 radian-to-degree conversion.
+pub const CODEX_ID_M00_RAD2DEG: &str = "formula_vault.m00.angle.rad2deg";
+/// Codex identifier for M00 3-vector dot product.
+pub const CODEX_ID_M00_VECTOR_DOT: &str = "formula_vault.m00.vector.dot";
+/// Codex identifier for M00 3-vector Euclidean norm.
+pub const CODEX_ID_M00_VECTOR_NORM: &str = "formula_vault.m00.vector.norm";
+/// Codex identifier for M00 3-vector cross product.
+pub const CODEX_ID_M00_VECTOR_CROSS: &str = "formula_vault.m00.vector.cross";
+/// Codex identifier for M00 3-vector unit direction.
+pub const CODEX_ID_M00_VECTOR_UNIT: &str = "formula_vault.m00.vector.unit";
+/// Codex identifier for M00 angle between 3-vectors.
+pub const CODEX_ID_M00_VECTOR_ANGLE: &str = "formula_vault.m00.vector.angle";
+/// Codex identifier for M00 projection of one 3-vector onto another.
+pub const CODEX_ID_M00_VECTOR_PROJECTION: &str = "formula_vault.m00.vector.projection";
+/// Codex identifier for M00 scalar triple product.
+pub const CODEX_ID_M00_SCALAR_TRIPLE: &str = "formula_vault.m00.vector.scalar_triple";
+/// Codex identifier for M00 vector triple product.
+pub const CODEX_ID_M00_VECTOR_TRIPLE: &str = "formula_vault.m00.vector.vector_triple";
+/// Codex identifier for M00 BAC-CAB vector triple identity form.
+pub const CODEX_ID_M00_VECTOR_TRIPLE_BAC_CAB: &str =
+    "formula_vault.m00.vector.vector_triple_bac_cab";
+/// Codex identifier for M00 collinearity check.
+pub const CODEX_ID_M00_IS_COLLINEAR: &str = "formula_vault.m00.vector.is_collinear";
+/// Codex identifier for M00 coplanarity check.
+pub const CODEX_ID_M00_IS_COPLANAR: &str = "formula_vault.m00.vector.is_coplanar";
+/// Codex identifier for M00 tangent-from-derivative helper.
+pub const CODEX_ID_M00_TANGENT_FROM_DR_DS: &str = "formula_vault.m00.vector.tangent_from_dr_ds";
+/// Codex identifier for M00 velocity-from-arc-rate helper.
+pub const CODEX_ID_M00_VELOCITY_FROM_ARC_RATE: &str =
+    "formula_vault.m00.vector.velocity_from_arc_rate";
+/// Codex identifier for M00 distance between two 3-vectors.
+pub const CODEX_ID_M00_VECTOR_DISTANCE: &str = "formula_vault.m00.vector.distance";
+
 /// Conservative source-registry ID for Phase 0.001 astrodynamics review.
 pub const SOURCE_ID_ASTRODYNAMICS_NASA_JPL_PARAMETERS: &str =
     aero_codex_constants::SOURCE_ID_NASA_JPL_ASTRODYNAMICS_PARAMETERS;
@@ -75,6 +110,23 @@ const ASTRODYNAMICS_TRANSFER_CELESTIAL_SOURCES: &[&str] = &[
     SOURCE_ID_ASTRODYNAMICS_TRANSFER_CELESTIAL_BASICS,
     SOURCE_ID_ASTRODYNAMICS_TWO_BODY_BASICS,
     SOURCE_ID_ASTRODYNAMICS_NASA_JPL_PARAMETERS,
+];
+
+/// Conservative source-registry ID for M00 angle implementation metadata.
+pub const SOURCE_ID_FORMULA_VAULT_M00_SOURCE_EXPRESSION_TEST_VECTORS: &str =
+    "source.formula_vault.m00_source_expression_test_vectors.research_required";
+/// Conservative source-registry ID for M00 vector-algebra implementation metadata.
+pub const SOURCE_ID_FORMULA_VAULT_M00_VECTOR_ALGEBRA: &str =
+    "source.formula_vault.m00_vector_algebra.research_required";
+
+const FORMULA_VAULT_M00_ANGLE_SOURCES: &[&str] = &[
+    SOURCE_ID_FORMULA_VAULT_M00_SOURCE_EXPRESSION_TEST_VECTORS,
+    SOURCE_ID_ASTRODYNAMICS_TWO_BODY_BASICS,
+];
+
+const FORMULA_VAULT_M00_VECTOR_SOURCES: &[&str] = &[
+    SOURCE_ID_FORMULA_VAULT_M00_VECTOR_ALGEBRA,
+    SOURCE_ID_ASTRODYNAMICS_TWO_BODY_BASICS,
 ];
 
 /// Conservative traceability metadata for Phase 0.001 astrodynamics helpers.
@@ -130,6 +182,86 @@ pub fn verification_record(codex_id: &str) -> Option<VerificationRecord> {
             CODEX_ID_SPHERE_OF_INFLUENCE,
             ASTRODYNAMICS_TRANSFER_CELESTIAL_SOURCES,
             "Laplace-style scalar sphere-of-influence radius helper implemented; source form, mass convention, and representative examples pending.",
+        )),
+        CODEX_ID_M00_DEG2RAD => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_DEG2RAD,
+            FORMULA_VAULT_M00_ANGLE_SOURCES,
+            "M00 degree-to-radian conversion implemented from independent contract and test vectors; M07 remains release-candidate/not certified.",
+        )),
+        CODEX_ID_M00_RAD2DEG => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_RAD2DEG,
+            FORMULA_VAULT_M00_ANGLE_SOURCES,
+            "M00 radian-to-degree conversion implemented from independent contract and test vectors; M07 remains release-candidate/not certified.",
+        )),
+        CODEX_ID_M00_VECTOR_DOT => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_DOT,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 3-vector dot product implemented from independent vector-algebra contract; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_NORM => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_NORM,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 3-vector Euclidean norm implemented from independent vector-algebra contract; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_CROSS => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_CROSS,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 3-vector cross product implemented from independent vector-algebra contract; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_UNIT => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_UNIT,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 unit-vector helper implemented with zero-vector rejection; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_ANGLE => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_ANGLE,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 angle-between-vectors helper implemented with finite 3-vector inputs and zero-vector rejection; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_PROJECTION => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_PROJECTION,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 vector projection helper implemented with nonzero target vector; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_SCALAR_TRIPLE => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_SCALAR_TRIPLE,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 scalar triple product implemented from independent vector-algebra contract; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_TRIPLE => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_TRIPLE,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 vector triple product implemented from independent vector-algebra contract; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_TRIPLE_BAC_CAB => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_TRIPLE_BAC_CAB,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 BAC-CAB vector triple identity helper implemented; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_IS_COLLINEAR => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_IS_COLLINEAR,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 collinearity predicate implemented with explicit tolerance input; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_IS_COPLANAR => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_IS_COPLANAR,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 coplanarity predicate implemented with explicit tolerance input; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_TANGENT_FROM_DR_DS => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_TANGENT_FROM_DR_DS,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 tangent-from-derivative helper implemented as a checked unit-vector operation; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VELOCITY_FROM_ARC_RATE => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VELOCITY_FROM_ARC_RATE,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 velocity-from-arc-rate helper implemented as speed times unit tangent; source equivalence evidence pending.",
+        )),
+        CODEX_ID_M00_VECTOR_DISTANCE => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_VECTOR_DISTANCE,
+            FORMULA_VAULT_M00_VECTOR_SOURCES,
+            "M00 distance-between-points helper implemented as Euclidean norm of coordinate difference; source equivalence evidence pending.",
         )),
         _ => None,
     }
@@ -547,6 +679,223 @@ pub fn sphere_of_influence_radius(
     ensure_positive_finite_result(CODEX_ID_SPHERE_OF_INFLUENCE, radius)
 }
 
+fn ensure_vector3_finite(parameter: &'static str, vector: [f64; 3]) -> AeroResult<[f64; 3]> {
+    for value in vector {
+        validation::ensure_finite(parameter, value)?;
+    }
+    Ok(vector)
+}
+
+fn ensure_vector3_result(codex_id: &'static str, value: [f64; 3]) -> AeroResult<[f64; 3]> {
+    if value.iter().all(|component| component.is_finite()) {
+        Ok(value)
+    } else {
+        Err(numerical_failure(
+            codex_id,
+            "computed vector result contained a non-finite component",
+        ))
+    }
+}
+
+fn vector3_difference(a: [f64; 3], b: [f64; 3]) -> AeroResult<[f64; 3]> {
+    ensure_vector3_result(
+        CODEX_ID_M00_VECTOR_DISTANCE,
+        [a[0] - b[0], a[1] - b[1], a[2] - b[2]],
+    )
+}
+
+fn checked_vector3_scale(
+    codex_id: &'static str,
+    scale: f64,
+    vector: [f64; 3],
+) -> AeroResult<[f64; 3]> {
+    validation::ensure_finite("scale", scale)?;
+    ensure_vector3_result(
+        codex_id,
+        [scale * vector[0], scale * vector[1], scale * vector[2]],
+    )
+}
+
+/// M00 degree-to-radian conversion for finite scalar inputs.
+///
+/// This helper is grounded in the Stage 4 formula-vault M00 contract but remains
+/// a research/preliminary-design implementation. It does not certify the M07
+/// release-candidate workspace or imply external Scilab equivalence.
+pub fn m00_degrees_to_radians(degrees: f64) -> AeroResult<f64> {
+    validation::ensure_finite("degrees", degrees)?;
+    ensure_finite_formula_result(CODEX_ID_M00_DEG2RAD, degrees * PI / 180.0)
+}
+
+/// M00 radian-to-degree conversion for finite scalar inputs.
+///
+/// This helper is grounded in the Stage 4 formula-vault M00 contract but remains
+/// a research/preliminary-design implementation. It does not certify the M07
+/// release-candidate workspace or imply external Scilab equivalence.
+pub fn m00_radians_to_degrees(radians: f64) -> AeroResult<f64> {
+    validation::ensure_finite("radians", radians)?;
+    ensure_finite_formula_result(CODEX_ID_M00_RAD2DEG, radians * 180.0 / PI)
+}
+
+fn ensure_finite_formula_result(codex_id: &'static str, value: f64) -> AeroResult<f64> {
+    if value.is_finite() {
+        Ok(value)
+    } else {
+        Err(numerical_failure(
+            codex_id,
+            "computed scalar result was not finite",
+        ))
+    }
+}
+
+/// M00 3-vector dot product, `a · b`.
+pub fn m00_vector_dot(a: [f64; 3], b: [f64; 3]) -> AeroResult<f64> {
+    let a = ensure_vector3_finite("a", a)?;
+    let b = ensure_vector3_finite("b", b)?;
+    ensure_finite_formula_result(
+        CODEX_ID_M00_VECTOR_DOT,
+        a[0] * b[0] + a[1] * b[1] + a[2] * b[2],
+    )
+}
+
+/// M00 3-vector Euclidean norm, `sqrt(a · a)`.
+pub fn m00_vector_norm(a: [f64; 3]) -> AeroResult<f64> {
+    let dot = m00_vector_dot(a, a)?;
+    if dot < 0.0 {
+        return Err(numerical_failure(
+            CODEX_ID_M00_VECTOR_NORM,
+            "norm radicand was negative",
+        ));
+    }
+    ensure_nonnegative_finite_result(CODEX_ID_M00_VECTOR_NORM, dot.sqrt())
+}
+
+/// M00 3-vector cross product, `a × b`.
+pub fn m00_vector_cross(a: [f64; 3], b: [f64; 3]) -> AeroResult<[f64; 3]> {
+    let a = ensure_vector3_finite("a", a)?;
+    let b = ensure_vector3_finite("b", b)?;
+    ensure_vector3_result(
+        CODEX_ID_M00_VECTOR_CROSS,
+        [
+            a[1] * b[2] - a[2] * b[1],
+            a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0],
+        ],
+    )
+}
+
+/// M00 checked 3-vector unit direction, `a / ||a||`.
+pub fn m00_unit_vector(a: [f64; 3]) -> AeroResult<[f64; 3]> {
+    let a = ensure_vector3_finite("a", a)?;
+    let norm = m00_vector_norm(a)?;
+    if norm == 0.0 {
+        return Err(AeroError::OutOfDomain {
+            parameter: "a",
+            value: norm,
+            expected: "nonzero vector for unit-vector operation",
+        });
+    }
+    checked_vector3_scale(CODEX_ID_M00_VECTOR_UNIT, 1.0 / norm, a)
+}
+
+/// M00 angle between two nonzero 3-vectors in radians.
+pub fn m00_vector_angle(a: [f64; 3], b: [f64; 3]) -> AeroResult<f64> {
+    let norm_a = m00_vector_norm(a)?;
+    let norm_b = m00_vector_norm(b)?;
+    if norm_a == 0.0 || norm_b == 0.0 {
+        return Err(AeroError::OutOfDomain {
+            parameter: "a_or_b",
+            value: 0.0,
+            expected: "both vectors must be nonzero for angle computation",
+        });
+    }
+    let denominator = checked_product(
+        CODEX_ID_M00_VECTOR_ANGLE,
+        "angle denominator was not finite",
+        norm_a,
+        norm_b,
+    )?;
+    let cosine = (m00_vector_dot(a, b)? / denominator).clamp(-1.0, 1.0);
+    ensure_finite_formula_result(CODEX_ID_M00_VECTOR_ANGLE, cosine.acos())
+}
+
+/// M00 projection of vector `a` onto nonzero vector `onto_b`.
+pub fn m00_vector_projection(a: [f64; 3], onto_b: [f64; 3]) -> AeroResult<[f64; 3]> {
+    let denominator = m00_vector_dot(onto_b, onto_b)?;
+    if denominator == 0.0 {
+        return Err(AeroError::OutOfDomain {
+            parameter: "onto_b",
+            value: denominator,
+            expected: "nonzero projection target vector",
+        });
+    }
+    let scale = m00_vector_dot(a, onto_b)? / denominator;
+    checked_vector3_scale(CODEX_ID_M00_VECTOR_PROJECTION, scale, onto_b)
+}
+
+/// M00 scalar triple product, `a · (b × c)`.
+pub fn m00_scalar_triple_product(a: [f64; 3], b: [f64; 3], c: [f64; 3]) -> AeroResult<f64> {
+    m00_vector_dot(a, m00_vector_cross(b, c)?)
+}
+
+/// M00 vector triple product, `a × (b × c)`.
+pub fn m00_vector_triple_product(a: [f64; 3], b: [f64; 3], c: [f64; 3]) -> AeroResult<[f64; 3]> {
+    m00_vector_cross(a, m00_vector_cross(b, c)?)
+}
+
+/// M00 BAC-CAB vector triple identity form, `(a · c)b - (a · b)c`.
+pub fn m00_vector_triple_bac_cab(a: [f64; 3], b: [f64; 3], c: [f64; 3]) -> AeroResult<[f64; 3]> {
+    let ac = m00_vector_dot(a, c)?;
+    let ab = m00_vector_dot(a, b)?;
+    ensure_vector3_result(
+        CODEX_ID_M00_VECTOR_TRIPLE_BAC_CAB,
+        [
+            ac * b[0] - ab * c[0],
+            ac * b[1] - ab * c[1],
+            ac * b[2] - ab * c[2],
+        ],
+    )
+}
+
+/// M00 collinearity predicate using an explicit nonnegative tolerance.
+pub fn m00_vectors_collinear(a: [f64; 3], b: [f64; 3], tolerance: f64) -> AeroResult<bool> {
+    validation::ensure_nonnegative("tolerance", tolerance)?;
+    let cross_norm = m00_vector_norm(m00_vector_cross(a, b)?)?;
+    let scale = (m00_vector_norm(a)? * m00_vector_norm(b)?).max(1.0);
+    Ok(cross_norm <= tolerance * scale)
+}
+
+/// M00 coplanarity predicate using an explicit nonnegative tolerance.
+pub fn m00_vectors_coplanar(
+    a: [f64; 3],
+    b: [f64; 3],
+    c: [f64; 3],
+    tolerance: f64,
+) -> AeroResult<bool> {
+    validation::ensure_nonnegative("tolerance", tolerance)?;
+    let scale = (m00_vector_norm(a)? * m00_vector_norm(b)? * m00_vector_norm(c)?).max(1.0);
+    Ok(m00_scalar_triple_product(a, b, c)?.abs() <= tolerance * scale)
+}
+
+/// M00 tangent helper from derivative with respect to arc length.
+pub fn m00_tangent_from_dr_ds(dr_ds: [f64; 3]) -> AeroResult<[f64; 3]> {
+    m00_unit_vector(dr_ds)
+}
+
+/// M00 velocity vector from tangent direction and signed arc rate.
+pub fn m00_velocity_from_arc_rate(tangent_unit: [f64; 3], ds_dt: f64) -> AeroResult<[f64; 3]> {
+    validation::ensure_finite("ds_dt", ds_dt)?;
+    checked_vector3_scale(
+        CODEX_ID_M00_VELOCITY_FROM_ARC_RATE,
+        ds_dt,
+        m00_unit_vector(tangent_unit)?,
+    )
+}
+
+/// M00 Euclidean distance between two 3-vectors.
+pub fn m00_vector_distance(a: [f64; 3], b: [f64; 3]) -> AeroResult<f64> {
+    m00_vector_norm(vector3_difference(a, b)?)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -558,6 +907,105 @@ mod tests {
             (actual - expected).abs() <= tolerance,
             "actual={actual}, expected={expected}, tolerance={tolerance}"
         );
+    }
+
+    fn assert_vector_close(actual: [f64; 3], expected: [f64; 3], tolerance: f64) {
+        for (actual_component, expected_component) in actual.into_iter().zip(expected) {
+            assert_close(actual_component, expected_component, tolerance);
+        }
+    }
+
+    #[test]
+    fn m00_angle_conversions_match_contract_vectors() {
+        assert_close(m00_degrees_to_radians(0.0).unwrap(), 0.0, 0.0);
+        assert_close(m00_degrees_to_radians(90.0).unwrap(), PI / 2.0, 1.0e-15);
+        assert_close(m00_degrees_to_radians(180.0).unwrap(), PI, 1.0e-15);
+        assert_close(m00_degrees_to_radians(360.0).unwrap(), 2.0 * PI, 2.0e-15);
+        assert_close(m00_degrees_to_radians(-90.0).unwrap(), -PI / 2.0, 1.0e-15);
+        assert_close(m00_degrees_to_radians(45.0).unwrap(), PI / 4.0, 1.0e-15);
+
+        assert_close(m00_radians_to_degrees(0.0).unwrap(), 0.0, 0.0);
+        assert_close(m00_radians_to_degrees(PI / 2.0).unwrap(), 90.0, 1.0e-12);
+        assert_close(m00_radians_to_degrees(PI).unwrap(), 180.0, 1.0e-12);
+        assert_close(m00_radians_to_degrees(2.0 * PI).unwrap(), 360.0, 1.0e-12);
+        assert_close(m00_radians_to_degrees(-PI).unwrap(), -180.0, 1.0e-12);
+        assert_close(m00_radians_to_degrees(PI / 4.0).unwrap(), 45.0, 1.0e-12);
+    }
+
+    #[test]
+    fn m00_angle_conversions_reject_nonfinite_inputs() {
+        assert!(m00_degrees_to_radians(f64::NAN).is_err());
+        assert!(m00_radians_to_degrees(f64::INFINITY).is_err());
+    }
+
+    #[test]
+    fn m00_vector_algebra_core_identities_hold() {
+        let a = [1.0, 2.0, 3.0];
+        let b = [4.0, -5.0, 6.0];
+        let c = [-2.0, 1.0, 0.5];
+
+        assert_close(m00_vector_dot(a, b).unwrap(), 12.0, 0.0);
+        assert_close(m00_vector_norm([3.0, 4.0, 12.0]).unwrap(), 13.0, 0.0);
+        assert_vector_close(m00_vector_cross(a, b).unwrap(), [27.0, 6.0, -13.0], 0.0);
+        assert_vector_close(
+            m00_unit_vector([0.0, 3.0, 4.0]).unwrap(),
+            [0.0, 0.6, 0.8],
+            1.0e-15,
+        );
+        assert_close(
+            m00_vector_angle([1.0, 0.0, 0.0], [0.0, 1.0, 0.0]).unwrap(),
+            PI / 2.0,
+            1.0e-15,
+        );
+        assert_vector_close(
+            m00_vector_projection([3.0, 4.0, 0.0], [1.0, 0.0, 0.0]).unwrap(),
+            [3.0, 0.0, 0.0],
+            0.0,
+        );
+        assert_close(m00_scalar_triple_product(a, b, c).unwrap(), -54.5, 0.0);
+
+        let triple = m00_vector_triple_product(a, b, c).unwrap();
+        let identity = m00_vector_triple_bac_cab(a, b, c).unwrap();
+        assert_vector_close(triple, identity, 1.0e-12);
+    }
+
+    #[test]
+    fn m00_vector_predicates_and_motion_helpers_hold() {
+        assert!(m00_vectors_collinear([1.0, 2.0, 3.0], [2.0, 4.0, 6.0], 1.0e-12).unwrap());
+        assert!(!m00_vectors_collinear([1.0, 0.0, 0.0], [0.0, 1.0, 0.0], 1.0e-12).unwrap());
+        assert!(
+            m00_vectors_coplanar([1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [1.0, 1.0, 0.0], 1.0e-12,)
+                .unwrap()
+        );
+        assert!(
+            !m00_vectors_coplanar([1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0], 1.0e-12,)
+                .unwrap()
+        );
+        assert_vector_close(
+            m00_tangent_from_dr_ds([0.0, 0.0, 5.0]).unwrap(),
+            [0.0, 0.0, 1.0],
+            0.0,
+        );
+        assert_vector_close(
+            m00_velocity_from_arc_rate([0.0, 3.0, 4.0], 10.0).unwrap(),
+            [0.0, 6.0, 8.0],
+            1.0e-14,
+        );
+        assert_close(
+            m00_vector_distance([1.0, 2.0, 3.0], [4.0, 6.0, 3.0]).unwrap(),
+            5.0,
+            0.0,
+        );
+    }
+
+    #[test]
+    fn m00_vector_helpers_reject_invalid_inputs() {
+        assert!(m00_vector_dot([f64::NAN, 0.0, 0.0], [1.0, 0.0, 0.0]).is_err());
+        assert!(m00_unit_vector([0.0, 0.0, 0.0]).is_err());
+        assert!(m00_vector_angle([0.0, 0.0, 0.0], [1.0, 0.0, 0.0]).is_err());
+        assert!(m00_vector_projection([1.0, 2.0, 3.0], [0.0, 0.0, 0.0]).is_err());
+        assert!(m00_vectors_collinear([1.0, 0.0, 0.0], [1.0, 0.0, 0.0], -1.0).is_err());
+        assert!(m00_velocity_from_arc_rate([1.0, 0.0, 0.0], f64::NAN).is_err());
     }
 
     #[test]

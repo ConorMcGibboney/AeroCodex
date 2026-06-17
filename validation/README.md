@@ -60,3 +60,5 @@ Source IDs in cards must match an entry under `source_registry/`. Upgrade a card
 ## Thin-film BLSS extension cards
 
 The thin-film BLSS package adds five `life_support.thinfilm.*` cards and matching source-registry seeds. These are marked `equation_traceable` because the supplied report, BibTeX file, and Rust implementation preserve explicit equation-to-function-to-source mappings. They are not reference-validated or experiment-validated until numerical reproduction cases and calibration data are added.
+
+Stage 4 Chunk 8A handoff adds validation/source metadata for the formula-vault M00 vector-equation expansion; status remains `research_required` and no readiness claim is made.

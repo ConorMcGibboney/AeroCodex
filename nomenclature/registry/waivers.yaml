@@ -33,3 +33,187 @@ records:
   approved_by: nomenclature_owner
   expires: never
   status: approved
+- waiver_id: ACX-NOM-WAIVER-0102
+  rule: ACX-NOM-W008
+  surface_form: ALGEBRA
+  context: Stage 4 M00 vector formula-vault Rust identifiers and metadata filenames
+  reason: Uppercase Rust const-identifier component for vector algebra metadata; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0103
+  rule: ACX-NOM-W008
+  surface_form: ARC
+  context: Stage 4 M00 velocity-from-arc-rate Rust identifier and metadata
+  reason: Uppercase Rust const-identifier component for arc-rate helper wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0104
+  rule: ACX-NOM-W008
+  surface_form: BAC
+  context: Stage 4 M00 vector triple identity Rust identifier and metadata
+  reason: Source-form identity label component in bac-cab vector triple notation; not an AeroCodex acronym expansion.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0105
+  rule: ACX-NOM-W008
+  surface_form: BAC-CAB
+  context: Stage 4 M00 vector triple identity Rust identifier and metadata
+  reason: Source-form identity label for bac-cab vector triple notation; not an AeroCodex acronym expansion.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0106
+  rule: ACX-NOM-W008
+  surface_form: CAB
+  context: Stage 4 M00 vector triple identity Rust identifier and metadata
+  reason: Source-form identity label component in bac-cab vector triple notation; not an AeroCodex acronym expansion.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0107
+  rule: ACX-NOM-W008
+  surface_form: COLLINEAR
+  context: Stage 4 M00 vector predicate Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for a geometry predicate; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0108
+  rule: ACX-NOM-W008
+  surface_form: COPLANAR
+  context: Stage 4 M00 vector predicate Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for a geometry predicate; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0109
+  rule: ACX-NOM-W008
+  surface_form: CROSS
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for a vector operation; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0110
+  rule: ACX-NOM-W008
+  surface_form: DEG2RAD
+  context: Stage 4 M00 angle-conversion Rust identifier and formula-vault ID
+  reason: Compact equation identifier for degree-to-radian conversion; not an AeroCodex acronym expansion.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0111
+  rule: ACX-NOM-W008
+  surface_form: DISTANCE
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for a vector operation; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0112
+  rule: ACX-NOM-W008
+  surface_form: DOT
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for dot-product wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0113
+  rule: ACX-NOM-W008
+  surface_form: EXPRESSION
+  context: Stage 4 M00 formula-vault source-expression Rust identifier and metadata
+  reason: Uppercase Rust const-identifier component for governed metadata naming; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0114
+  rule: ACX-NOM-W008
+  surface_form: FORMULA
+  context: Stage 4 formula-vault Rust identifiers and metadata filenames
+  reason: Uppercase Rust const-identifier component for formula-vault naming; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0115
+  rule: ACX-NOM-W008
+  surface_form: IEEE-754
+  context: Stage 4 M00 vector-algebra candidate metadata
+  reason: Standards notation for floating-point arithmetic; treated as notation/source label, not a local acronym expansion.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0116
+  rule: ACX-NOM-W008
+  surface_form: NORM
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for vector norm wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0117
+  rule: ACX-NOM-W008
+  surface_form: RAD2DEG
+  context: Stage 4 M00 angle-conversion Rust identifier and formula-vault ID
+  reason: Compact equation identifier for radian-to-degree conversion; not an AeroCodex acronym expansion.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0118
+  rule: ACX-NOM-W008
+  surface_form: SCALAR
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for scalar-triple wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0119
+  rule: ACX-NOM-W008
+  surface_form: TANGENT
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for tangent helper wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0120
+  rule: ACX-NOM-W008
+  surface_form: TEST
+  context: Stage 4 M00 source-expression test-vector Rust identifier and metadata
+  reason: Uppercase Rust const-identifier component for governed test-vector metadata naming; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0121
+  rule: ACX-NOM-W008
+  surface_form: TRIPLE
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for vector triple-product wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0122
+  rule: ACX-NOM-W008
+  surface_form: UNIT
+  context: Stage 4 M00 vector helper Rust identifiers and metadata
+  reason: Uppercase Rust const-identifier component for unit-vector wording; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0123
+  rule: ACX-NOM-W008
+  surface_form: VAULT
+  context: Stage 4 formula-vault Rust identifiers and metadata filenames
+  reason: Uppercase Rust const-identifier component for formula-vault naming; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved
+- waiver_id: ACX-NOM-WAIVER-0124
+  rule: ACX-NOM-W008
+  surface_form: VECTORS
+  context: Stage 4 M00 source-expression test-vector Rust identifier and metadata
+  reason: Uppercase Rust const-identifier component for governed test-vector metadata naming; not a standalone acronym.
+  approved_by: nomenclature_owner
+  expires: never
+  status: approved

@@ -1,0 +1,22 @@
+id: source.formula_vault.m00_vector_algebra.research_required
+title: Formula-vault M00 vector-algebra source seed
+category: validation
+status: research_required
+intended_use:
+  - Register the bounded M00 vector-algebra formula-vault expansion as research/preliminary-design metadata.
+  - Tie the future/active implementation slice to the registered M07 release-candidate artifact without copying raw source.
+  - Preserve the distinction between independent analytical vector-algebra tests and pending external Scilab equivalence.
+requested_details:
+  - Release-gate rows 14 through 24 and 26 through 28 for M00 vector helpers.
+  - M00 vector review source locator line-span summaries without raw source text.
+  - Independent test vectors for dot, norm, cross, unit, angle, projection, triple products, collinearity, coplanarity, tangent, velocity, and distance.
+  - Explicit exclusion of app_resolve_coplanar until least-squares rank policy is reviewed.
+implementation_notes:
+  - Allowed implementation path is independently written Rust over finite [f64; 3] inputs.
+  - No M07 source code, generated Rust, Scilab output, external fixture, archive, or binary may be committed.
+  - Validation status remains research_required until source equivalence/reference evidence is added.
+limits:
+  - Not certification, flight readiness, mission readiness, operational approval, habitat-safety approval, medical-use approval, or regulated-use approval.
+  - Not a blanket approval for all M07 represented rows.
+  - Not external Scilab equivalence evidence and not M07 release certification.
+notes: Stage 4 handoff seed for adding more equations safely; bounded to M00 vector algebra and blocked from any readiness/status upgrade without future evidence.
