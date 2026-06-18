@@ -2,9 +2,9 @@
 
 Session: **C2 — Stage 5 M07 formula-family classifier dataset**.
 
-Classification: **ready_for_live_intake** as quarantined planning metadata, not implementation approval.
+Historical intake classification: **ready_for_live_intake** as quarantined planning metadata, not implementation approval. Current status: deployed/completed as research/planning metadata; explicit C2 DATA_REGISTRY coverage is closed by the Stage 5 status reconciliation.
 
-This handoff classifies the remaining M07 backlog from `PORT_STATUS_RELEASE_GATE.csv` using metadata fields only: milestone, Rust alias, Scilab alias, source-file locator, module, and release-gate status columns. It does not copy raw M07 source text, comments, control flow, generated code, Scilab output, archives, binaries, or fixtures. It does not add public APIs or implementation code.
+This handoff classifies the remaining M07 backlog from `PORT_STATUS_RELEASE_GATE.csv` using metadata fields only: milestone, Rust alias, source-file locator, module, and release-gate status columns. It does not copy raw M07 implementation text, comments, control-flow detail, generated code, external runtime output, archives, binaries, or fixtures. It does not add public APIs or implementation code.
 
 ## Inputs reviewed
 
@@ -17,20 +17,21 @@ This handoff classifies the remaining M07 backlog from `PORT_STATUS_RELEASE_GATE
 | Rows classified in this handoff | **1333** |
 | Scilab equivalence source jobs available as metadata | 188 source-file-level jobs |
 
-## Current repo baseline from uploaded snapshot
+## Current repo baseline from live main
 
-The aggregate row-count inventory in `validation/equation_inventory.tsv` matches the governed Stage 4 baseline by count:
+The classifier is planning metadata and does not change governed equation-inventory counts. Live verifier counts at this reconciliation are:
 
-| Count key | Uploaded snapshot aggregate |
+| Count key | Live main value |
 | --- | ---: |
-| executable_research_equations | 128 |
-| metadata_only_candidates | 17 |
-| external_m07_backlog_rows | 1333 |
-| validation_card_only_records | 38 |
-| helper_algorithms | 89 |
-| source_registry_seeds, file count | 36 |
+| executable_research_equations | 138 |
+| metadata_only_candidates | 27 |
+| external_m07_backlog_rows | 1323 |
+| validation_cards | 44 |
+| source_registry_seeds | 42 |
+| validation_card_only_records | 44 |
+| helper_algorithms | 138 |
 
-Live deployment must keep these counts as classifier-source accounting only; governed equation-inventory counts remain controlled by `validation/equation_inventory.tsv`.
+C2 does not remove classifier rows from `external_m07_backlog_rows`, does not promote source or validation status, and remains research/planning metadata.
 
 ## Counts by formula family
 
@@ -138,11 +139,13 @@ Live deployment must keep these counts as classifier-source accounting only; gov
 
 `ready_for_live_intake`
 
-Reason: the output is documentation/data inventory only, uses quarantined source metadata locators rather than source expressions, and makes no validation, certification, operational, flight, mission, or regulated-use claims. The deployment agent must apply this serially, run repository checks, and review classifier heuristics before merging.
+Reason: the output is documentation/data inventory only, uses quarantined source metadata locators rather than source expressions, and makes no validation, certification, operational, flight, mission, or regulated-use claims. Low-risk classification is prioritization metadata only and is not implementation approval.
 
 
 ## Live Stage 5 C2 deployment notes
 
-This repository copy is the classifier dataset only. It preserves quarantined source metadata locators and keeps M07 rows in planning status. It does not import source expressions, Scilab output, raw source archives, fixtures, generated Rust, public APIs, or validation-status promotion.
+This repository copy is the classifier dataset only. It preserves quarantined source metadata locators and keeps M07 rows in planning status. It does not import source implementation text, external runtime output, raw source archives, fixtures, generated Rust, public APIs, or validation-status promotion.
 
-The authorized deterministic locator normalization rule for this deployment was: replace a `source_file_locator` prefix beginning exactly `/mnt/data/scilab_extracted/` with `source_scilab_extracted_locator/` and leave all other locator values unchanged. Live checks found zero `/mnt/data/scilab_extracted/` locators in the three deployed CSV files, so no data-cell replacements were needed. Existing logical `source_scilab/` and `source_scilab_extracted_locator/` values were left unchanged.
+The deployed dataset contains 1,333 classifier rows. The core classifier contains exactly 115 `source_file_locator` values beginning with `source_scilab_extracted_locator/`, zero obsolete absolute extraction prefixes, and zero preparation-machine absolute paths. Existing logical `source_scilab/` and `source_scilab_extracted_locator/` values are logical metadata locators, not imported source.
+
+The three CSV files have explicit DATA_REGISTRY coverage after the Stage 5 status reconciliation: the core classifier, low-risk derivative, and blocked/high-risk derivative each carry an exact SHA256 entry. DATA_MANIFEST.toml remains thin-film-specific and is not used to cover C2.

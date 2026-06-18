@@ -6,21 +6,30 @@ AeroCodex is research/preliminary-design software. These outputs are local softw
 
 ## Script output shape
 
-Both scripts print a short banner, the repository root, Rust tool versions when available, and numbered check steps. A typical clean run has this structure:
+The Bash and PowerShell scripts print a short banner, the repository root, Rust tool versions when available, the selected Python command, the current Git commit when available, and fifteen numbered check steps. A typical clean run has this structure:
 
 ```text
 [friend-test] AeroCodex local friend-test package
 [friend-test] repository root: <path-to-clone>
 [friend-test] rustc: <version>
 [friend-test] cargo: <version>
-[friend-test] step 1/8: cargo fmt --all -- --check
-[friend-test] step 2/8: cargo clippy --workspace --all-targets --all-features -- -D warnings
-[friend-test] step 3/8: cargo test --workspace --all-features
-[friend-test] step 4/8: cargo run -p xtask -- verify --all
-[friend-test] step 5/8: cargo run -p xtask -- verify equation-inventory
-[friend-test] step 6/8: cargo run -p xtask -- verify formula-vault
-[friend-test] step 7/8: cargo run -p xtask -- dependency-policy
-[friend-test] step 8/8: cargo doc --workspace --all-features --no-deps
+[friend-test] python command: <python-or-python3> (<version>)
+[friend-test] git commit: <short-sha>
+[friend-test] step 1/15: git status --short
+[friend-test] step 2/15: git diff --check
+[friend-test] step 3/15: sha256sum -c checksums/SHA256SUMS
+[friend-test] step 4/15: cargo fmt --all -- --check
+[friend-test] step 5/15: cargo check --workspace --all-targets --all-features
+[friend-test] step 6/15: cargo clippy --workspace --all-targets --all-features -- -D warnings
+[friend-test] step 7/15: cargo test --workspace --all-targets --all-features
+[friend-test] step 8/15: cargo run -p xtask -- verify --all
+[friend-test] step 9/15: cargo run -p xtask -- dependency-policy
+[friend-test] step 10/15: <python> scripts/verify_thinfilm_artifact.py
+[friend-test] step 11/15: <python> nomenclature/tooling/aerocodex_nom_lint.py --root nomenclature
+[friend-test] step 12/15: <python> nomenclature/tooling/aerocodex_acronym_inventory.py --repo-root . --nomenclature-root nomenclature --check-new --baseline nomenclature/generated/current_repo_acronym_baseline.json
+[friend-test] step 13/15: <python> nomenclature/tooling/aerocodex_terminology.py --root nomenclature export-jsonl --output nomenclature/generated/terminology/index.jsonl
+[friend-test] step 14/15: git diff --exit-code nomenclature/generated/terminology/index.jsonl
+[friend-test] step 15/15: RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
 [friend-test] completed all requested local checks
 ```
 
@@ -30,37 +39,46 @@ If a step fails, the scripts stop at that step and return a non-zero exit code. 
 
 | Step | Expected local outcome | What it means |
 |---|---|---|
+| `git status --short` | exits successfully and should print no tracked changes in a clean clone | The working tree has no unexpected tracked edits before tests. |
+| `git diff --check` | exits successfully | No whitespace errors are present in tracked diffs. |
+| `sha256sum -c checksums/SHA256SUMS` | exits successfully | Governed checksum-listed files match the manifest. |
 | `cargo fmt --all -- --check` | exits successfully | Rust formatting matches the checked-in style. |
+| `cargo check --workspace --all-targets --all-features` | exits successfully | The workspace type-checks under all targets/features. |
 | `cargo clippy --workspace --all-targets --all-features -- -D warnings` | exits successfully | Lints configured as warnings did not fire for the workspace under the selected toolchain. |
-| `cargo test --workspace --all-features` | exits successfully | Workspace tests passed under the selected toolchain and platform. |
+| `cargo test --workspace --all-targets --all-features` | exits successfully | Workspace tests passed under the selected toolchain and platform. |
 | `cargo run -p xtask -- verify --all` | exits successfully | The configured governance verifiers completed as a group. |
-| `cargo run -p xtask -- verify equation-inventory` | exits successfully | Inventory rows and counts agree with the current repo state. |
-| `cargo run -p xtask -- verify formula-vault` | exits successfully | Formula-vault metadata records pass the current metadata gate. |
 | `cargo run -p xtask -- dependency-policy` | exits successfully | The workspace did not add dependency tokens blocked by the current policy. |
-| `cargo doc --workspace --all-features --no-deps` | exits successfully | Workspace documentation builds without pulling dependency docs. |
+| `python scripts/verify_thinfilm_artifact.py` | exits successfully, or `python3` fallback succeeds when bare `python` is unavailable | Thin-film governed artifact checks pass. |
+| `python nomenclature/tooling/aerocodex_nom_lint.py --root nomenclature` | exits successfully | Nomenclature policy lint passes. |
+| `python nomenclature/tooling/aerocodex_acronym_inventory.py --repo-root . --nomenclature-root nomenclature --check-new --baseline nomenclature/generated/current_repo_acronym_baseline.json` | exits successfully | New acronym inventory entries remain controlled. |
+| `python nomenclature/tooling/aerocodex_terminology.py --root nomenclature export-jsonl --output nomenclature/generated/terminology/index.jsonl` | exits successfully | Terminology export regenerates. |
+| `git diff --exit-code nomenclature/generated/terminology/index.jsonl` | exits successfully | Regenerated terminology matches the checked-in file. |
+| `RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps` | exits successfully | Workspace documentation builds with warnings denied. |
 
 ## Current governed inventory snapshot
 
-This Session G branch reports these live counts from `cargo run -p xtask -- verify equation-inventory` after applying the friend-test documentation package:
+These current-main counts come from the governed equation-inventory verifier and include Session G plus later Stage 5 work:
 
-| Inventory class | Live count after Session G |
-|---|---:|
-| Executable research equations | 138 |
-| Metadata-only formula-vault candidates | 27 |
-| External M07 backlog rows | 1,323 |
-| Validation cards | 42 |
-| Source-registry seeds | 40 |
-| Validation-card-only records | 42 |
-| Helper algorithms | 138 |
+| Inventory class | Current main count | Meaning |
+|---|---:|---|
+| Executable research equations | 138 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
+| Metadata-only formula-vault candidates | 27 | Formula-vault candidate metadata records; not implementations by themselves. |
+| External M07 backlog rows | 1,323 | Registered external M07 represented rows not yet selected as formula-vault candidates. C2 classification does not remove rows from this backlog. |
+| Validation cards | 44 | Conservative validation/governance records. They are not certification evidence. |
+| Source-registry seeds | 42 | Source/governance traceability seeds. |
+| Validation-card-only records | 44 | Metadata records, not formula implementations. |
+| Helper algorithms | 138 | Support routines not counted as executable research equations. |
 
-If another handoff lands before this branch merges, deployment should recompute the live counts. The Session G deltas are `+0` executable research equations, `+0` formula-vault candidates, `+0` external M07 backlog rows, `+1` validation card, `+1` source-registry seed, `+1` validation-card-only record, and `+0` helper algorithms.
+The historical Session G deltas were `+0` executable research equations, `+0` formula-vault candidates, `+0` external M07 backlog rows, `+1` validation card, `+1` source-registry seed, `+1` validation-card-only record, and `+0` helper algorithms. The absolute values above are no longer the old Session G branch-local counts.
 
 ## Expected blocked states
 
 A clean friend-test run still leaves blocked and research-only items blocked. In particular:
 
-- `wrap2pi` remains blocked pending endpoint-behavior policy;
+- `wrap2pi` has contract/test metadata but executable/public runtime implementation remains blocked pending endpoint-behavior policy;
 - `app_resolve_coplanar` remains blocked pending least-squares, rank, and tolerance policy;
+- Orekit O2a exists, while O2b, O2c, and O2d remain incomplete;
+- BioSim B2a, B2b, and B2c remain incomplete;
 - formula-vault candidates remain metadata-only unless a later chunk explicitly implements and validates them;
 - validation cards remain conservative records and do not prove implementation or validation by themselves.
 

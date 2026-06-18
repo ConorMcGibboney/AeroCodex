@@ -13,25 +13,23 @@ The public alpha friend-test package is intended to answer four narrow questions
 3. Do testers see the project’s research-only and blocked status before using any formula?
 4. Can failures be reported in a reproducible way without importing external source material or generated artifacts?
 
-## Live counts for Session G deployment
+## Current main governed counts
 
-The live Session G branch reports the following governed counts from `cargo run -p xtask -- verify equation-inventory`. These counts must be recomputed if another handoff lands before this branch merges.
+The current main counts below are verifier-derived and include Session G plus later Stage 5 work. Session G itself historically added `+1` validation card, `+1` source-registry seed, `+1` validation-card-only record, and `+0` to the other four governed counters; the absolute values here are the current-main values, not the old Session G branch-local snapshot.
 
-| Inventory class | Live count after Session G | Session G delta | Meaning |
-|---|---:|---:|---|
-| Executable research equations | 138 | +0 | Public Rust research/preliminary-design equation kernels. |
-| Metadata-only formula-vault candidates | 27 | +0 | Candidate metadata records; not implementations by themselves. |
-| External M07 backlog rows | 1,323 | +0 | Quarantined represented rows not selected into formula-vault metadata. |
-| Validation cards | 42 | +1 | Conservative validation/governance records. |
-| Source-registry seeds | 40 | +1 | Source/governance traceability records. |
-| Validation-card-only records | 42 | +1 | Metadata records, not formula implementations. |
-| Helper algorithms | 138 | +0 | Support routines not counted as executable research equations. |
-
-Session G does not add Rust equations, formula-vault candidates, external source imports, crates, dependencies, or public application programming interfaces. It adds friend-test docs, simple local scripts, one validation card, one source-registry seed, and one equation-inventory validation-card-only row.
+| Inventory class | Current main count | Meaning |
+|---|---:|---|
+| Executable research equations | 138 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
+| Metadata-only formula-vault candidates | 27 | Formula-vault candidate metadata records; not implementations by themselves. |
+| External M07 backlog rows | 1,323 | Registered external M07 represented rows not yet selected as formula-vault candidates. C2 classification does not remove rows from this backlog. |
+| Validation cards | 44 | Conservative validation/governance records. They are not certification evidence. |
+| Source-registry seeds | 42 | Source/governance traceability seeds. |
+| Validation-card-only records | 44 | Metadata records, not formula implementations. |
+| Helper algorithms | 138 | Support routines not counted as executable research equations. |
 
 ## Public alpha lanes
 
-| Lane | User-visible artifact | Current readiness label | Blocked from promotion because |
+| Lane | User-visible artifact | Current label | Blocked from promotion because |
 |---|---|---|---|
 | Local clone checks | `docs/testing/friend_test_quickstart.md`, `scripts/friend_test_local.sh`, `scripts/friend_test_local.ps1` | research_required | Local checks are software gates only and do not prove physical validity or safety. |
 | Expected-output guide | `docs/testing/friend_test_expected_output.md` | research_required | Output varies by toolchain and is not validation evidence. |
@@ -43,10 +41,11 @@ Session G does not add Rust equations, formula-vault candidates, external source
 
 ## Known blocked public-facing items
 
-- `wrap2pi` remains blocked for a dedicated endpoint-behavior policy and test-vector chunk.
+- `wrap2pi` contract/test metadata exists, but executable/public runtime implementation remains blocked pending a separate endpoint-behavior decision.
 - `app_resolve_coplanar` remains blocked for least-squares, rank, singularity, and tolerance policy.
-- BioSim-style clean-room primitives remain research-only and are not a habitat-control system.
-- Orekit-related material remains reference-oracle planning only and is not copied into AeroCodex.
+- Orekit v3 O2a exists; O2b, O2c, and O2d remain incomplete.
+- BioSim docs/contracts and clean-room primitives remain research-only and incomplete as a full engine.
+- Session F provides Orekit reference-oracle planning metadata only and does not provide certified Orekit parity.
 - M07 material remains quarantined source material and is not bulk-imported.
 
 ## Minimum friend-test acceptance criteria
@@ -61,7 +60,3 @@ A public friend-test report is useful if it includes:
 - whether a root `Cargo.lock` appeared after the run.
 
 A clean report is still not a safety or certification claim.
-
-## Deployment-agent refresh rule
-
-Before merging this dashboard, the deployment agent should run the live inventory verifier and refresh any absolute counts affected by earlier serial handoffs. If the live baseline differs again before merge, keep the Session G deltas and update only the absolute values that the verifier proves.

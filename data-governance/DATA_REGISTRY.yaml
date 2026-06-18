@@ -1,5 +1,5 @@
-# AeroCodex Stage 4 data/source governance registry.
-# External Stage 4 source archives use logical external://stage4/... paths so public
+# AeroCodex data/source governance registry.
+# External source archives use logical external://stage4/... paths so public
 # repo files do not depend on user-specific local Windows paths.
 artifacts:
   - id: in_repo.data_manifest
@@ -8,7 +8,7 @@ artifacts:
     artifact_kind: repo_file_manifest
     origin: current_repo
     license: MIT OR Apache-2.0 with source-material attribution boundaries
-    sha256: f7ffdd3809db4b96d457ec4983602ac778a2502ba65a49b8cf1e11958388e63b
+    sha256: 78fb726c0eb781674a201e82f7c29c03495257db918ffe336fe09d4455a4c2bb
     hash_status: sha256_verified_current_repo_file
     allowed_use: in-repository provenance and thin-film source manifest tracking only
     bundling_decision: bundled repo-relative governance artifact; not an external-code import
@@ -198,6 +198,48 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: refresh only when a new M07 bundle is supplied and re-hashed
     notes: Bundle reports 1,350 represented function rows and 188 Scilab equivalence jobs; do not overwrite crates/aero-codex-astrodynamics and do not certify until full release gates pass.
+  - id: stage5.c2.m07_formula_family_classifier.core.2026_06_18
+    title: M07 formula-family classifier core metadata
+    local_path: docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier.csv
+    artifact_kind: repo_file_classifier_research_metadata
+    origin: Stage 5 Session C2 classifier dataset derived from registered artifact stage4.m07_rust_port_v14.2026_06_15
+    license: MIT OR Apache-2.0 metadata with M07 source-boundary restrictions
+    sha256: 0d647c56f19284f58c147f1fab310df5ab9e3f625ff1c86ff70af48f63ab7461
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: formula-family planning, prioritization, and review only
+    bundling_decision: bundled repo-relative metadata only; no source/code/fixture import and no public API promotion
+    validation_status: repository_tracked_research_data
+    owner: AeroCodex maintainers
+    update_cadence: refresh only through explicit C2/classifier governance chunks
+    notes: Research_required planning metadata for 1,333 classifier rows; low-risk labels are not implementation approval, classification does not reduce external_m07_backlog_rows, and no certification, flight, mission, operational, habitat, medical, parity, or regulated-use claim is made.
+  - id: stage5.c2.m07_low_risk_candidate_derivative.2026_06_18
+    title: M07 low-risk candidate derivative metadata
+    local_path: docs/source_intake/m07_formula_family_classifier/low_risk_candidate_shortlist.csv
+    artifact_kind: repo_file_classifier_research_metadata_derivative
+    origin: Stage 5 Session C2 derivative of the M07 formula-family classifier tied to stage4.m07_rust_port_v14.2026_06_15
+    license: MIT OR Apache-2.0 metadata with M07 source-boundary restrictions
+    sha256: 878e08336221e5e1143cb9c0f2b29c0bb4ee8f2a71cfb86201903f028792df9b
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: formula-family planning, prioritization, and review only
+    bundling_decision: bundled repo-relative metadata only; no source/code/fixture import and no public API promotion
+    validation_status: repository_tracked_research_data
+    owner: AeroCodex maintainers
+    update_cadence: refresh only through explicit C2/classifier governance chunks
+    notes: Research_required 154-row derivative of the core classifier; low-risk classification is prioritization metadata only, not implementation approval or validation-status promotion.
+  - id: stage5.c2.m07_blocked_high_risk_derivative.2026_06_18
+    title: M07 blocked/high-risk derivative metadata
+    local_path: docs/source_intake/m07_formula_family_classifier/blocked_high_risk_rows.csv
+    artifact_kind: repo_file_classifier_research_metadata_derivative
+    origin: Stage 5 Session C2 derivative of the M07 formula-family classifier tied to stage4.m07_rust_port_v14.2026_06_15
+    license: MIT OR Apache-2.0 metadata with M07 source-boundary restrictions
+    sha256: 66af81dac18648393bbf28b1113b2e22595f98669172c1f6329fe89c6bff3162
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: formula-family planning, prioritization, and review only
+    bundling_decision: bundled repo-relative metadata only; no source/code/fixture import and no public API promotion
+    validation_status: repository_tracked_research_data
+    owner: AeroCodex maintainers
+    update_cadence: refresh only through explicit C2/classifier governance chunks
+    notes: Research_required 594-row derivative covering blocked and high-risk classifier rows; records policy blockers only and makes no source, validation, parity, safety, or operational promotion.
   - id: stage4.biosim_rs_bootstrap.2026_06_15
     title: BioSim-RS GPL-boundaried Rust scaffold
     local_path: external://stage4/aerocodex-biosim-rs-bootstrap.zip
