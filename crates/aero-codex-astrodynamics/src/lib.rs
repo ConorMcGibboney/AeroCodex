@@ -14,6 +14,10 @@
 //! `research_required` until exact source editions, equation identifiers,
 //! reference examples, constants, and tolerances are reviewed.
 
+pub mod frames;
+pub mod state;
+pub mod time;
+
 use aero_codex_core::{validation, AeroError, AeroResult, VerificationRecord};
 use std::f64::consts::PI;
 

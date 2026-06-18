@@ -1605,3 +1605,322 @@ records:
     confidence: medium
   notes:
   - Candidate record added for Stage 4 planning and governance docs.
+- acronym_id: acx:acr:astrodynamics:ecef:v1
+  token: ECEF
+  preferred_token: ECEF
+  expansion: Earth-Centered, Earth-Fixed
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - reference_frames
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - Earth-centered Earth-fixed
+    - terrestrial frame
+    - ITRF
+    - frame label
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: ECEF is used as an Earth-fixed frame label in O2a astrodynamics frame contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:eci:v1
+  token: ECI
+  preferred_token: ECI
+  expansion: Earth-Centered Inertial
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - reference_frames
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - Earth-centered inertial
+    - mean equator
+    - frame label
+    - orbit state
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: ECI is used as a generic inertial Earth-centered frame label in O2a astrodynamics records.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:gcrf:v1
+  token: GCRF
+  preferred_token: GCRF
+  expansion: Geocentric Celestial Reference Frame
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - reference_frames
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - geocentric celestial
+    - reference frame
+    - frame label
+    - Orekit
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: GCRF is used as a label-only reference-frame term in O2a astrodynamics contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:gps:v1
+  token: GPS
+  preferred_token: GPS
+  expansion: Global Positioning System
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - time_scales
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - global positioning
+    - time scale
+    - time label
+    - GNSS
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: GPS is used as a placeholder time-scale label in O2a astrodynamics time contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:itrf:v1
+  token: ITRF
+  preferred_token: ITRF
+  expansion: International Terrestrial Reference Frame
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - reference_frames
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - terrestrial reference frame
+    - Earth orientation
+    - ECEF
+    - frame label
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: ITRF is used as a label-only terrestrial reference-frame term in O2a astrodynamics contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:rtn:v1
+  token: RTN
+  preferred_token: RTN
+  expansion: Radial-Transverse-Normal
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - local_orbital_frames
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - radial transverse normal
+    - local orbital
+    - frame label
+    - orbit geometry
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: RTN is used as a local-orbital frame label in O2a astrodynamics contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:tai:v1
+  token: TAI
+  preferred_token: TAI
+  expansion: International Atomic Time
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - time_scales
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - atomic time
+    - time scale
+    - epoch label
+    - seconds
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: TAI is used as a time-scale label in O2a astrodynamics time contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:tdb:v1
+  token: TDB
+  preferred_token: TDB
+  expansion: Barycentric Dynamical Time
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - time_scales
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - barycentric dynamical
+    - time scale
+    - epoch label
+    - relativistic
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: TDB is used as a placeholder time-scale label in O2a astrodynamics time contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:teme:v1
+  token: TEME
+  preferred_token: TEME
+  expansion: True Equator, Mean Equinox
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - reference_frames
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - true equator
+    - mean equinox
+    - SGP4
+    - frame label
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: TEME is used as a label-only reference-frame term in O2a astrodynamics contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
+- acronym_id: acx:acr:astrodynamics:tt:v1
+  token: TT
+  preferred_token: TT
+  expansion: Terrestrial Time
+  namespace: acronym
+  domains:
+  - astrodynamics
+  - time_scales
+  - source_traceability
+  status: candidate
+  source:
+    authority: AeroCodex Stage 5 orbit-reference v3 O2a nomenclature reconciliation
+    source_id: acx:source:current_repo_scan:v1
+    authority_rank: repository_evidence
+    evidence: O2a astrodynamics frame/time/state primitives introduce this durable label in guarded source code.
+  first_use:
+    requires_definition: true
+    allowed_after_definition: true
+  disambiguation:
+    signals:
+    - terrestrial time
+    - time scale
+    - epoch label
+  ai:
+    inject_when:
+    - token_detected
+    - domain_match
+    summary: TT is used as a time-scale label in O2a astrodynamics time contracts.
+    confidence: medium
+  notes:
+  - Candidate record added for O2a bounded gate reconciliation; no transform, propagation, or time-conversion implementation is implied.
