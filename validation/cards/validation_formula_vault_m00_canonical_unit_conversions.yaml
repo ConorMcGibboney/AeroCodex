@@ -1,0 +1,42 @@
+id: validation.formula_vault.m00_canonical_unit_conversions
+name: Formula-vault M00 canonical unit conversion equation expansion
+category: validation
+status: research_required
+source:
+  id: source.formula_vault.m00_canonical_unit_conversions.research_required
+  status: research_required
+assumptions:
+  - The slice is limited to finite scalar canonical unit construction and conversion helpers.
+  - Unit scales are caller supplied, finite, and strictly positive.
+  - The implementation uses independently written scalar algebra and does not copy M07 source text, comments, control flow, generated code, or constants tables.
+  - The M07 artifact remains release-candidate context and is not promoted as certified evidence.
+domain:
+  discipline: astrodynamics
+  scope: M00 canonical unit scalar conversions for research/preliminary-design use only
+  exclusions:
+    - wrap2pi endpoint policy
+    - least-squares coplanar resolution
+    - compact civil-time parsing
+    - copied external constants tables
+    - no external Scilab equivalence claims and no certification claims
+inputs:
+  - finite scalar gravitational parameter when constructing canonical units
+  - finite strictly positive distance and time unit scales
+  - finite signed scalar distances, times, and speeds for conversion helpers
+outputs:
+  - canonical time unit
+  - canonical speed unit
+  - canonical gravitational parameter
+  - scalar distance, time, and speed conversions to and from canonical units
+tests:
+  - cargo test -p aero-codex-astrodynamics m00_canonical_unit
+  - cargo test --workspace --all-features
+  - cargo run -p xtask -- verify formula-vault
+  - cargo run -p xtask -- verify equation-inventory
+failure_modes:
+  - non-finite input is accepted instead of rejected
+  - zero or negative unit scale is accepted instead of rejected
+  - canonical time-unit square-root branch is not the positive branch
+  - inverse conversion pairs fail to round-trip within tolerance
+  - formula-vault candidate counts or equation-inventory counts drift from the added metadata and code
+notes: Research-required formula-vault expansion and implementation-readiness card only; no certification, flight readiness, mission readiness, operational approval, medical-use approval, habitat-safety approval, regulated-use approval, external Scilab parity, or M07 release certification is claimed.

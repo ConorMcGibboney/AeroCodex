@@ -1,0 +1,169 @@
+# Stage 4 Chunk 8C formula-vault candidate metadata slice.
+#
+# Metadata plus implementation-handoff scope only: this file has no copied M07
+# source, no generated Rust, no Scilab output, no external fixture, no
+# certification evidence, no flight-readiness claim, no mission-readiness claim,
+# no operational approval, and no regulated-use approval.
+
+schema_version: formula_vault_candidate_slice.v1
+record_status: metadata_only_research_required
+
+slice:
+  id: formula_vault.m00_canonical_unit_conversions.v1
+  title: M00 canonical unit scalar conversion candidate expansion
+  lifecycle_label: equation_contract_drafted
+  stage4_chunk: stage4_chunk8c_m00_canonical_unit_conversion_expansion
+  public_api_surface: blocked_research_kernel_only_pending_deployment_agent_review
+  implementation_surface: bounded_astrodynamics_crate_research_kernel_handoff
+  notes:
+    - Selects scalar canonical-unit formulas that avoid frame, epoch, solver, table, and branch-cut dependencies.
+    - Does not include wrap2pi, app_resolve_coplanar, string-dispatch unit APIs, external data tables, least-squares solvers, or iterative methods.
+    - Uses caller-supplied positive unit scales for implementation to avoid importing M07 hard-coded constant tables.
+    - Source rows are used as locators only; independent scalar formulas and analytical tests define the AeroCodex contract.
+
+sources:
+  source_artifact_ids:
+    - stage4.m07_rust_port_v14.2026_06_15
+  source_archive_sha256: 15b1ca3a39267187167c43ea1228f28fd4736c4456f65d072dc42a32a7b19190
+  source_registry_seed_id: source.formula_vault.m00_canonical_unit_conversions.research_required
+  validation_card_id: validation.formula_vault.m00_canonical_unit_conversions
+  human_review_locators:
+    release_gate_rows:
+      - row_number_1_based_with_header: 6
+        rust_function: app_to_due_distance
+        scilab_function: foa_app_ast_app_to_due_distance
+      - row_number_1_based_with_header: 7
+        rust_function: app_from_due_distance
+        scilab_function: foa_app_ast_app_from_due_distance
+      - row_number_1_based_with_header: 8
+        rust_function: app_to_due_velocity
+        scilab_function: foa_app_ast_app_to_due_velocity
+      - row_number_1_based_with_header: 9
+        rust_function: app_from_due_velocity
+        scilab_function: foa_app_ast_app_from_due_velocity
+      - row_number_1_based_with_header: 10
+        rust_function: app_to_tue_time
+        scilab_function: foa_app_ast_app_to_tue_time
+      - row_number_1_based_with_header: 11
+        rust_function: app_from_tue_time
+        scilab_function: foa_app_ast_app_from_tue_time
+      - row_number_1_based_with_header: 12
+        rust_function: app_canonical_units_from_mu_du
+        scilab_function: foa_app_ast_app_canonical_units_from_mu_du
+    excluded_m00_rows:
+      - app_wrap2pi remains blocked for endpoint-policy handling outside this slice.
+      - app_ut_day_fraction remains deferred because its compact civil-time encoding needs a separate input-format contract.
+      - app_constants remains metadata/reference-table context only and is not copied into AeroCodex implementation code.
+      - app_resolve_coplanar remains blocked by least-squares rank and singularity policy.
+    source_file_locator: appendices_scilab_astrodynamics constants conversion source file; exact path retained in the registered M07 release-gate CSV
+  source_boundary:
+    m07_archive_status: external_quarantine_reference_only
+    import_policy: no_bulk_import_no_generated_binary_no_raw_source_no_table_copy_no_external_fixture
+    implementation_policy: independent_scalar_formulas_with_caller_supplied_positive_units
+    validation_status: research_required
+
+formula_contract:
+  formula_ids:
+    - formula_vault.m00.canonical.time_unit_from_mu_du
+    - formula_vault.m00.canonical.speed_unit_from_du_tu
+    - formula_vault.m00.canonical.speed_unit_from_mu_du
+    - formula_vault.m00.canonical.mu_from_units
+    - formula_vault.m00.canonical.distance_to_canonical
+    - formula_vault.m00.canonical.distance_from_canonical
+    - formula_vault.m00.canonical.time_to_canonical
+    - formula_vault.m00.canonical.time_from_canonical
+    - formula_vault.m00.canonical.speed_to_canonical
+    - formula_vault.m00.canonical.speed_from_canonical
+  variables:
+    - mu
+    - distance_unit
+    - time_unit
+    - distance
+    - canonical_distance
+    - time
+    - canonical_time
+    - speed
+    - canonical_speed
+  units:
+    - caller_supplied_consistent_distance_unit
+    - caller_supplied_consistent_time_unit
+    - caller_supplied_consistent_gravitational_parameter_unit
+    - dimensionless_canonical_unit
+  coordinate_frames:
+    - not_frame_dependent
+  time_scales:
+    - not_time_scale_dependent
+  sign_conventions:
+    - unit scales must be finite and strictly positive
+    - scalar values being converted may be finite signed values unless the operation computes a unit scale
+  valid_domain:
+    - finite real scalar inputs only
+    - positive distance_unit when used as a scale
+    - positive time_unit when used as a scale
+    - positive mu when used for canonical unit construction
+  singularities:
+    - zero distance_unit rejected
+    - zero time_unit rejected
+    - zero mu rejected for canonical time or speed construction
+  invalid_regions:
+    - NaN inputs are excluded
+    - positive or negative infinity inputs are excluded
+    - nonpositive unit scales are excluded
+  branch_behavior:
+    - single_branch_scalar_algebra
+    - no angle endpoint policy
+    - no string unit dispatch
+    - no frame or epoch interpretation
+  tolerance_policy:
+    absolute_tolerance: 1.0e-12 for unit-scale deterministic tests
+    relative_tolerance: 1.0e-12 for nonzero analytical identity tests
+    rationale: finite f64 scalar algebra with exact analytical inverse pairs and canonical mu identity
+
+validation_records:
+  required_source_registry_seed: source.formula_vault.m00_canonical_unit_conversions.research_required
+  required_validation_card: validation.formula_vault.m00_canonical_unit_conversions
+  status: research_required
+  status_upgrade_policy: blocked_without_deployment_agent_checks_source_review_equivalence_and_reference_evidence
+
+evidence_plan:
+  rust_gates:
+    - cargo test -p aero-codex-astrodynamics m00_canonical_unit
+    - cargo test --workspace --all-features
+    - cargo run -p xtask -- verify formula-vault
+    - cargo run -p xtask -- verify equation-inventory
+  scilab_equivalence_jobs:
+    - future bounded equivalence job for M00 constants/conversions source locator only
+  sgp4_reference_checks: []
+  analytical_identity_checks:
+    - canonical_time_unit_from_mu_du squared equals distance_unit cubed divided by mu
+    - canonical_speed_unit_from_du_tu equals distance_unit divided by time_unit
+    - canonical_speed_unit_from_mu_du squared equals mu divided by distance_unit
+    - canonical_mu_from_units equals one when time_unit is built from the same mu and distance_unit
+    - distance, time, and speed conversion pairs round-trip for finite signed values
+  reference_oracle_checks:
+    - independent scalar dimensional-analysis review before status upgrade
+  fixture_hashes: []
+  tolerance_rationale: deferred_external_equivalence_pending_future_evidence
+
+promotion_gate:
+  default_state: blocked
+  required_before_promotion:
+    - deployment_agent_confirms_current_main_counts_before_applying_patch
+    - source locators rechecked against the registered M07 archive hash
+    - no copied M07 constants table or raw source text committed
+    - bounded Rust implementation reviewed as independent scalar algebra
+    - unit tests cover every new public research kernel
+    - equation inventory and formula-vault counts are regenerated on live main
+    - validation status remains research_required
+
+non_claims:
+  no_formula_implementation: false
+  no_source_translation: true
+  no_scilab_execution_result: true
+  no_certification_evidence: true
+  no_flight_readiness: true
+  no_mission_readiness: true
+  no_operational_approval: true
+  no_regulated_use_approval: true
+  no_bulk_m07_import: true
+  no_external_parity_claim_without_evidence: true

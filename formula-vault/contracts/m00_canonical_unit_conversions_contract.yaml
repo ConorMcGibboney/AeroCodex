@@ -1,0 +1,157 @@
+# Stage 4 Chunk 8C M00 canonical unit conversion independent contract.
+#
+# Metadata/test-contract plus implementation-handoff scope only. The formulas
+# below are independent scalar dimensional-analysis statements; this file does
+# not copy raw M07 source, generated code, source comments, external fixtures,
+# Scilab output, and does not include any readiness/certification evidence.
+
+schema_version: formula_vault_source_expression_contract.v1
+record_status: metadata_test_contract_research_required
+stage4_chunk: stage4_chunk8c_m00_canonical_unit_conversion_expansion
+source_artifact_id: stage4.m07_rust_port_v14.2026_06_15
+source_boundary:
+  m07_archive_status: external_quarantine_reference_only
+  review_method: source_locator_and_release_gate_row_review_without_committing_raw_source
+  import_policy: no_bulk_import_no_raw_source_no_generated_code_no_external_fixture_no_constant_table_copy
+  validation_status: research_required
+  m07_facts:
+    represented_function_rows: 1350
+    scilab_equivalence_jobs: 188
+    release_status: release_candidate_not_certified
+
+formulas:
+  - formula_id: formula_vault.m00.canonical.time_unit_from_mu_du
+    rust_function_alias: m00_canonical_time_unit_from_mu_du
+    m07_locator_aliases:
+      - app_canonical_units_from_mu_du release-gate row 12
+    independent_mathematical_contract:
+      expression_summary: TU equals square root of distance_unit cubed divided by gravitational parameter
+      domain_summary: mu and distance_unit are finite strictly positive scalars in compatible units
+    output_units: caller_supplied_time_unit
+    branch_or_endpoint_behavior: single branch positive square root
+    invalid_inputs:
+      - nonfinite mu
+      - nonfinite distance_unit
+      - nonpositive mu
+      - nonpositive distance_unit
+    tolerance_policy:
+      absolute_tolerance: 1.0e-12 for normalized tests
+      relative_tolerance: 1.0e-12 for nonzero values
+
+  - formula_id: formula_vault.m00.canonical.speed_unit_from_du_tu
+    rust_function_alias: m00_canonical_speed_unit_from_du_tu
+    m07_locator_aliases:
+      - app_canonical_units_from_mu_du release-gate row 12
+      - app_to_due_velocity release-gate row 8
+      - app_from_due_velocity release-gate row 9
+    independent_mathematical_contract:
+      expression_summary: speed_unit equals distance_unit divided by time_unit
+      domain_summary: distance_unit and time_unit are finite strictly positive scalars
+    output_units: distance_per_time
+    branch_or_endpoint_behavior: single branch positive ratio
+    invalid_inputs:
+      - nonfinite distance_unit
+      - nonfinite time_unit
+      - nonpositive distance_unit
+      - nonpositive time_unit
+
+  - formula_id: formula_vault.m00.canonical.speed_unit_from_mu_du
+    rust_function_alias: m00_canonical_speed_unit_from_mu_du
+    m07_locator_aliases:
+      - app_canonical_units_from_mu_du release-gate row 12
+    independent_mathematical_contract:
+      expression_summary: speed_unit equals square root of mu divided by distance_unit
+      domain_summary: mu and distance_unit are finite strictly positive scalars in compatible units
+    output_units: distance_per_time
+    branch_or_endpoint_behavior: single branch positive square root
+
+  - formula_id: formula_vault.m00.canonical.mu_from_units
+    rust_function_alias: m00_canonical_mu_from_units
+    m07_locator_aliases:
+      - app_canonical_units_from_mu_du release-gate row 12
+    independent_mathematical_contract:
+      expression_summary: canonical_mu equals mu multiplied by time_unit squared divided by distance_unit cubed
+      domain_summary: mu, distance_unit, and time_unit are finite strictly positive scalars in compatible units
+    output_units: dimensionless_canonical_gravitational_parameter
+    branch_or_endpoint_behavior: single branch positive scalar ratio
+
+  - formula_id: formula_vault.m00.canonical.distance_to_canonical
+    rust_function_alias: m00_distance_to_canonical
+    m07_locator_aliases:
+      - app_to_due_distance release-gate row 6
+    independent_mathematical_contract:
+      expression_summary: canonical_distance equals distance divided by positive distance_unit
+      domain_summary: distance is finite signed scalar; distance_unit is finite and strictly positive
+    output_units: canonical_distance_unit
+    branch_or_endpoint_behavior: single branch finite scalar ratio
+
+  - formula_id: formula_vault.m00.canonical.distance_from_canonical
+    rust_function_alias: m00_distance_from_canonical
+    m07_locator_aliases:
+      - app_from_due_distance release-gate row 7
+    independent_mathematical_contract:
+      expression_summary: distance equals canonical_distance multiplied by positive distance_unit
+      domain_summary: canonical_distance is finite signed scalar; distance_unit is finite and strictly positive
+    output_units: caller_supplied_distance_unit
+    branch_or_endpoint_behavior: single branch finite scalar product
+
+  - formula_id: formula_vault.m00.canonical.time_to_canonical
+    rust_function_alias: m00_time_to_canonical
+    m07_locator_aliases:
+      - app_to_tue_time release-gate row 10
+    independent_mathematical_contract:
+      expression_summary: canonical_time equals time divided by positive time_unit
+      domain_summary: time is finite signed scalar; time_unit is finite and strictly positive
+    output_units: canonical_time_unit
+    branch_or_endpoint_behavior: single branch finite scalar ratio
+
+  - formula_id: formula_vault.m00.canonical.time_from_canonical
+    rust_function_alias: m00_time_from_canonical
+    m07_locator_aliases:
+      - app_from_tue_time release-gate row 11
+    independent_mathematical_contract:
+      expression_summary: time equals canonical_time multiplied by positive time_unit
+      domain_summary: canonical_time is finite signed scalar; time_unit is finite and strictly positive
+    output_units: caller_supplied_time_unit
+    branch_or_endpoint_behavior: single branch finite scalar product
+
+  - formula_id: formula_vault.m00.canonical.speed_to_canonical
+    rust_function_alias: m00_speed_to_canonical
+    m07_locator_aliases:
+      - app_to_due_velocity release-gate row 8
+    independent_mathematical_contract:
+      expression_summary: canonical_speed equals speed multiplied by time_unit divided by distance_unit
+      domain_summary: speed is finite signed scalar; unit scales are finite and strictly positive
+    output_units: canonical_speed_unit
+    branch_or_endpoint_behavior: single branch finite scalar product and ratio
+
+  - formula_id: formula_vault.m00.canonical.speed_from_canonical
+    rust_function_alias: m00_speed_from_canonical
+    m07_locator_aliases:
+      - app_from_due_velocity release-gate row 9
+    independent_mathematical_contract:
+      expression_summary: speed equals canonical_speed multiplied by distance_unit divided by time_unit
+      domain_summary: canonical_speed is finite signed scalar; unit scales are finite and strictly positive
+    output_units: caller_supplied_distance_per_time_unit
+    branch_or_endpoint_behavior: single branch finite scalar product and ratio
+
+global_policy:
+  coordinate_frame_dependence: none
+  time_scale_dependence: none
+  external_data_required: false
+  solver_or_iteration_required: false
+  nonfinite_input_policy: reject
+  zero_scale_policy: reject
+  signed_value_policy: finite signed scalar values are allowed for converted distances, times, and speeds
+  tolerance_policy:
+    absolute_tolerance: 1.0e-12
+    relative_tolerance: 1.0e-12
+    rationale: independent scalar identities and inverse-pair tests over finite f64 values
+
+non_claims:
+  - no certification evidence
+  - no flight readiness
+  - no mission readiness
+  - no operational approval
+  - no external Scilab parity claim
+  - no M07 release certification

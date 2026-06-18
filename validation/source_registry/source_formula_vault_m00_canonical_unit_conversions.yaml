@@ -1,0 +1,23 @@
+id: source.formula_vault.m00_canonical_unit_conversions.research_required
+title: Formula-vault M00 canonical unit conversion source seed
+category: validation
+status: research_required
+intended_use:
+  - Register the bounded M00 canonical unit conversion formula-vault expansion as research/preliminary-design metadata.
+  - Tie the implementation slice to the registered M07 release-candidate artifact without copying source text, generated code, Scilab output, or constants tables.
+  - Preserve the distinction between independent scalar analytical tests and pending external equivalence evidence.
+requested_details:
+  - Release-gate rows 6 through 12 for M00 distance, velocity, time, and canonical-unit locators.
+  - Independent scalar contracts for canonical time unit, speed unit, gravitational-parameter canonicalization, and inverse distance/time/speed conversions.
+  - Explicit exclusion of wrap2pi, app_resolve_coplanar, app_ut_day_fraction, and app_constants implementation promotion.
+  - Count-accounting review because ten formula IDs are derived from seven row-level M07 locators.
+implementation_notes:
+  - Allowed implementation path is independently written Rust over finite f64 scalar inputs.
+  - Unit scales must be explicit function inputs rather than copied M07 constants-table values.
+  - No M07 raw source, source comments, generated Rust, Scilab output, external fixture, archive, binary, or local evidence log may be committed.
+  - Validation status remains research_required until source equivalence or independent reference evidence is added.
+limits:
+  - Not certification, flight readiness, mission readiness, operational approval, habitat-safety approval, medical-use approval, or regulated-use approval.
+  - Not a blanket approval for all M07 rows or for string-dispatch unit APIs.
+  - Not external Scilab equivalence evidence and not M07 release certification.
+notes: Stage 4 Chunk 8C source seed for adding canonical scalar unit equations safely; bounded to M00 scalar algebra and blocked from any readiness/status upgrade without future evidence.

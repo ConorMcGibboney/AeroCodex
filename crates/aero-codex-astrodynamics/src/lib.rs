@@ -77,6 +77,46 @@ pub const CODEX_ID_M00_VELOCITY_FROM_ARC_RATE: &str =
 /// Codex identifier for M00 distance between two 3-vectors.
 pub const CODEX_ID_M00_VECTOR_DISTANCE: &str = "formula_vault.m00.vector.distance";
 
+fn codex_id_m00_canonical_time_unit() -> &'static str {
+    "formula_vault.m00.canonical.time_unit_from_mu_du"
+}
+
+fn codex_id_m00_canonical_speed_unit_from_du_tu() -> &'static str {
+    "formula_vault.m00.canonical.speed_unit_from_du_tu"
+}
+
+fn codex_id_m00_canonical_speed_unit_from_mu_du() -> &'static str {
+    "formula_vault.m00.canonical.speed_unit_from_mu_du"
+}
+
+fn codex_id_m00_canonical_mu() -> &'static str {
+    "formula_vault.m00.canonical.mu_from_units"
+}
+
+fn codex_id_m00_distance_to_canonical() -> &'static str {
+    "formula_vault.m00.canonical.distance_to_canonical"
+}
+
+fn codex_id_m00_distance_from_canonical() -> &'static str {
+    "formula_vault.m00.canonical.distance_from_canonical"
+}
+
+fn codex_id_m00_time_to_canonical() -> &'static str {
+    "formula_vault.m00.canonical.time_to_canonical"
+}
+
+fn codex_id_m00_time_from_canonical() -> &'static str {
+    "formula_vault.m00.canonical.time_from_canonical"
+}
+
+fn codex_id_m00_speed_to_canonical() -> &'static str {
+    "formula_vault.m00.canonical.speed_to_canonical"
+}
+
+fn codex_id_m00_speed_from_canonical() -> &'static str {
+    "formula_vault.m00.canonical.speed_from_canonical"
+}
+
 /// Conservative source-registry ID for Phase 0.001 astrodynamics review.
 pub const SOURCE_ID_ASTRODYNAMICS_NASA_JPL_PARAMETERS: &str =
     aero_codex_constants::SOURCE_ID_NASA_JPL_ASTRODYNAMICS_PARAMETERS;
@@ -128,6 +168,13 @@ const FORMULA_VAULT_M00_VECTOR_SOURCES: &[&str] = &[
     SOURCE_ID_FORMULA_VAULT_M00_VECTOR_ALGEBRA,
     SOURCE_ID_ASTRODYNAMICS_TWO_BODY_BASICS,
 ];
+
+fn formula_vault_m00_unit_conversion_sources() -> &'static [&'static str] {
+    &[
+        "source.formula_vault.m00_canonical_unit_conversions.research_required",
+        SOURCE_ID_ASTRODYNAMICS_TWO_BODY_BASICS,
+    ]
+}
 
 /// Conservative traceability metadata for Phase 0.001 astrodynamics helpers.
 #[must_use]
@@ -192,6 +239,56 @@ pub fn verification_record(codex_id: &str) -> Option<VerificationRecord> {
             CODEX_ID_M00_RAD2DEG,
             FORMULA_VAULT_M00_ANGLE_SOURCES,
             "M00 radian-to-degree conversion implemented from independent contract and test vectors; M07 remains release-candidate/not certified.",
+        )),
+        value if value == codex_id_m00_canonical_time_unit() => Some(VerificationRecord::research_required(
+            codex_id_m00_canonical_time_unit(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 canonical time-unit helper implemented from independent scalar unit contract; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_canonical_speed_unit_from_du_tu() => Some(VerificationRecord::research_required(
+            codex_id_m00_canonical_speed_unit_from_du_tu(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 canonical speed-unit helper implemented as distance unit over time unit; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_canonical_speed_unit_from_mu_du() => Some(VerificationRecord::research_required(
+            codex_id_m00_canonical_speed_unit_from_mu_du(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 canonical speed-unit helper implemented from gravitational parameter and distance unit; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_canonical_mu() => Some(VerificationRecord::research_required(
+            codex_id_m00_canonical_mu(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 gravitational-parameter canonicalization helper implemented with explicit unit inputs; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_distance_to_canonical() => Some(VerificationRecord::research_required(
+            codex_id_m00_distance_to_canonical(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 distance-to-canonical scalar conversion implemented with caller-supplied positive distance unit; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_distance_from_canonical() => Some(VerificationRecord::research_required(
+            codex_id_m00_distance_from_canonical(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 distance-from-canonical scalar conversion implemented with caller-supplied positive distance unit; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_time_to_canonical() => Some(VerificationRecord::research_required(
+            codex_id_m00_time_to_canonical(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 time-to-canonical scalar conversion implemented with caller-supplied positive time unit; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_time_from_canonical() => Some(VerificationRecord::research_required(
+            codex_id_m00_time_from_canonical(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 time-from-canonical scalar conversion implemented with caller-supplied positive time unit; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_speed_to_canonical() => Some(VerificationRecord::research_required(
+            codex_id_m00_speed_to_canonical(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 speed-to-canonical scalar conversion implemented with caller-supplied positive distance and time units; source equivalence evidence pending.",
+        )),
+        value if value == codex_id_m00_speed_from_canonical() => Some(VerificationRecord::research_required(
+            codex_id_m00_speed_from_canonical(),
+            formula_vault_m00_unit_conversion_sources(),
+            "M00 speed-from-canonical scalar conversion implemented with caller-supplied positive distance and time units; source equivalence evidence pending.",
         )),
         CODEX_ID_M00_VECTOR_DOT => Some(VerificationRecord::research_required(
             CODEX_ID_M00_VECTOR_DOT,
@@ -343,6 +440,20 @@ fn checked_positive_ratio(
 ) -> AeroResult<f64> {
     let value = numerator / denominator;
     if value.is_finite() && value > 0.0 {
+        Ok(value)
+    } else {
+        Err(numerical_failure(codex_id, reason))
+    }
+}
+
+fn checked_finite_ratio(
+    codex_id: &'static str,
+    reason: &'static str,
+    numerator: f64,
+    denominator: f64,
+) -> AeroResult<f64> {
+    let value = numerator / denominator;
+    if value.is_finite() {
         Ok(value)
     } else {
         Err(numerical_failure(codex_id, reason))
@@ -747,6 +858,190 @@ fn ensure_finite_formula_result(codex_id: &'static str, value: f64) -> AeroResul
     }
 }
 
+/// M00 canonical time unit, `TU = sqrt(DU^3 / mu)`.
+///
+/// `mu` and `distance_unit` must be finite and strictly positive in compatible
+/// physical units. The helper is a scalar canonical-unit research kernel and
+/// does not imply an Earth-specific constant, frame, epoch, or operational model.
+pub fn m00_canonical_time_unit_from_mu_du(mu: f64, distance_unit: f64) -> AeroResult<f64> {
+    validation::ensure_positive("mu", mu)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    let du_squared = checked_product(
+        codex_id_m00_canonical_time_unit(),
+        "canonical time-unit distance squared was not finite",
+        distance_unit,
+        distance_unit,
+    )?;
+    let du_cubed = checked_product(
+        codex_id_m00_canonical_time_unit(),
+        "canonical time-unit distance cubed was not finite",
+        du_squared,
+        distance_unit,
+    )?;
+    let time_squared = checked_positive_ratio(
+        codex_id_m00_canonical_time_unit(),
+        "canonical time-unit squared value was not positive and finite",
+        du_cubed,
+        mu,
+    )?;
+    ensure_positive_finite_result(codex_id_m00_canonical_time_unit(), time_squared.sqrt())
+}
+
+/// M00 canonical speed unit, `speed_unit = DU / TU`.
+pub fn m00_canonical_speed_unit_from_du_tu(distance_unit: f64, time_unit: f64) -> AeroResult<f64> {
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    validation::ensure_positive("time_unit", time_unit)?;
+    checked_positive_ratio(
+        codex_id_m00_canonical_speed_unit_from_du_tu(),
+        "canonical speed unit was not positive and finite",
+        distance_unit,
+        time_unit,
+    )
+}
+
+/// M00 canonical speed unit, `speed_unit = sqrt(mu / DU)`.
+pub fn m00_canonical_speed_unit_from_mu_du(mu: f64, distance_unit: f64) -> AeroResult<f64> {
+    validation::ensure_positive("mu", mu)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    let speed_squared = checked_positive_ratio(
+        codex_id_m00_canonical_speed_unit_from_mu_du(),
+        "canonical speed-unit squared value was not positive and finite",
+        mu,
+        distance_unit,
+    )?;
+    ensure_positive_finite_result(
+        codex_id_m00_canonical_speed_unit_from_mu_du(),
+        speed_squared.sqrt(),
+    )
+}
+
+/// M00 gravitational parameter in canonical units, `mu_c = mu * TU^2 / DU^3`.
+pub fn m00_canonical_mu_from_units(mu: f64, distance_unit: f64, time_unit: f64) -> AeroResult<f64> {
+    validation::ensure_positive("mu", mu)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    validation::ensure_positive("time_unit", time_unit)?;
+    let time_squared = checked_product(
+        codex_id_m00_canonical_mu(),
+        "canonical mu time-unit squared value was not finite",
+        time_unit,
+        time_unit,
+    )?;
+    let numerator = checked_product(
+        codex_id_m00_canonical_mu(),
+        "canonical mu numerator was not finite",
+        mu,
+        time_squared,
+    )?;
+    let du_squared = checked_product(
+        codex_id_m00_canonical_mu(),
+        "canonical mu distance squared was not finite",
+        distance_unit,
+        distance_unit,
+    )?;
+    let du_cubed = checked_product(
+        codex_id_m00_canonical_mu(),
+        "canonical mu distance cubed was not finite",
+        du_squared,
+        distance_unit,
+    )?;
+    checked_positive_ratio(
+        codex_id_m00_canonical_mu(),
+        "canonical mu value was not positive and finite",
+        numerator,
+        du_cubed,
+    )
+}
+
+/// M00 scalar distance conversion to canonical distance units, `x_c = x / DU`.
+pub fn m00_distance_to_canonical(distance: f64, distance_unit: f64) -> AeroResult<f64> {
+    validation::ensure_finite("distance", distance)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    checked_finite_ratio(
+        codex_id_m00_distance_to_canonical(),
+        "distance-to-canonical result was not finite",
+        distance,
+        distance_unit,
+    )
+}
+
+/// M00 scalar distance conversion from canonical distance units, `x = x_c * DU`.
+pub fn m00_distance_from_canonical(canonical_distance: f64, distance_unit: f64) -> AeroResult<f64> {
+    validation::ensure_finite("canonical_distance", canonical_distance)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    checked_product(
+        codex_id_m00_distance_from_canonical(),
+        "distance-from-canonical result was not finite",
+        canonical_distance,
+        distance_unit,
+    )
+}
+
+/// M00 scalar time conversion to canonical time units, `t_c = t / TU`.
+pub fn m00_time_to_canonical(time: f64, time_unit: f64) -> AeroResult<f64> {
+    validation::ensure_finite("time", time)?;
+    validation::ensure_positive("time_unit", time_unit)?;
+    checked_finite_ratio(
+        codex_id_m00_time_to_canonical(),
+        "time-to-canonical result was not finite",
+        time,
+        time_unit,
+    )
+}
+
+/// M00 scalar time conversion from canonical time units, `t = t_c * TU`.
+pub fn m00_time_from_canonical(canonical_time: f64, time_unit: f64) -> AeroResult<f64> {
+    validation::ensure_finite("canonical_time", canonical_time)?;
+    validation::ensure_positive("time_unit", time_unit)?;
+    checked_product(
+        codex_id_m00_time_from_canonical(),
+        "time-from-canonical result was not finite",
+        canonical_time,
+        time_unit,
+    )
+}
+
+/// M00 scalar speed conversion to canonical units, `v_c = v * TU / DU`.
+pub fn m00_speed_to_canonical(speed: f64, distance_unit: f64, time_unit: f64) -> AeroResult<f64> {
+    validation::ensure_finite("speed", speed)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    validation::ensure_positive("time_unit", time_unit)?;
+    let numerator = checked_product(
+        codex_id_m00_speed_to_canonical(),
+        "speed-to-canonical numerator was not finite",
+        speed,
+        time_unit,
+    )?;
+    checked_finite_ratio(
+        codex_id_m00_speed_to_canonical(),
+        "speed-to-canonical result was not finite",
+        numerator,
+        distance_unit,
+    )
+}
+
+/// M00 scalar speed conversion from canonical units, `v = v_c * DU / TU`.
+pub fn m00_speed_from_canonical(
+    canonical_speed: f64,
+    distance_unit: f64,
+    time_unit: f64,
+) -> AeroResult<f64> {
+    validation::ensure_finite("canonical_speed", canonical_speed)?;
+    validation::ensure_positive("distance_unit", distance_unit)?;
+    validation::ensure_positive("time_unit", time_unit)?;
+    let numerator = checked_product(
+        codex_id_m00_speed_from_canonical(),
+        "speed-from-canonical numerator was not finite",
+        canonical_speed,
+        distance_unit,
+    )?;
+    checked_finite_ratio(
+        codex_id_m00_speed_from_canonical(),
+        "speed-from-canonical result was not finite",
+        numerator,
+        time_unit,
+    )
+}
+
 /// M00 3-vector dot product, `a · b`.
 pub fn m00_vector_dot(a: [f64; 3], b: [f64; 3]) -> AeroResult<f64> {
     let a = ensure_vector3_finite("a", a)?;
@@ -936,6 +1231,53 @@ mod tests {
     fn m00_angle_conversions_reject_nonfinite_inputs() {
         assert!(m00_degrees_to_radians(f64::NAN).is_err());
         assert!(m00_radians_to_degrees(f64::INFINITY).is_err());
+    }
+
+    #[test]
+    fn m00_canonical_unit_conversions_match_contract_vectors() {
+        let mu = 398_600.0;
+        let du = 10_000.0;
+        let tu = m00_canonical_time_unit_from_mu_du(mu, du).unwrap();
+
+        assert_close(tu, 1583.9131076432109, 1.0e-9);
+        assert_close(
+            m00_canonical_speed_unit_from_du_tu(du, tu).unwrap(),
+            m00_canonical_speed_unit_from_mu_du(mu, du).unwrap(),
+            1.0e-12,
+        );
+        assert_close(
+            m00_canonical_mu_from_units(mu, du, tu).unwrap(),
+            1.0,
+            1.0e-15,
+        );
+
+        assert_close(m00_distance_to_canonical(25_000.0, du).unwrap(), 2.5, 0.0);
+        assert_close(m00_distance_from_canonical(2.5, du).unwrap(), 25_000.0, 0.0);
+        assert_close(m00_time_to_canonical(2.0 * tu, tu).unwrap(), 2.0, 0.0);
+        assert_close(m00_time_from_canonical(2.0, tu).unwrap(), 2.0 * tu, 0.0);
+        assert_close(
+            m00_speed_to_canonical(2.0 * du / tu, du, tu).unwrap(),
+            2.0,
+            1.0e-15,
+        );
+        assert_close(
+            m00_speed_from_canonical(2.0, du, tu).unwrap(),
+            2.0 * du / tu,
+            1.0e-12,
+        );
+    }
+
+    #[test]
+    fn m00_canonical_unit_conversions_reject_invalid_inputs() {
+        assert!(m00_canonical_time_unit_from_mu_du(0.0, 1.0).is_err());
+        assert!(m00_canonical_time_unit_from_mu_du(1.0, 0.0).is_err());
+        assert!(m00_canonical_speed_unit_from_du_tu(1.0, f64::NAN).is_err());
+        assert!(m00_canonical_speed_unit_from_mu_du(f64::INFINITY, 1.0).is_err());
+        assert!(m00_canonical_mu_from_units(1.0, -1.0, 1.0).is_err());
+        assert!(m00_distance_to_canonical(f64::NAN, 1.0).is_err());
+        assert!(m00_time_from_canonical(1.0, 0.0).is_err());
+        assert!(m00_speed_to_canonical(1.0, 0.0, 1.0).is_err());
+        assert!(m00_speed_from_canonical(f64::INFINITY, 1.0, 1.0).is_err());
     }
 
     #[test]

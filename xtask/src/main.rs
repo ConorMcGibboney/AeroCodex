@@ -221,7 +221,7 @@ fn m07_represented_function_rows() -> usize {
 }
 
 fn governed_executable_research_equation_count() -> usize {
-    128
+    138
 }
 
 fn required_status_vocabulary_names() -> &'static [&'static str] {
