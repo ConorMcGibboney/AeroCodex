@@ -343,6 +343,19 @@ mod tests {
     }
 
     #[test]
+    fn load_factor_is_even_and_increases_with_bank_magnitude() {
+        let mut previous = load_factor_level_turn(Angle::from_degrees(0.0)).unwrap();
+        for bank_degrees in [5.0, 15.0, 30.0, 45.0, 60.0, 75.0] {
+            let positive = load_factor_level_turn(Angle::from_degrees(bank_degrees)).unwrap();
+            let negative = load_factor_level_turn(Angle::from_degrees(-bank_degrees)).unwrap();
+
+            assert_close(positive, negative, 1.0e-12);
+            assert!(positive > previous, "bank_degrees={bank_degrees}");
+            previous = positive;
+        }
+    }
+
+    #[test]
     fn turn_rate_matches_formula_and_preserves_bank_sign() {
         let g = 9.81;
         let velocity = 100.0;
@@ -370,6 +383,21 @@ mod tests {
     }
 
     #[test]
+    fn turn_rate_is_odd_in_bank_angle_and_inversely_scales_with_velocity() {
+        let g = 9.81;
+        let bank_angle = Angle::from_degrees(30.0);
+        let slow_velocity = 80.0;
+        let fast_velocity = 160.0;
+
+        let positive = turn_rate(g, slow_velocity, bank_angle).unwrap();
+        let negative = turn_rate(g, slow_velocity, Angle::from_degrees(-30.0)).unwrap();
+        let faster = turn_rate(g, fast_velocity, bank_angle).unwrap();
+
+        assert_close(positive, -negative, 1.0e-12);
+        assert_close(positive, 2.0 * faster, 1.0e-12);
+    }
+
+    #[test]
     fn turn_radius_matches_formula_and_uses_magnitude() {
         let velocity = 100.0;
         let g = 9.81;
@@ -392,6 +420,18 @@ mod tests {
         let steep = turn_radius(100.0, 9.81, Angle::from_degrees(45.0)).unwrap();
 
         assert!(steep < shallow);
+    }
+
+    #[test]
+    fn turn_radius_scales_with_velocity_squared() {
+        let g = 9.81;
+        let bank_angle = Angle::from_degrees(35.0);
+        let baseline = turn_radius(70.0, g, bank_angle).unwrap();
+        let doubled_velocity = turn_radius(140.0, g, bank_angle).unwrap();
+        let negative_bank = turn_radius(70.0, g, Angle::from_degrees(-35.0)).unwrap();
+
+        assert_close(doubled_velocity, 4.0 * baseline, 1.0e-9);
+        assert_close(negative_bank, baseline, 1.0e-12);
     }
 
     #[test]
@@ -428,6 +468,23 @@ mod tests {
     }
 
     #[test]
+    fn stall_speed_scales_with_square_root_input_terms() {
+        let baseline = stall_speed(10_000.0, 1.225, 16.0, 1.5).unwrap();
+
+        let quadruple_weight = stall_speed(40_000.0, 1.225, 16.0, 1.5).unwrap();
+        assert_close(quadruple_weight, 2.0 * baseline, 1.0e-12);
+
+        let quadruple_density = stall_speed(10_000.0, 4.0 * 1.225, 16.0, 1.5).unwrap();
+        assert_close(quadruple_density, 0.5 * baseline, 1.0e-12);
+
+        let quadruple_wing_area = stall_speed(10_000.0, 1.225, 64.0, 1.5).unwrap();
+        assert_close(quadruple_wing_area, 0.5 * baseline, 1.0e-12);
+
+        let quadruple_lift_coefficient = stall_speed(10_000.0, 1.225, 16.0, 6.0).unwrap();
+        assert_close(quadruple_lift_coefficient, 0.5 * baseline, 1.0e-12);
+    }
+
+    #[test]
     fn stall_speed_rejects_invalid_domains_and_nonfinite_outputs() {
         assert!(stall_speed(0.0, 1.225, 16.0, 1.5).is_err());
         assert!(stall_speed(10_000.0, 0.0, 16.0, 1.5).is_err());
@@ -457,6 +514,19 @@ mod tests {
             0.0,
             1.0e-12,
         );
+    }
+
+    #[test]
+    fn specific_excess_power_is_linear_in_excess_force_and_velocity() {
+        let baseline = specific_excess_power(2_000.0, 1_000.0, 100.0, 10_000.0).unwrap();
+        let doubled_excess_force =
+            specific_excess_power(3_000.0, 1_000.0, 100.0, 10_000.0).unwrap();
+        let doubled_velocity = specific_excess_power(2_000.0, 1_000.0, 200.0, 10_000.0).unwrap();
+        let zero_excess_force = specific_excess_power(1_000.0, 1_000.0, 200.0, 10_000.0).unwrap();
+
+        assert_close(doubled_excess_force, 2.0 * baseline, 1.0e-12);
+        assert_close(doubled_velocity, 2.0 * baseline, 1.0e-12);
+        assert_close(zero_excess_force, 0.0, 1.0e-12);
     }
 
     #[test]
