@@ -95,6 +95,9 @@
         "failure_modes": {
             "$ref": "#/$defs/nonempty_string_list"
         },
+        "non_claims": {
+            "$ref": "#/$defs/nonempty_string_list"
+        },
         "notes": {
             "type": "string",
             "minLength": 1

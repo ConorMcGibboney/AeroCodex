@@ -1,0 +1,23 @@
+id: source.validation.template_formula_family_source_seed.research_required
+title: Template formula-family source-registry seed
+category: validation
+status: research_required
+intended_use:
+  - Provide a non-operative source-seed skeleton for future formula-family validation-card generation.
+  - Record the required source-boundary language for generated source-registry seeds.
+  - Keep generated source seeds at research_required until a separate reviewed source-evidence patch justifies any upgrade.
+requested_details:
+  - Slice-specific source registry ID, formula-family title, bounded scope, and source locator request.
+  - Variables, units, coordinate frames, time scales, sign conventions, valid domains, singularities, invalid regions, and branch behavior that reviewers must collect.
+  - Required independent analytical tests, reference values, tolerance rationale, or oracle comparison evidence before status upgrade.
+  - Explicit statement that raw external source text, generated code, outputs, archives, binaries, and fixtures are not imported.
+implementation_notes:
+  - This template is not implementation code and must not create Rust public APIs or formula kernels.
+  - Future generated seeds must request evidence without copying raw M07 source, GPL BioSim Java source, Orekit Java source, comments, control flow, generated code, or Scilab output.
+  - Future generated seeds must pair with a generated validation card in the same reviewed patch or reference an existing reviewed card.
+  - A generator must default to dry-run mode and refuse overwrites without explicit approval.
+limits:
+  - Not source traceability evidence, reference validation, experiment validation, certification, flight readiness, mission readiness, operational approval, habitat safety, medical use, or regulated-use approval.
+  - Not permission to bulk-import M07 rows, GPL BioSim code, Orekit code, external archives, generated code, binaries, or fixtures.
+  - Not an external Scilab, Orekit, BioSim, or other oracle parity claim.
+notes: Stage 5 Session D non-operative source-seed template record for future source-seed generation policy. It remains research_required, requests future locators/evidence without asserting them, and is included only because the current scaffold verifies checked-in YAML templates recursively.

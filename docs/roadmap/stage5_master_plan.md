@@ -40,8 +40,8 @@ Chunk 0 froze this planning baseline from live `main` at:
 | Lane | Purpose | Milestone rule |
 |---|---|---|
 | Chunk 0 intake baseline | Freeze inventory, classifications, queue, and operating rules. | Documentation-only, zero governed-count delta. |
-| Session D policy/templates | Review validation-card/source-seed generation policy and templates. | Preferred first post-Chunk-0 candidate only after exact scope review. |
-| Session C M07 classifier | Split M07 classifier material into coherent documentation/policy and governed-data subchunks. | No bulk M07 source import; no public API promotion. |
+| Session D policy/templates | Deployed validation-card/source-seed generation policy and non-operative templates. | Completed by bounded Session D; one template card/source seed is counted by current recursive verifiers. |
+| Session C M07 classifier | Split M07 classifier material into coherent documentation/policy and governed-data subchunks. | Next candidate is bounded split review and subchunk planning only; no bulk M07 source import and no public API promotion. |
 | Session B scalar expansion | Review bounded canonical-unit scalar expansion. | Requires math semantics, count-delta, API, and test review. |
 | Session A wrap2pi | Review endpoint contract/test metadata. | Requires endpoint behavior policy before deployment. |
 | Session G public friend-test | Review public friend-test/readiness material. | Requires wording and scope review to avoid readiness/certification overclaim. |

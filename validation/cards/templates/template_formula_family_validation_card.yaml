@@ -1,0 +1,46 @@
+id: validation.template.formula_family_validation_card
+name: Template formula-family validation card
+category: validation
+status: research_required
+source:
+  id: source.validation.template_formula_family_source_seed.research_required
+  status: research_required
+assumptions:
+  - This checked-in template is a non-operative scaffold for future generated formula-family validation cards.
+  - Generated cards must replace this template identifier, title, scope, source reference, checks, failure modes, and notes with slice-specific reviewed content.
+  - Generated cards start at research_required and must not auto-promote validation status.
+  - The template must not be interpreted as formula implementation, source evidence, external parity evidence, or readiness approval.
+domain:
+  summary: Template for bounded formula-family validation-card skeletons.
+  bounds:
+    - Applies only to validation-card skeleton generation policy and review workflow.
+    - Future generated cards must define their own formula family, variables, units, frames, time-scales, domains, branches, singularities, invalid regions, and tolerance evidence needs.
+    - Future generated cards must reference a matching source-registry seed.
+  excluded_cases:
+    - Formula implementation, Rust public API creation, generated code import, source archive import, external fixture import, or status upgrade.
+    - Bulk M07 import, GPL BioSim Java import, Orekit Java import, Scilab output import, and copied external comments or control flow.
+inputs:
+  - docs/assurance/validation_card_generation_policy.md
+  - docs/assurance/source_seed_generation_policy.md
+  - validation/source_registry/templates/template_formula_family_source_seed.yaml
+  - future reviewed slice-specific generator input contract
+outputs:
+  - Non-operative formula-family validation-card skeleton template.
+  - Required field checklist for future generated validation cards.
+  - Research-required validation planning metadata only.
+tests:
+  - cargo run -p xtask -- verify cards
+  - cargo run -p xtask -- verify source-registry
+  - cargo run -p xtask -- verify equation-inventory
+  - cargo run -p xtask -- verify --all
+failure_modes:
+  - A generated card keeps this template identifier or generic scope instead of using slice-specific reviewed content.
+  - A generator overwrites an existing card without explicit reviewer approval.
+  - A generated card omits source-boundary limits, non-claims, assumptions, tests, or failure modes.
+  - Template or generated metadata is misread as source traceability, formula validation, certification, operational approval, or regulated-use approval.
+non_claims:
+  - No formula implementation is provided by this template.
+  - No source traceability or external parity is claimed by this template.
+  - No certification, flight readiness, mission readiness, operational approval, habitat-safety approval, medical-use approval, or regulated-use approval is claimed.
+  - No external source text, generated code, source archive, binary, or fixture import is authorized.
+notes: Stage 5 Session D non-operative template record for future validation-card generation policy. It remains research_required, makes no validation or readiness claim, and is included only because the current scaffold verifies checked-in YAML templates recursively.

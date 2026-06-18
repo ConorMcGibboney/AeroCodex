@@ -21,6 +21,8 @@ Start with:
 - [Formula-vault M00 vector-equation expansion](assurance/formula_vault_m00_vector_equation_expansion.md)
 - [Formula-vault candidate verifier](assurance/formula_vault_candidate_verifier.md)
 - [Equation inventory/readiness dashboard](assurance/equation_inventory_readiness_dashboard.md)
+- [Validation-card generation policy](assurance/validation_card_generation_policy.md)
+- [Source-seed generation policy](assurance/source_seed_generation_policy.md)
 - [M07 formula-vault intake](source_intake/m07_formula_vault_intake.md)
 - [BioSim-RS license-bound architecture](assurance/biosim_rs_license_architecture.md)
 - [BioSim-RS resource identity and tick validation](assurance/biosim_rs_resource_tick_validation.md)
