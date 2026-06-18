@@ -14,7 +14,9 @@
 //! `research_required` until exact source editions, equation identifiers,
 //! reference examples, constants, and tolerances are reviewed.
 
+pub mod elements;
 pub mod frames;
+pub mod kepler;
 pub mod state;
 pub mod time;
 

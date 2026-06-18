@@ -61,13 +61,13 @@ These current-main counts come from the governed equation-inventory verifier and
 
 | Inventory class | Current main count | Meaning |
 |---|---:|---|
-| Executable research equations | 138 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
+| Executable research equations | 151 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
 | Metadata-only formula-vault candidates | 27 | Formula-vault candidate metadata records; not implementations by themselves. |
 | External M07 backlog rows | 1,323 | Registered external M07 represented rows not yet selected as formula-vault candidates. C2 classification does not remove rows from this backlog. |
 | Validation cards | 44 | Conservative validation/governance records. They are not certification evidence. |
 | Source-registry seeds | 42 | Source/governance traceability seeds. |
 | Validation-card-only records | 44 | Metadata records, not formula implementations. |
-| Helper algorithms | 138 | Support routines not counted as executable research equations. |
+| Helper algorithms | 144 | Support routines not counted as executable research equations. |
 
 The historical Session G deltas were `+0` executable research equations, `+0` formula-vault candidates, `+0` external M07 backlog rows, `+1` validation card, `+1` source-registry seed, `+1` validation-card-only record, and `+0` helper algorithms. The absolute values above are no longer the old Session G branch-local counts.
 
@@ -77,7 +77,7 @@ A clean friend-test run still leaves blocked and research-only items blocked. In
 
 - `wrap2pi` has contract/test metadata but executable/public runtime implementation remains blocked pending endpoint-behavior policy;
 - `app_resolve_coplanar` remains blocked pending least-squares, rank, and tolerance policy;
-- Orekit O2a exists, while O2b, O2c, and O2d remain incomplete;
+- Orekit O2a and O2b exist as research/preliminary-only foundations, while O2c and O2d remain incomplete;
 - BioSim B2a, B2b, and B2c remain incomplete;
 - formula-vault candidates remain metadata-only unless a later chunk explicitly implements and validates them;
 - validation cards remain conservative records and do not prove implementation or validation by themselves.
