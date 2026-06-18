@@ -1,0 +1,50 @@
+id: validation.formula_vault.m00_wrap2pi_endpoint_policy
+name: Formula-vault M00 wrap2pi endpoint policy
+category: validation
+status: research_required
+source:
+  id: source.formula_vault.m00_wrap2pi_endpoint_policy.research_required
+  status: research_required
+assumptions:
+  - Stage 5 Session A is metadata/test-contract only and does not implement wrap2pi.
+  - The endpoint interval is reviewed as [0, 2*pi) based on existing formula-vault metadata and source-locator review without source import.
+  - Signed-zero sign-bit behavior is not treated as source-derived; the AeroCodex Rust contract chooses canonical positive zero for deterministic endpoint tests.
+  - M07 source material remains external and quarantine/reference-only.
+  - Raw source text, copied comments, source control flow, generated Rust, external fixtures, Scilab output, and public APIs are not promoted.
+domain:
+  summary: endpoint-behavior contract for formula_vault.m00.angle.wrap2pi
+  bounds:
+    - finite real scalar radian inputs only
+    - output interval [0, 2*pi), lower endpoint inclusive and upper endpoint exclusive
+    - exact zero and exact positive or negative period multiples map to canonical positive zero
+    - bounded f64 large-multiple regression vectors are included without arbitrary huge-magnitude exactness claims
+    - validation status remains research_required until a later implementation chunk adds tests and evidence
+  excluded_cases:
+    - no formula implementation, no source translation, no generated code import, and no public Rust API creation
+    - no Scilab execution result, no SGP4 certification claim, no external oracle fixture import, and no source archive bundling
+    - no certification evidence, no flight-readiness claim, no mission-readiness claim, no operational approval, no medical approval, no habitat-safety approval, and no regulated-use approval
+inputs:
+  - formula-vault/contracts/m00_wrap2pi_endpoint_contract.yaml
+  - formula-vault/contracts/m00_wrap2pi_test_vectors.csv
+  - docs/assurance/formula_vault_m00_wrap2pi_endpoint_policy.md
+  - formula-vault/contracts/m00_angle_unit_conversions_contract.yaml
+  - existing M07 data-governance artifact stage4.m07_rust_port_v14.2026_06_15
+outputs:
+  - dedicated wrap2pi endpoint interval policy
+  - machine-readable test-vector table covering required endpoint cases
+  - explicit non-finite input rejection policy for future implementation
+  - blocked-by-default future implementation gate
+  - research_required validation metadata for this endpoint-policy contract
+tests:
+  - cargo run -p xtask -- verify cards
+  - cargo run -p xtask -- verify source-registry
+  - cargo run -p xtask -- verify equation-inventory
+  - cargo run -p xtask -- verify formula-vault
+  - final source-boundary scan confirms no M07 code, archive, fixture, generated formula code, public API, crate change, root cargo lockfile, or local absolute path was promoted
+failure_modes:
+  - future implementation treats this endpoint contract as public API authorization
+  - future implementation omits signed-zero, period-multiple, or non-finite rejection tests
+  - future implementation claims arbitrary huge-magnitude exactness beyond bounded f64 regression vectors
+  - future candidate treats the M07 archive as bundled implementation source or Scilab parity evidence
+  - documentation is misread even though it provides no certification evidence, readiness evidence, operational approval, medical approval, habitat-safety approval, or regulated-use approval
+notes: "Stage 5 Session A validation card for wrap2pi endpoint metadata and test-contract records only. This card does not implement formulas, import M07 code, run Scilab/SGP4 checks, create public APIs, or approve operational use."

@@ -1,0 +1,512 @@
+# Stage 5 Session A wrap2pi endpoint-behavior contract draft.
+#
+# Metadata/test-contract only: this file contains no Rust implementation code,
+# no generated code, no copied M07 source text, no Scilab output, no external
+# fixture, no certification evidence, no flight-readiness claim, no mission-
+# readiness claim, no operational approval, no habitat-safety approval, no
+# medical-use approval, and no regulated-use approval.
+
+schema_version: formula_vault_endpoint_contract.v1
+record_status: metadata_test_contract_research_required
+stage4_chunk: stage4_chunk8b_wrap2pi_endpoint_behavior_contract
+formula:
+  formula_id: formula_vault.m00.angle.wrap2pi
+  existing_candidate_slice_id: formula_vault.m00_angle_unit_conversions.v1
+  rust_function_alias: app_wrap2pi
+  scilab_function_alias: foa_app_ast_app_wrap2pi
+  likely_future_aerocodex_function: m00_wrap2pi
+  implementation_status: blocked_no_formula_implementation_in_chunk8b
+  public_surface_status: blocked_no_public_application_programming_interface
+
+source_locator_review:
+  status: reviewed_without_source_copy
+  source_artifact_id: stage4.m07_rust_port_v14.2026_06_15
+  source_archive_sha256: 15b1ca3a39267187167c43ea1228f28fd4736c4456f65d072dc42a32a7b19190
+  registered_m07_status: release_candidate_not_certified
+  release_gate_row_alias: release-gate status csv row 5
+  equivalence_job_alias: equivalence job 002
+  source_file_locator_alias: appendices_scilab_astrodynamics constants conversion source file
+  reviewed_line_span_alias: lines 75 through 80 in the registered M07 source locator
+  current_repo_metadata_inputs:
+    - formula-vault/candidates/m00_angle_unit_conversions.yaml
+    - formula-vault/contracts/m00_angle_unit_conversions_contract.yaml
+    - formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml
+    - docs/assurance/formula_vault_m00_source_expression_test_vectors.md
+  import_policy: no_raw_m07_source_no_comments_no_control_flow_no_generated_code_no_scilab_output_no_fixtures
+  decision: existing_contract_and_source_locator_are_sufficient_to_resolve_interval_convention
+
+interval_contract:
+  interval_review_state: reviewed_interval_0_to_2pi_exclusive_upper
+  mathematical_interval: '[0, 2*pi)'
+  lower_endpoint: inclusive
+  upper_endpoint: exclusive
+  period: 2*pi
+  units: radians
+  valid_domain: all finite real scalar radian inputs
+  invalid_inputs:
+    - NaN
+    - positive_infinity
+    - negative_infinity
+  invalid_input_policy: reject_before_wrapping
+  coordinate_frame_dependence: none
+  time_scale_dependence: none
+  singularities: none
+  branch_behavior:
+    exact_zero: returns_canonical_positive_zero
+    exact_positive_zero: returns_canonical_positive_zero
+    exact_negative_zero: returns_canonical_positive_zero
+    exact_positive_two_pi: returns_canonical_positive_zero
+    exact_negative_two_pi: returns_canonical_positive_zero
+    exact_positive_pi: returns_pi
+    exact_negative_pi: returns_pi
+    exact_positive_three_pi: returns_pi
+    exact_negative_three_pi: returns_pi
+    positive_small_angle: returns_input_angle
+    negative_small_angle: returns_two_pi_minus_absolute_angle
+  signed_zero_policy:
+    source_sign_bit_status: not_claimed_not_source_derived
+    aerocodex_rust_contract_choice: canonicalize_any_zero_output_to_positive_zero
+    rationale: deterministic f64 endpoint tests should not expose negative zero as a distinct mathematical angle
+  large_magnitude_policy:
+    regression_scope: bounded_f64_vectors_only
+    exactness_limit: no_arbitrary_huge_magnitude_exactness_claim
+    rationale: finite f64 remainder operations can lose low-order information for very large magnitudes; large multiple vectors are bounded regression cases, not certification evidence
+  tolerance_policy:
+    endpoint_exact_zero_cases: require_exact_positive_zero_after_canonicalization
+    ordinary_absolute_tolerance: 1.0e-15
+    ordinary_relative_tolerance: 1.0e-15
+    large_multiple_absolute_tolerance: 1.0e-12
+    decimal_residue_absolute_tolerance: 1.0e-14
+
+reference_oracle:
+  type: independent_interval_contract
+  identity: angle modulo 2*pi, represented in the half-open interval [0, 2*pi)
+  periodicity: wrap2pi(x + k*2*pi) equals wrap2pi(x) for finite integer k within bounded f64 regression scope
+  endpoint_non_claim: this is not external Scilab parity evidence and not certification evidence
+
+test_vector_table:
+  repo_path: formula-vault/contracts/m00_wrap2pi_test_vectors.csv
+  handoff_copy: wrap2pi_test_vectors.csv
+  row_count: 26
+  required_endpoint_cases_covered:
+    - zero
+    - positive_zero
+    - negative_zero
+    - positive_two_pi
+    - negative_two_pi
+    - positive_pi
+    - negative_pi
+    - positive_three_pi
+    - negative_three_pi
+    - very_small_positive_angle
+    - very_small_negative_angle
+    - large_positive_multiple_of_two_pi
+    - large_negative_multiple_of_two_pi
+    - finite_non_multiple_values_in_several_quadrants
+    - NaN_and_infinity_rejection_policy
+
+test_vectors:
+  - id: wrap2pi.zero
+    input_kind: endpoint
+    input_radians_symbolic: '0'
+    input_radians_decimal: '0'
+    input_zero_sign: positive
+    expected_status: ok
+    expected_radians_symbolic: '0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: lower_endpoint
+    absolute_tolerance: '0.0'
+    relative_tolerance: '0.0'
+    notes: 'numeric zero maps to lower endpoint; output zero is canonical positive zero'
+  - id: wrap2pi.positive_zero
+    input_kind: endpoint
+    input_radians_symbolic: '+0'
+    input_radians_decimal: '0'
+    input_zero_sign: positive
+    expected_status: ok
+    expected_radians_symbolic: '+0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: signed_zero_endpoint
+    absolute_tolerance: '0.0'
+    relative_tolerance: '0.0'
+    notes: 'explicit signed-zero case; AeroCodex Rust contract canonicalizes output zero as +0.0'
+  - id: wrap2pi.negative_zero
+    input_kind: endpoint
+    input_radians_symbolic: '-0'
+    input_radians_decimal: '-0.0'
+    input_zero_sign: negative
+    expected_status: ok
+    expected_radians_symbolic: '+0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: signed_zero_endpoint
+    absolute_tolerance: '0.0'
+    relative_tolerance: '0.0'
+    notes: 'source locator does not create a certification claim for sign bits; AeroCodex Rust contract canonicalizes output zero as +0.0'
+  - id: wrap2pi.two_pi
+    input_kind: endpoint
+    input_radians_symbolic: '2*pi'
+    input_radians_decimal: '6.2831853071795862'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: upper_endpoint_wraps_to_lower
+    absolute_tolerance: '0.0'
+    relative_tolerance: '0.0'
+    notes: 'upper endpoint is exclusive and wraps to lower endpoint'
+  - id: wrap2pi.negative_two_pi
+    input_kind: endpoint
+    input_radians_symbolic: '-2*pi'
+    input_radians_decimal: '-6.2831853071795862'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: negative_period_wraps_to_lower
+    absolute_tolerance: '0.0'
+    relative_tolerance: '0.0'
+    notes: 'negative full period maps to lower endpoint'
+  - id: wrap2pi.pi
+    input_kind: endpoint
+    input_radians_symbolic: 'pi'
+    input_radians_decimal: '3.1415926535897931'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: 'pi'
+    expected_radians_decimal: '3.1415926535897931'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: interior_pi
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'pi is interior in [0, 2*pi)'
+  - id: wrap2pi.negative_pi
+    input_kind: endpoint
+    input_radians_symbolic: '-pi'
+    input_radians_decimal: '-3.1415926535897931'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: 'pi'
+    expected_radians_decimal: '3.1415926535897931'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: interior_after_negative_wrap
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: '-pi maps to pi under [0, 2*pi) convention'
+  - id: wrap2pi.three_pi
+    input_kind: endpoint
+    input_radians_symbolic: '3*pi'
+    input_radians_decimal: '9.4247779607693793'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: 'pi'
+    expected_radians_decimal: '3.1415926535897931'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: interior_after_positive_period_removal
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: '3*pi maps to pi'
+  - id: wrap2pi.negative_three_pi
+    input_kind: endpoint
+    input_radians_symbolic: '-3*pi'
+    input_radians_decimal: '-9.4247779607693793'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: 'pi'
+    expected_radians_decimal: '3.1415926535897931'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: interior_after_negative_period_removal
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: '-3*pi maps to pi'
+  - id: wrap2pi.very_small_positive
+    input_kind: near_endpoint
+    input_radians_symbolic: '1.0e-12'
+    input_radians_decimal: '9.9999999999999998e-13'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '1.0e-12'
+    expected_radians_decimal: '9.9999999999999998e-13'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: just_above_lower_endpoint
+    absolute_tolerance: '1.0e-18'
+    relative_tolerance: '1.0e-15'
+    notes: 'very small positive finite input remains itself'
+  - id: wrap2pi.very_small_negative
+    input_kind: near_endpoint
+    input_radians_symbolic: '-1.0e-12'
+    input_radians_decimal: '-9.9999999999999998e-13'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '2*pi - 1.0e-12'
+    expected_radians_decimal: '6.2831853071785861'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: just_below_lower_endpoint
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'very small negative finite input wraps to just below 2*pi'
+  - id: wrap2pi.large_positive_period_multiple
+    input_kind: large_period_multiple
+    input_radians_symbolic: '1048576 * 2*pi'
+    input_radians_decimal: '6588397.3166611418'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: large_positive_multiple_wraps_to_lower
+    absolute_tolerance: '1.0e-12'
+    relative_tolerance: '1.0e-15'
+    notes: 'bounded large-period regression vector; not a guarantee for arbitrary huge magnitudes'
+  - id: wrap2pi.large_negative_period_multiple
+    input_kind: large_period_multiple
+    input_radians_symbolic: '-1048576 * 2*pi'
+    input_radians_decimal: '-6588397.3166611418'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '0'
+    expected_radians_decimal: '0'
+    expected_zero_sign: positive
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: large_negative_multiple_wraps_to_lower
+    absolute_tolerance: '1.0e-12'
+    relative_tolerance: '1.0e-15'
+    notes: 'bounded large-period regression vector; not a guarantee for arbitrary huge magnitudes'
+  - id: wrap2pi.quadrant_i_pi_over_six
+    input_kind: finite_non_multiple
+    input_radians_symbolic: 'pi/6'
+    input_radians_decimal: '0.52359877559829882'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: 'pi/6'
+    expected_radians_decimal: '0.52359877559829882'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: quadrant_i
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite non-multiple quadrant I'
+  - id: wrap2pi.quadrant_ii_three_pi_over_four
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '3*pi/4'
+    input_radians_decimal: '2.3561944901923448'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '3*pi/4'
+    expected_radians_decimal: '2.3561944901923448'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: quadrant_ii
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite non-multiple quadrant II'
+  - id: wrap2pi.quadrant_iii_five_pi_over_four
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '5*pi/4'
+    input_radians_decimal: '3.9269908169872414'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '5*pi/4'
+    expected_radians_decimal: '3.9269908169872414'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: quadrant_iii
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite non-multiple quadrant III'
+  - id: wrap2pi.quadrant_iv_seven_pi_over_four
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '7*pi/4'
+    input_radians_decimal: '5.497787143782138'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '7*pi/4'
+    expected_radians_decimal: '5.497787143782138'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: quadrant_iv
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite non-multiple quadrant IV'
+  - id: wrap2pi.negative_pi_over_six
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '-pi/6'
+    input_radians_decimal: '-0.52359877559829882'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '11*pi/6'
+    expected_radians_decimal: '5.7595865315812871'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: negative_quadrant_wrap
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'negative non-multiple wraps into quadrant IV'
+  - id: wrap2pi.negative_five_pi_over_four
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '-5*pi/4'
+    input_radians_decimal: '-3.9269908169872414'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '3*pi/4'
+    expected_radians_decimal: '2.3561944901923448'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: negative_quadrant_wrap
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'negative non-multiple wraps into quadrant II'
+  - id: wrap2pi.two_pi_plus_pi_over_three
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '2*pi + pi/3'
+    input_radians_decimal: '7.3303828583761836'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: 'pi/3'
+    expected_radians_decimal: '1.0471975511965976'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: positive_period_plus_residue
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite positive non-multiple beyond one period'
+  - id: wrap2pi.negative_two_pi_minus_pi_over_three
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '-2*pi - pi/3'
+    input_radians_decimal: '-7.3303828583761836'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '5*pi/3'
+    expected_radians_decimal: '5.2359877559829888'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: negative_period_minus_residue
+    absolute_tolerance: '1.0e-15'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite negative non-multiple beyond one period'
+  - id: wrap2pi.ten_pi_plus_quarter
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '10*pi + 0.25'
+    input_radians_decimal: '31.665926535897931'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '0.25'
+    expected_radians_decimal: '0.25'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: positive_multiple_plus_decimal_residue
+    absolute_tolerance: '1.0e-14'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite positive decimal residue after integer periods'
+  - id: wrap2pi.negative_ten_pi_minus_quarter
+    input_kind: finite_non_multiple
+    input_radians_symbolic: '-10*pi - 0.25'
+    input_radians_decimal: '-31.665926535897931'
+    input_zero_sign: not_applicable
+    expected_status: ok
+    expected_radians_symbolic: '2*pi - 0.25'
+    expected_radians_decimal: '6.0331853071795862'
+    expected_zero_sign: not_applicable
+    interval_state: reviewed_interval_0_to_2pi_exclusive_upper
+    endpoint_class: negative_multiple_minus_decimal_residue
+    absolute_tolerance: '1.0e-14'
+    relative_tolerance: '1.0e-15'
+    notes: 'finite negative decimal residue after integer periods'
+  - id: wrap2pi.nan
+    input_kind: invalid_nonfinite
+    input_radians_symbolic: 'NaN'
+    input_radians_decimal: 'NaN'
+    input_zero_sign: not_applicable
+    expected_status: reject_nonfinite
+    expected_radians_symbolic: null
+    expected_radians_decimal: null
+    expected_zero_sign: not_applicable
+    interval_state: nonfinite_rejected_before_interval_mapping
+    endpoint_class: invalid_input
+    absolute_tolerance: 'not_applicable'
+    relative_tolerance: 'not_applicable'
+    notes: 'future Rust implementation should reject NaN before wrapping'
+  - id: wrap2pi.positive_infinity
+    input_kind: invalid_nonfinite
+    input_radians_symbolic: '+infinity'
+    input_radians_decimal: 'Infinity'
+    input_zero_sign: not_applicable
+    expected_status: reject_nonfinite
+    expected_radians_symbolic: null
+    expected_radians_decimal: null
+    expected_zero_sign: not_applicable
+    interval_state: nonfinite_rejected_before_interval_mapping
+    endpoint_class: invalid_input
+    absolute_tolerance: 'not_applicable'
+    relative_tolerance: 'not_applicable'
+    notes: 'future Rust implementation should reject positive infinity before wrapping'
+  - id: wrap2pi.negative_infinity
+    input_kind: invalid_nonfinite
+    input_radians_symbolic: '-infinity'
+    input_radians_decimal: '-Infinity'
+    input_zero_sign: not_applicable
+    expected_status: reject_nonfinite
+    expected_radians_symbolic: null
+    expected_radians_decimal: null
+    expected_zero_sign: not_applicable
+    interval_state: nonfinite_rejected_before_interval_mapping
+    endpoint_class: invalid_input
+    absolute_tolerance: 'not_applicable'
+    relative_tolerance: 'not_applicable'
+    notes: 'future Rust implementation should reject negative infinity before wrapping'
+
+promotion_gate:
+  default_state: blocked
+  metadata_deployment_allowed: true
+  implementation_allowed_in_this_chunk: false
+  required_before_implementation:
+    - deployment agent accepts the endpoint contract and signed-zero policy
+    - Rust implementation chunk is explicitly authorized later
+    - implementation rejects non-finite inputs before wrapping
+    - implementation canonicalizes zero outputs to positive zero or the contract is revised explicitly
+    - unit tests cover every required endpoint case in the CSV table
+    - no M07 raw source, comments, control flow, generated code, Scilab output, archive contents, or fixtures are committed
+    - validation status remains research_required until independent evidence justifies a later upgrade
+
+validation_records:
+  required_source_registry_seed: source.formula_vault.m00_wrap2pi_endpoint_policy.research_required
+  required_validation_card: validation.formula_vault.m00_wrap2pi_endpoint_policy
+  status: research_required
+  status_upgrade_policy: blocked_without_future_implementation_tests_equivalence_review_and_reference_evidence
+
+non_claims:
+  no_formula_implementation: true
+  no_source_translation: true
+  no_raw_m07_source_committed: true
+  no_copied_m07_comments: true
+  no_copied_m07_control_flow: true
+  no_generated_formula_code: true
+  no_scilab_execution_result: true
+  no_external_fixture_import: true
+  no_public_api_promotion: true
+  no_status_upgrade_beyond_research_required: true
+  no_certification_evidence: true
+  no_flight_readiness: true
+  no_mission_readiness: true
+  no_operational_approval: true
+  no_medical_use_approval: true
+  no_habitat_safety_approval: true
+  no_regulated_use_approval: true
+  no_bulk_m07_import: true
+  no_external_parity_claim_without_evidence: true
