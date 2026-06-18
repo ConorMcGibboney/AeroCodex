@@ -1,0 +1,39 @@
+id: validation.public_friend_test_package
+name: Public friend-test package and readiness dashboard
+category: validation
+status: research_required
+source:
+  id: source.public_friend_test_package.research_required
+  status: research_required
+assumptions:
+  - The friend-test package is documentation and script scaffolding for local repository checks only.
+  - Testers run the commands on their own cloned checkout and report environment details with failures.
+  - A clean local run is not physical validation, safety evidence, certification evidence, or mission-readiness evidence.
+domain:
+  discipline: validation
+  scope: Public tester quickstart, expected-output guide, research caveats, local scripts, and readiness dashboard metadata
+inputs:
+  - docs/testing/friend_test_quickstart.md
+  - docs/testing/friend_test_expected_output.md
+  - docs/testing/research_safety_caveats_for_testers.md
+  - scripts/friend_test_local.sh
+  - scripts/friend_test_local.ps1
+  - docs/roadmap/public_alpha_readiness_dashboard.md
+outputs:
+  - Friend-test command sequence for Rust and xtask local checks.
+  - Tester-facing expected-output and failure-report guidance.
+  - Public alpha dashboard that preserves research-only and blocked status.
+tests:
+  - cargo fmt --all -- --check
+  - cargo clippy --workspace --all-targets --all-features -- -D warnings
+  - cargo test --workspace --all-features
+  - cargo run -p xtask -- verify --all
+  - cargo run -p xtask -- verify equation-inventory
+  - cargo run -p xtask -- verify formula-vault
+  - cargo run -p xtask -- dependency-policy
+  - cargo doc --workspace --all-features --no-deps
+failure_modes:
+  - A tester treats a clean local run as physical validation, safety evidence, certification evidence, or mission-readiness evidence.
+  - The scripts assume Cargo, rustfmt, clippy, Bash, PowerShell, or documentation tooling that is not available on the tester machine.
+  - Counts in tester-facing docs drift from the live equation inventory after later handoffs unless refreshed by the deployment agent.
+notes: Research-required tester documentation and scripts only; no Rust equations, formula-vault candidates, source imports, public application programming interfaces, physical validation, certification, flight readiness, mission readiness, habitat-safety approval, medical approval, operational approval, or regulated-use approval are claimed.

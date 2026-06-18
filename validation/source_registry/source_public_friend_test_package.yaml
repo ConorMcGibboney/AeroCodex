@@ -1,0 +1,21 @@
+id: source.public_friend_test_package.research_required
+title: Public friend-test package and readiness dashboard source seed
+category: validation
+status: research_required
+intended_use:
+  - Register the public friend-test quickstart, expected-output guide, safety caveats, scripts, and readiness dashboard as validation/governance scaffolding.
+  - Help outside testers run the existing local repository checks without promoting readiness claims.
+  - Preserve the distinction between executable research equations, formula-vault metadata candidates, validation-card-only records, and helper algorithms.
+requested_details:
+  - Shell and PowerShell scripts that run the required Rust and xtask command sequence.
+  - Tester-facing documentation for expected output, failure reports, and research-only caveats.
+  - Dashboard text that states Session G count deltas instead of hard-coding future live counts.
+implementation_notes:
+  - Documentation and dependency-light scripts only.
+  - No Rust equation implementations, formula-vault candidates, public application programming interfaces, external source archives, fixtures, generated binaries, or evidence logs are introduced.
+  - Deployment agent must recompute live inventory counts and run the full local checks before merge.
+limits:
+  - Local friend-test completion does not prove physical validity, safety, certification, flight readiness, mission readiness, habitat safety, medical suitability, operational approval, or regulated-use approval.
+  - The scripts assume a local Rust toolchain with Cargo, rustfmt, and clippy available.
+  - Output shape can vary by platform, Rust version, cache state, and shell.
+notes: Stage 5 Session G source seed for public tester documentation and scripts; status remains research_required and all readiness claims remain blocked.
