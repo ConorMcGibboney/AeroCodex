@@ -1,22 +1,22 @@
 # Stage 5 Session A wrap2pi endpoint-behavior contract draft.
 #
-# Metadata/test-contract only: this file contains no Rust implementation code,
-# no generated code, no copied M07 source text, no Scilab output, no external
+# Metadata/test-contract plus bounded runtime deployment record: this file contains no generated code,
+# no copied M07 source text, no Scilab output, no external
 # fixture, no certification evidence, no flight-readiness claim, no mission-
 # readiness claim, no operational approval, no habitat-safety approval, no
 # medical-use approval, and no regulated-use approval.
 
 schema_version: formula_vault_endpoint_contract.v1
-record_status: metadata_test_contract_research_required
-deployment_session: stage5_session_a_wrap2pi_endpoint_behavior_contract
+record_status: bounded_runtime_deployed_research_required
+deployment_session: post_stage5_m00_wrap2pi_runtime_deployment
 formula:
   formula_id: formula_vault.m00.angle.wrap2pi
   existing_candidate_slice_id: formula_vault.m00_angle_unit_conversions.v1
   rust_function_alias: app_wrap2pi
   scilab_function_alias: foa_app_ast_app_wrap2pi
   likely_future_aerocodex_function: m00_wrap2pi
-  implementation_status: blocked_no_formula_implementation_in_stage5_session_a
-  public_surface_status: blocked_no_public_application_programming_interface
+  implementation_status: bounded_rust_runtime_deployed_research_required
+  public_surface_status: public_api_m00_wrap2pi_only_blocked_from_readiness_or_certification_promotion
 
 source_locator_review:
   status: reviewed_without_source_copy
@@ -33,7 +33,7 @@ source_locator_review:
     - formula-vault/manifests/m00_angle_unit_conversions_manifest.yaml
     - docs/assurance/formula_vault_m00_source_expression_test_vectors.md
   import_policy: no_raw_m07_source_no_comments_no_control_flow_no_generated_code_no_scilab_output_no_fixtures
-  decision: existing_contract_and_source_locator_are_sufficient_to_resolve_interval_convention
+  decision: existing_contract_and_source_locator_are_sufficient_to_resolve_interval_convention; runtime uses independent Rust rem_euclid(2*pi) behavior without Scilab parity claim
 
 interval_contract:
   interval_review_state: reviewed_interval_0_to_2pi_exclusive_upper
@@ -83,6 +83,19 @@ reference_oracle:
   identity: angle modulo 2*pi, represented in the half-open interval [0, 2*pi)
   periodicity: wrap2pi(x + k*2*pi) equals wrap2pi(x) for finite integer k within bounded f64 regression scope
   endpoint_non_claim: this is not external Scilab parity evidence and not certification evidence
+
+runtime_implementation:
+  public_api: pub fn m00_wrap2pi(angle_radians: f64) -> AeroResult<f64>
+  codex_id: formula_vault.m00.angle.wrap2pi
+  implementation_rules:
+    - reject nonfinite inputs before wrapping
+    - compute with angle_radians.rem_euclid(std::f64::consts::TAU)
+    - return only values in [0, TAU)
+    - canonicalize zero output to positive zero
+    - repair only an exact `TAU` remainder-roundoff endpoint to the greatest representable value below `TAU`
+    - do not apply epsilon or ordinary-value clamping
+    - do not claim M07 or Scilab parity
+  status: research_required
 
 test_vector_table:
   repo_path: formula-vault/contracts/m00_wrap2pi_test_vectors.csv
@@ -472,26 +485,30 @@ test_vectors:
     notes: 'future Rust implementation should reject negative infinity before wrapping'
 
 promotion_gate:
-  default_state: blocked
+  default_state: bounded_runtime_deployed_research_required
   metadata_deployment_allowed: true
-  implementation_allowed_in_this_chunk: false
-  required_before_implementation:
-    - deployment agent accepts the endpoint contract and signed-zero policy
-    - Rust implementation chunk is explicitly authorized later
+  implementation_allowed_in_this_chunk: true
+  completed_for_this_runtime_deployment:
+    - deployment agent accepted the endpoint contract and signed-zero policy
+    - Rust implementation was explicitly authorized for `m00_wrap2pi` only
     - implementation rejects non-finite inputs before wrapping
-    - implementation canonicalizes zero outputs to positive zero or the contract is revised explicitly
+    - implementation canonicalizes zero outputs to positive zero
+    - implementation repairs only exact `TAU` remainder-roundoff endpoints without epsilon or ordinary-value clamping
     - unit tests cover every required endpoint case in the CSV table
     - no M07 raw source, comments, control flow, generated code, Scilab output, archive contents, or fixtures are committed
     - validation status remains research_required until independent evidence justifies a later upgrade
+  required_before_status_upgrade:
+    - independent reference/equivalence evidence beyond the governed Rust vectors
+    - explicit future authorization for any status upgrade or alternate public interface
 
 validation_records:
   required_source_registry_seed: source.formula_vault.m00_wrap2pi_endpoint_policy.research_required
   required_validation_card: validation.formula_vault.m00_wrap2pi_endpoint_policy
   status: research_required
-  status_upgrade_policy: blocked_without_future_implementation_tests_equivalence_review_and_reference_evidence
+  status_upgrade_policy: blocked_without_future_independent_equivalence_review_and_reference_evidence
 
 non_claims:
-  no_formula_implementation: true
+  no_additional_formula_implementation_beyond_bounded_m00_wrap2pi_runtime: true
   no_source_translation: true
   no_raw_m07_source_committed: true
   no_copied_m07_comments: true
@@ -499,7 +516,7 @@ non_claims:
   no_generated_formula_code: true
   no_scilab_execution_result: true
   no_external_fixture_import: true
-  no_public_api_promotion: true
+  no_alternate_public_api_promotion: true
   no_status_upgrade_beyond_research_required: true
   no_certification_evidence: true
   no_flight_readiness: true

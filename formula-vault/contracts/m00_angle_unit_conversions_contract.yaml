@@ -16,7 +16,7 @@ source_boundary:
   m07_archive_status: external_quarantine_reference_only
   review_method: inspected_local_registered_archive_without_committing_raw_source
   import_policy: no_bulk_import_no_raw_source_no_generated_code_no_external_fixture
-  public_api_surface: blocked_no_public_application_programming_interface
+  public_api_surface: bounded_m00_wrap2pi_public_api_only_no_aliases
   validation_status: research_required
   m07_facts:
     represented_function_rows: 1350
@@ -199,7 +199,7 @@ formulas:
       exact_negative_pi: returns_pi
       negative_small_angle: returns_two_pi_minus_epsilon_for_epsilon_in_open_interval_zero_to_two_pi
       positive_small_angle: returns_epsilon
-      note: future Rust implementation must document f64 signed-zero and large-magnitude rounding behavior separately
+      note: bounded Post-Stage-5 Rust runtime documents signed-zero, half-open interval, exact-TAU remainder-roundoff repair, nonfinite rejection, and large-magnitude finite-grid behavior separately
     tolerance_policy:
       absolute_tolerance: 1.0e-15
       relative_tolerance: 1.0e-15
@@ -207,8 +207,8 @@ formulas:
     reference_oracle:
       type: independent_interval_contract
       identity: wrapped_angle_in_0_to_2pi_with_period_2pi
-    implementation_status: blocked_no_formula_implementation_in_chunk7f
-    promotion_gate: blocked_until_future_explicit_implementation_chunk_with_endpoint_tests_and_equivalence_review
+    implementation_status: bounded_runtime_deployed_research_required_post_stage5
+    promotion_gate: deployed_only_for_m00_wrap2pi_with_endpoint_tests_no_status_upgrade_without_future_equivalence_review
     test_vectors:
       - id: wrap2pi.zero
         input_radians_symbolic: '0'
@@ -256,11 +256,11 @@ formulas:
       - no_regulated_use_approval
 
 contract_level_non_claims:
-  no_formula_implementation: true
+  no_additional_formula_implementation_beyond_bounded_m00_wrap2pi_runtime: true
   no_source_translation: true
   no_raw_m07_source_committed: true
   no_generated_formula_code: true
   no_scilab_execution_result: true
   no_external_fixture_import: true
-  no_public_api_promotion: true
+  no_alternate_public_api_promotion: true
   no_status_upgrade_beyond_research_required: true

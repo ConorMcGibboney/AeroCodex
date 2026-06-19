@@ -35,7 +35,7 @@ Stage 4 Chunk 8A handoff expands the formula-vault with a bounded M00 vector-alg
 - validation card `validation.formula_vault.m00_vector_algebra`
 - source seed `source.formula_vault.m00_vector_algebra.research_required`
 
-The handoff covers fourteen finite 3-vector helpers, plus implementation of the already-contracted `deg2rad` and `rad2deg` helpers. `wrap2pi` and `app_resolve_coplanar` remain blocked for separate endpoint/rank-policy chunks.
+The handoff covers fourteen finite 3-vector helpers, plus implementation of the already-contracted `deg2rad` and `rad2deg` helpers. Post-Stage-5 adds only the bounded `m00_wrap2pi` Rust runtime for `formula_vault.m00.angle.wrap2pi`; `app_resolve_coplanar` remains blocked for a separate least-squares/rank/tolerance policy chunk.
 
 Stage 4 Chunk 7C adds the first dependency-free candidate metadata verifier without implementing formulas:
 
@@ -79,4 +79,4 @@ Stage 4 Chunk 7F adds a metadata-only source-expression and test-vector contract
 - validation card `validation.formula_vault.m00_source_expression_test_vectors`
 - source seed `source.formula_vault.m00_source_expression_test_vectors.research_required`
 
-The contract records independent mathematical summaries, finite-input domains, tolerance metadata, and endpoint-sensitive `wrap2pi` expectations. It does not implement formulas, import M07 source, generate Rust, import Scilab outputs or fixtures, or promote any public application programming interface.
+The contract records independent mathematical summaries, finite-input domains, tolerance metadata, and endpoint-sensitive `wrap2pi` expectations. Post-Stage-5 deploys the single public `m00_wrap2pi` Rust API with research_required status, finite-input validation, `rem_euclid(std::f64::consts::TAU)`, [0, TAU) output, canonical positive zero, nonfinite rejection, no epsilon/ordinary-value clamping, and no M07/Scilab parity claim. It does not import M07 source, generate Rust from source material, import Scilab outputs or fixtures, or promote alternate public aliases.

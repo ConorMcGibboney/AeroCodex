@@ -5,7 +5,7 @@ status: research_required
 intended_use:
   - Trace the Stage 5 Session A endpoint-policy contract for formula_vault.m00.angle.wrap2pi.
   - Tie the contract to existing M00 angle/unit metadata and the registered M07 source locator without importing raw source code.
-  - Preserve wrap2pi as blocked from public API and implementation until a later explicitly authorized chunk adds tests and evidence.
+  - Record the explicitly authorized bounded `m00_wrap2pi` runtime deployment while preserving research_required status and blocking any alternate alias or readiness promotion.
 requested_details:
   - M07 source artifact id stage4.m07_rust_port_v14.2026_06_15 with registered SHA256 15b1ca3a39267187167c43ea1228f28fd4736c4456f65d072dc42a32a7b19190.
   - Existing formula-vault candidate formula_vault.m00.angle.wrap2pi and source locator release-gate status csv row 5.
@@ -14,12 +14,12 @@ requested_details:
   - Test-vector table for endpoint, signed-zero, period-multiple, small-angle, quadrant, large-multiple, and non-finite rejection cases.
 implementation_notes:
   - Stage 5 Session A adds metadata/test contracts only.
-  - No M07 source code, generated binaries, raw archives, fixtures, public Rust APIs, crate changes, or replacement astrodynamics content are imported.
+  - No M07 source code, generated binaries, raw archives, fixtures, alternate public Rust aliases, or replacement astrodynamics content are imported.
   - The source locator is not used as a sign-bit oracle; AeroCodex future Rust tests should canonicalize zero outputs to positive zero unless this contract is explicitly revised.
   - Validation status remains research_required.
 limits:
-  - No formula implementation, no source translation, no generated code import, and no public application programming interface.
+  - No source translation, no generated code import, no alternate public application programming interface, and no status upgrade beyond research_required.
   - Not a Scilab execution result, no SGP4 certification claim, no external oracle fixture, and no M07 parity claim.
   - No arbitrary huge-magnitude exactness claim for f64 remainder behavior.
   - No certification evidence, no flight readiness, no mission readiness, no operational use, no medical use, no habitat-safety approval, and no regulated-use suitability.
-notes: "Stage 5 Session A source seed for wrap2pi endpoint metadata. Later work must add explicit implementation authorization, Rust endpoint tests, equivalence/reference evidence, and source-boundary scans before any status upgrade or application-interface proposal."
+notes: "Post-Stage-5 source seed for the bounded `m00_wrap2pi` runtime deployment and endpoint metadata. Later work must add separate authorization, independent equivalence/reference evidence, and source-boundary scans before any status upgrade, alternate application-interface proposal, or parity claim."

@@ -50,7 +50,7 @@ artifacts:
     artifact_kind: repo_directory_validation_cards
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: 32bb1d709c43588f07021587fe13f25836a257c43511820c67c04e7ff9ed0d73
+    sha256: 167da1b31fda0d3414043360dd4f4bc3008990d43e2ce5d9c32c51292b453edb
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: validation-card metadata and source-status tracking only
     bundling_decision: bundled repo-relative validation metadata; no external archive import
@@ -64,7 +64,7 @@ artifacts:
     artifact_kind: repo_directory_source_registry
     origin: current_repo
     license: MIT OR Apache-2.0 metadata with cited-source boundaries
-    sha256: 967623b402264253b4000f6e337d49b1f4dbc42cfca92be959b7f0f4709849f5
+    sha256: 7213dc847f5941d3b47bc25456f9c46375678fd4c0265cbf678016f02acc03e1
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: source seed registry and validation-card linkage only
     bundling_decision: bundled repo-relative source metadata; not external source-code import
@@ -78,28 +78,28 @@ artifacts:
     artifact_kind: repo_file_validation_inventory
     origin: current_repo
     license: MIT OR Apache-2.0 metadata
-    sha256: 2f138245ab9a4694f44858bccda6ccb4dcf834f529cdaa48cc761440b043fa66
+    sha256: 62f72a9b4ea5e743fe2de2609468279145f48a6675735c9d08905d352ed008c2
     hash_status: sha256_verified_current_repo_file
     allowed_use: machine-readable equation inventory and readiness-dashboard counts only
     bundling_decision: bundled repo-relative validation metadata; no formula implementation, source archive import, generated code, fixture, or public application programming interface promotion
     validation_status: repository_tracked_manifest
     owner: AeroCodex maintainers
     update_cadence: refresh when public equation/helper surfaces, formula-vault candidates, validation cards, or source-registry seeds change
-    notes: Stage 4 Chunk 7E inventory rows remain blocked with explicit reasons; not certification, flight-readiness, mission-readiness, operational, medical, or regulated-use evidence.
+    notes: Current inventory rows remain blocked with explicit reasons; post-Stage-5 wrap2pi adds one research_required executable equation and no certification, flight-readiness, mission-readiness, operational, medical, or regulated-use evidence.
   - id: in_repo.formula_vault
     title: Formula-vault metadata directory
     local_path: formula-vault/
     artifact_kind: repo_directory_formula_vault_metadata
     origin: current_repo
     license: MIT OR Apache-2.0 metadata with source-boundary caveats
-    sha256: 4da83c4cb16330fb8066673cdbb0a82b265dce6867412f6fad3401b6c80b3660
+    sha256: c4de76d224d076b692766a60e197807b613db2db1bc9ccf00bbfabb9e2aed1d8
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: quarantined formula-vault planning metadata and future per-slice gate templates only
     bundling_decision: bundled repo-relative metadata; no external M07 source-code import, generated binary, fixture, or public application programming interface promotion
     validation_status: repository_tracked_formula_vault_metadata
     owner: AeroCodex maintainers
     update_cadence: refresh when formula-vault metadata or templates change
-    notes: Formula-vault metadata supports research/preliminary-design gate planning only; not certification, flight-readiness, mission-readiness, operational, medical, or regulated-use evidence.
+    notes: Formula-vault metadata supports research/preliminary-design gate planning and the bounded m00_wrap2pi runtime record only; not certification, flight-readiness, mission-readiness, operational, medical, parity, or regulated-use evidence.
   - id: in_repo.nomenclature_generated
     title: Generated nomenclature and acronym inventories
     local_path: nomenclature/generated/

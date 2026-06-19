@@ -54,6 +54,8 @@ pub const CODEX_ID_SPHERE_OF_INFLUENCE: &str = "astrodynamics.celestial.sphere_o
 pub const CODEX_ID_M00_DEG2RAD: &str = "formula_vault.m00.angle.deg2rad";
 /// Codex identifier for M00 radian-to-degree conversion.
 pub const CODEX_ID_M00_RAD2DEG: &str = "formula_vault.m00.angle.rad2deg";
+/// Codex identifier for M00 radian angle wrapping into `[0, TAU)`.
+pub const CODEX_ID_M00_WRAP2PI: &str = "formula_vault.m00.angle.wrap2pi";
 /// Codex identifier for M00 3-vector dot product.
 pub const CODEX_ID_M00_VECTOR_DOT: &str = "formula_vault.m00.vector.dot";
 /// Codex identifier for M00 3-vector Euclidean norm.
@@ -247,6 +249,11 @@ pub fn verification_record(codex_id: &str) -> Option<VerificationRecord> {
             CODEX_ID_M00_RAD2DEG,
             FORMULA_VAULT_M00_ANGLE_SOURCES,
             "M00 radian-to-degree conversion implemented from independent contract and test vectors; M07 remains release-candidate/not certified.",
+        )),
+        CODEX_ID_M00_WRAP2PI => Some(VerificationRecord::research_required(
+            CODEX_ID_M00_WRAP2PI,
+            FORMULA_VAULT_M00_ANGLE_SOURCES,
+            "M00 wrap-to-two-pi endpoint implemented from independent endpoint contract and 26 deployed test vectors; M07 remains release-candidate/not certified.",
         )),
         value if value == codex_id_m00_canonical_time_unit() => Some(VerificationRecord::research_required(
             codex_id_m00_canonical_time_unit(),
@@ -855,6 +862,27 @@ pub fn m00_radians_to_degrees(radians: f64) -> AeroResult<f64> {
     ensure_finite_formula_result(CODEX_ID_M00_RAD2DEG, radians * 180.0 / PI)
 }
 
+/// M00 radian angle normalization into the reviewed `[0, TAU)` interval.
+///
+/// This helper accepts finite scalar radian inputs only, applies the Rust
+/// Euclidean remainder against `std::f64::consts::TAU`, canonicalizes every zero
+/// output to positive zero, repairs only an exact `TAU` remainder-roundoff
+/// endpoint to the greatest representable value below `TAU`, and remains a
+/// research/preliminary-design implementation. It does not certify the M07
+/// release-candidate workspace or imply external Scilab equivalence.
+pub fn m00_wrap2pi(angle_radians: f64) -> AeroResult<f64> {
+    validation::ensure_finite("angle_radians", angle_radians)?;
+    let tau = std::f64::consts::TAU;
+    let wrapped = angle_radians.rem_euclid(tau);
+    if wrapped == 0.0 {
+        Ok(0.0)
+    } else if wrapped == tau {
+        ensure_finite_formula_result(CODEX_ID_M00_WRAP2PI, f64::from_bits(tau.to_bits() - 1))
+    } else {
+        ensure_finite_formula_result(CODEX_ID_M00_WRAP2PI, wrapped)
+    }
+}
+
 fn ensure_finite_formula_result(codex_id: &'static str, value: f64) -> AeroResult<f64> {
     if value.is_finite() {
         Ok(value)
@@ -1218,6 +1246,15 @@ mod tests {
         }
     }
 
+    fn assert_wrap2pi_circular_close(actual: f64, expected: f64, tolerance: f64) {
+        let absolute = (actual - expected).abs();
+        let circular = (std::f64::consts::TAU - absolute).abs();
+        assert!(
+            absolute.min(circular) <= tolerance,
+            "actual={actual}, expected={expected}, circular_tolerance={tolerance}"
+        );
+    }
+
     #[test]
     fn m00_angle_conversions_match_contract_vectors() {
         assert_close(m00_degrees_to_radians(0.0).unwrap(), 0.0, 0.0);
@@ -1239,6 +1276,223 @@ mod tests {
     fn m00_angle_conversions_reject_nonfinite_inputs() {
         assert!(m00_degrees_to_radians(f64::NAN).is_err());
         assert!(m00_radians_to_degrees(f64::INFINITY).is_err());
+    }
+
+    fn parse_wrap2pi_csv_record(line: &str) -> Vec<String> {
+        let mut fields = Vec::new();
+        let mut field = String::new();
+        let mut in_quotes = false;
+        for ch in line.chars() {
+            match ch {
+                '"' => in_quotes = !in_quotes,
+                ',' if !in_quotes => {
+                    fields.push(field.clone());
+                    field.clear();
+                }
+                _ => field.push(ch),
+            }
+        }
+        fields.push(field);
+        fields
+    }
+
+    fn parse_wrap2pi_decimal(value: &str) -> f64 {
+        match value {
+            "NaN" => f64::NAN,
+            "Infinity" => f64::INFINITY,
+            "-Infinity" => -f64::INFINITY,
+            other => other.parse::<f64>().unwrap(),
+        }
+    }
+
+    fn parse_wrap2pi_tolerance(value: &str) -> f64 {
+        if value == "not_applicable" {
+            0.0
+        } else {
+            value.parse::<f64>().unwrap()
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_matches_all_26_deployed_contract_vectors() {
+        let csv = include_str!("../../../formula-vault/contracts/m00_wrap2pi_test_vectors.csv");
+        let mut lines = csv.lines();
+        let header = parse_wrap2pi_csv_record(lines.next().unwrap());
+        assert_eq!(header.len(), 14);
+
+        let mut data_rows = 0usize;
+        let mut ok_rows = 0usize;
+        let mut rejected_rows = 0usize;
+        for line in lines.filter(|line| !line.trim().is_empty()) {
+            let row = parse_wrap2pi_csv_record(line);
+            assert_eq!(row.len(), header.len(), "malformed vector row: {line}");
+            data_rows += 1;
+
+            let id = &row[0];
+            let input = parse_wrap2pi_decimal(&row[3]);
+            let expected_status = &row[5];
+            match expected_status.as_str() {
+                "ok" => {
+                    ok_rows += 1;
+                    let actual = m00_wrap2pi(input)
+                        .unwrap_or_else(|err| panic!("{id} unexpectedly failed with {err:?}"));
+                    let expected = parse_wrap2pi_decimal(&row[7]);
+                    let absolute_tolerance = parse_wrap2pi_tolerance(&row[11]);
+                    assert!(
+                        (0.0..std::f64::consts::TAU).contains(&actual),
+                        "{id} returned {actual}, outside [0, TAU)"
+                    );
+                    assert_close(actual, expected, absolute_tolerance);
+                    if row[8] == "positive" {
+                        assert_eq!(actual, 0.0, "{id} expected canonical zero");
+                        assert!(!actual.is_sign_negative(), "{id} returned negative zero");
+                    }
+                }
+                "reject_nonfinite" => {
+                    rejected_rows += 1;
+                    let err = m00_wrap2pi(input).expect_err("nonfinite input must be rejected");
+                    assert_eq!(err.code(), "out_of_domain", "{id} rejected with {err:?}");
+                    assert_eq!(
+                        err.parameter(),
+                        Some("angle_radians"),
+                        "{id} rejected with {err:?}"
+                    );
+                }
+                other => panic!("{id} has unsupported expected_status {other}"),
+            }
+        }
+
+        assert_eq!(data_rows, 26);
+        assert_eq!(ok_rows, 23);
+        assert_eq!(rejected_rows, 3);
+    }
+
+    #[test]
+    fn m00_wrap2pi_canonicalizes_signed_zero() {
+        for angle in [0.0, -0.0, std::f64::consts::TAU, -std::f64::consts::TAU] {
+            let wrapped = m00_wrap2pi(angle).unwrap();
+            assert_eq!(wrapped, 0.0, "angle={angle}");
+            assert!(
+                !wrapped.is_sign_negative(),
+                "angle={angle}, wrapped={wrapped:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_outputs_stay_in_half_open_tau_interval() {
+        for angle in [
+            -13.75 * PI,
+            -2.0 * std::f64::consts::TAU,
+            -PI,
+            -1.0e-12,
+            -f64::EPSILON,
+            -1.0e-16,
+            -f64::MIN_POSITIVE,
+            -f64::from_bits(1),
+            0.0,
+            PI,
+            std::f64::consts::TAU,
+            9.25 * PI,
+            f64::MIN_POSITIVE,
+            f64::MAX,
+            -f64::MAX,
+        ] {
+            let wrapped = m00_wrap2pi(angle).unwrap();
+            assert!(
+                (0.0..std::f64::consts::TAU).contains(&wrapped),
+                "angle={angle}, wrapped={wrapped}"
+            );
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_repairs_exact_tau_remainder_roundoff_without_epsilon_clamping() {
+        let upper_neighbor = f64::from_bits(std::f64::consts::TAU.to_bits() - 1);
+        for angle in [
+            -f64::EPSILON,
+            -1.0e-16,
+            -f64::MIN_POSITIVE,
+            -f64::from_bits(1),
+        ] {
+            let wrapped = m00_wrap2pi(angle).unwrap();
+            assert_eq!(wrapped.to_bits(), upper_neighbor.to_bits(), "angle={angle}");
+            assert!(wrapped > 0.0, "angle={angle}, wrapped={wrapped}");
+            assert!(
+                wrapped < std::f64::consts::TAU,
+                "angle={angle}, wrapped={wrapped}"
+            );
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_is_idempotent_for_bounded_finite_samples() {
+        for angle in [
+            -41.0,
+            -PI,
+            -1.0e-12,
+            0.0,
+            0.25,
+            PI,
+            std::f64::consts::TAU,
+            87.5,
+        ] {
+            let wrapped = m00_wrap2pi(angle).unwrap();
+            assert_close(m00_wrap2pi(wrapped).unwrap(), wrapped, 0.0);
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_matches_bounded_periodicity() {
+        for angle in [-PI, -0.25, 0.0, 0.25, PI, 5.5] {
+            let base = m00_wrap2pi(angle).unwrap();
+            for k in -16..=16 {
+                let shifted = angle + f64::from(k) * std::f64::consts::TAU;
+                assert_wrap2pi_circular_close(m00_wrap2pi(shifted).unwrap(), base, 3.0e-14);
+            }
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_is_deterministic_across_repeated_calls() {
+        for angle in [
+            -19.75,
+            -0.0,
+            0.0,
+            1.23456789,
+            std::f64::consts::TAU,
+            12345.6789,
+        ] {
+            let first = m00_wrap2pi(angle).unwrap();
+            for _ in 0..64 {
+                assert_eq!(m00_wrap2pi(angle).unwrap().to_bits(), first.to_bits());
+            }
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_rejects_nonfinite_inputs() {
+        for angle in [f64::NAN, f64::INFINITY, -f64::INFINITY] {
+            let err = m00_wrap2pi(angle).expect_err("nonfinite input must reject");
+            assert_eq!(err.code(), "out_of_domain");
+            assert_eq!(err.parameter(), Some("angle_radians"));
+        }
+    }
+
+    #[test]
+    fn m00_wrap2pi_does_not_panic_on_finite_grid() {
+        for whole in -128..=128 {
+            for fractional in [-0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75] {
+                let angle = (f64::from(whole) + fractional) * PI;
+                let result = std::panic::catch_unwind(|| m00_wrap2pi(angle));
+                assert!(result.is_ok(), "angle={angle} panicked");
+                let wrapped = result.unwrap().unwrap();
+                assert!(
+                    (0.0..std::f64::consts::TAU).contains(&wrapped),
+                    "angle={angle}, wrapped={wrapped}"
+                );
+            }
+        }
     }
 
     #[test]

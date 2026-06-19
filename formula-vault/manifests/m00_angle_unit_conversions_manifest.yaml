@@ -1,12 +1,12 @@
 # Stage 4 Chunk 7D formula-vault per-candidate manifest.
 #
-# Metadata only: this manifest adds review-depth and reference-link structure for
-# the existing M00 angle/unit candidate. It has no formula implementation code,
+# Metadata plus bounded runtime deployment record: this manifest adds review-depth
+# and reference-link structure for the existing M00 angle/unit candidate. It has
 # no generated Rust, no Scilab execution output, and no certification evidence.
 # no flight readiness, no mission readiness, no operational approval, and no regulated-use approval.
 
 schema_version: formula_vault_candidate_manifest.v1
-manifest_status: metadata_only_research_required
+manifest_status: partial_runtime_deployed_research_required
 
 candidate:
   slice_id: formula_vault.m00_angle_unit_conversions.v1
@@ -30,8 +30,8 @@ review_links:
   source_boundary:
     m07_archive: external_quarantine_reference_only
     source_expression_review: pending_future_human_review_without_bulk_source_import
-    implementation_status: blocked_no_formula_implementation
-    public_surface_status: blocked_no_public_application_programming_interface
+    implementation_status: partial_runtime_deployed_wrap2pi_only_research_required
+    public_surface_status: public_runtime_exists_blocked_from_readiness_or_certification_promotion
   shared_archive_locators:
     release_gate_table_alias: release-gate status csv
     equivalence_jobs_table_alias: Scilab equivalence jobs csv
@@ -75,13 +75,13 @@ formula_reference_links:
     release_gate_row_alias: release-gate status csv row 5
     equivalence_job_alias: equivalence job 002
     source_file_locator: Bate, Mueller, and White - Fundamentals of Astrodynamics/fundamentals_astrodynamics_scilab_cleaned_all/fundamentals_astrodynamics_scilab_cleaned_all/namespaced/appendices_scilab_astrodynamics/src/constants/ast_app_constants_conversions.sci
-    source_expression_status: pending_future_human_review_no_source_import
-    variable_review_status: angle_radians finite real scalar metadata recorded
-    unit_review_status: radian input and radian output relationship pending future implementation evidence
-    domain_review_status: finite real scalar input only; non-finite input excluded
-    branch_review_status: endpoint and interval branch behavior pending future source review
-    tolerance_review_status: pending future equivalence evidence
-    implementation_status: blocked_no_formula_implementation
+    source_expression_status: endpoint_policy_reviewed_no_source_import
+    variable_review_status: angle_radians finite real scalar runtime input
+    unit_review_status: radian input and radian output runtime relationship deployed
+    domain_review_status: finite real scalar input only; non-finite input rejected
+    branch_review_status: reviewed interval [0, 2*pi), canonical positive zero, no ordinary-value clamping
+    tolerance_review_status: governed endpoint vectors and bounded deterministic checks only
+    implementation_status: bounded_runtime_deployed_research_required_no_scilab_parity_claim
 
 review_checklist:
   completed_in_chunk7d:
@@ -92,17 +92,19 @@ review_checklist:
   completed_in_chunk7f:
     - metadata-only source-expression and test-vector contract added for deg2rad, rad2deg, and wrap2pi
     - wrap2pi interval convention recorded as reviewed interval [0, 2*pi) with endpoint-sensitive expected values
-    - no implementation, generated code, fixtures, Scilab outputs, raw source, or public application programming interface added
+    - no generated code, fixtures, Scilab outputs, raw source, alternate public alias, or status upgrade added
+  post_stage5_runtime_deployment:
+    - `m00_wrap2pi` bounded Rust research/preliminary runtime deployed with finite-input validation, rem_euclid(2*pi), [0, 2*pi) output, canonical positive zero, exact-TAU remainder-roundoff endpoint repair, and nonfinite rejection
   blocked_until_future_explicit_authorization:
     - source expression transcription or translation
-    - implementation code or generated Rust
+    - additional implementation code, generated Rust, or alternate public API beyond bounded `m00_wrap2pi`
     - executable equivalence fixture import
     - Scilab execution result capture in repo
-    - public application programming interface promotion
+    - alternate public application programming interface promotion
     - validation status upgrade beyond research_required
 
 non_claims:
-  no_formula_implementation: true
+  no_additional_formula_implementation_beyond_bounded_m00_wrap2pi_runtime: true
   no_source_translation: true
   no_scilab_execution_result: true
   no_sgp4_certification_claim: true

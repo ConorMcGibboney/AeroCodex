@@ -57,11 +57,11 @@ If a step fails, the scripts stop at that step and return a non-zero exit code. 
 
 ## Current governed inventory snapshot
 
-These current-main counts come from the governed equation-inventory verifier and include Session G plus later Stage 5 work:
+These current-main counts come from the governed equation-inventory verifier and include Session G, later Stage 5 work, and the bounded post-Stage-5 `m00_wrap2pi` runtime deployment:
 
 | Inventory class | Current main count | Meaning |
 |---|---:|---|
-| Executable research equations | 151 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
+| Executable research equations | 152 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
 | Metadata-only formula-vault candidates | 27 | Formula-vault candidate metadata records; not implementations by themselves. |
 | External M07 backlog rows | 1,323 | Registered external M07 represented rows not yet selected as formula-vault candidates. C2 classification does not remove rows from this backlog. |
 | Validation cards | 46 | Conservative validation/governance records. They are not certification evidence. |
@@ -75,7 +75,7 @@ The historical Session G deltas were `+0` executable research equations, `+0` fo
 
 A clean friend-test run still leaves blocked and research-only items blocked. In particular:
 
-- `wrap2pi` has contract/test metadata but executable/public runtime implementation remains blocked pending endpoint-behavior policy;
+- `m00_wrap2pi` has contract/test metadata plus bounded executable/public runtime coverage for all 26 deployed endpoint vectors, while remaining research_required and non-certified; alternate aliases remain blocked;
 - `app_resolve_coplanar` remains blocked pending least-squares, rank, and tolerance policy;
 - Orekit O2a/O2b/O2c/O2d exist as bounded research/preliminary-only foundations and metadata helpers; O2d is contract/source-policy only and does not parse two-line-element records, implement checksums, decode fields, run SGP4, perform TEME transforms, propagate orbits, track objects operationally, or claim parity;
 - BioSim B2a exists only as a clean-room scenario-domain and deterministic structural-validation foundation; B2b-1 exists only as process/validated-constructor/one-tick-intent-planner helpers; B2b-2 exists only as bounded compartment replay, compact noncryptographic digest, and immutable atomic replay-event helpers; B2c exists only as fail-closed replay-integrity validation, deterministic committed-event ledger accounting, clamp accounting, path-safe report formatting, one synthetic example, and governance; no flat-resource adapter, full engine, controller, biological-fidelity, habitat-safety, medical, operational, parity, certification, or regulated-use claim exists; B2b-3 is skipped/not required for the deployed B2c consumer path;

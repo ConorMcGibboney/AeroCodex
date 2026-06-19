@@ -11,13 +11,14 @@ record_status: metadata_only_research_required
 slice:
   id: formula_vault.m00_angle_unit_conversions.v1
   title: M00 angle unit conversion and angle-wrap candidate metadata
-  lifecycle_label: equation_contract_drafted
+  lifecycle_label: bounded_runtime_deployed_research_required
   stage4_chunk: stage4_chunk7b_formula_vault_first_metadata_slice
-  public_api_surface: blocked_no_public_application_programming_interface
-  implementation_surface: blocked_no_executable_formula_code
+  public_api_surface: public_runtime_exists_blocked_from_readiness_or_certification_promotion
+  implementation_surface: bounded_aerocodex_rust_runtime_deployed_for_wrap2pi_only
   notes:
     - First bounded formula-vault metadata slice after the Chunk 7A candidate gate.
     - Selects three low-risk M00 unit/angle helper rows only.
+    - Post-Stage-5 deploys only `m00_wrap2pi` as a bounded Rust research/preliminary public API with `research_required` status.
     - Does not import or translate the M07 implementation source.
     - Does not cover the remaining M00 rows or any non-M00 astrodynamics formulas.
 
@@ -83,8 +84,8 @@ candidate_manifest:
       release_gate_row_alias: release-gate status csv row 5
       source_function_alias: foa_app_ast_app_wrap2pi
       equivalence_job_alias: equivalence job 002
-      source_expression_status: pending_future_human_review_no_source_import
-      implementation_status: blocked_no_formula_implementation
+      source_expression_status: endpoint_policy_reviewed_no_source_import
+      implementation_status: bounded_runtime_deployed_research_required_no_scilab_parity_claim
 
 
 source_expression_contract:
@@ -96,8 +97,8 @@ source_expression_contract:
     - formula_vault.m00.angle.deg2rad
     - formula_vault.m00.angle.rad2deg
     - formula_vault.m00.angle.wrap2pi
-  implementation_status: blocked_no_formula_implementation
-  public_surface_status: blocked_no_public_application_programming_interface
+  implementation_status: partially_implemented_research_required_wrap2pi_runtime_only
+  public_surface_status: public_runtime_exists_blocked_from_readiness_or_certification_promotion
 
 formula_contract:
   formula_ids:
@@ -113,7 +114,7 @@ formula_contract:
       contract_intent: convert finite radian-valued angle metadata to degrees; exact expression remains pending future source review before implementation.
     - rust_function: app_wrap2pi
       scilab_function: foa_app_ast_app_wrap2pi
-      contract_intent: normalize a finite radian angle into a two-pi interval; interval endpoint policy remains pending future source review before implementation.
+      contract_intent: normalize a finite radian angle into the reviewed [0, 2*pi) interval using bounded Rust research/preliminary runtime behavior; no source translation or Scilab parity claim is made.
   variables:
     - name: angle_degrees
       applies_to: formula_vault.m00.angle.deg2rad
@@ -143,11 +144,11 @@ formula_contract:
     - positive or negative infinity inputs are excluded.
   branch_behavior:
     - deg2rad and rad2deg are single-branch metadata candidates.
-    - wrap2pi interval endpoint behavior is not promoted until future source review and equivalence evidence exist.
+    - wrap2pi runtime behavior is bounded to finite inputs, rem_euclid(2*pi), [0, 2*pi) output, canonical positive zero, exact-TAU remainder-roundoff endpoint repair, and nonfinite rejection; it is not a Scilab parity or certification claim.
   tolerance_policy:
     absolute_tolerance: pending_future_equivalence_plan
     relative_tolerance: pending_future_equivalence_plan
-    rationale: No numerical tolerance is claimed in Chunk 7B because no executable implementation or reference fixture is promoted.
+    rationale: Post-Stage-5 wrap2pi Rust tests execute the 26 governed endpoint-policy vectors; ordinary values are not clamped, no epsilon-based endpoint promotion is used, and only exact `TAU` remainder-roundoff is repaired to the greatest representable value below `TAU`.
 
 validation_records:
   required_source_registry_seed: source.formula_vault.m00_angle_unit_conversions.research_required
@@ -157,13 +158,13 @@ validation_records:
 
 evidence_plan:
   rust_gates:
-    - future bounded Rust unit tests only if a later chunk explicitly authorizes implementation
+    - bounded Rust unit tests for `m00_wrap2pi`, including all 26 governed endpoint-policy vectors and deterministic property checks
   scilab_equivalence_jobs:
     - equivalence job 002
   sgp4_reference_checks: []
   analytical_identity_checks:
-    - deg2rad and rad2deg inverse-consistency checks after future implementation authorization
-    - wrap2pi interval and periodicity checks after future implementation authorization
+    - deg2rad and rad2deg inverse-consistency checks remain research/preliminary
+    - wrap2pi interval, signed-zero, idempotence, bounded periodicity, repeated-call, nonfinite, and finite-grid checks executed by Rust unit tests
   reference_oracle_checks:
     - source-row inspection and independent unit-conversion oracle before status upgrade
   fixture_hashes: []
@@ -174,14 +175,14 @@ promotion_gate:
   required_before_promotion:
     - source locators rechecked against the registered M07 archive hash
     - source expressions reviewed without bulk source import
-    - implementation chunk explicitly authorized
-    - Rust unit tests and equivalence/reference checks written for this bounded formula list only
+    - any future status upgrade explicitly authorized beyond this bounded runtime deployment
+    - independent validation/equivalence evidence written for any status upgrade beyond research_required
     - no raw M07 source, generated binary, fixture, local absolute path, or evidence log promoted
-    - no public application programming interface promoted without explicit future authorization
+    - no alternate public alias promoted and no status upgrade beyond research_required
     - research and preliminary-design caveat repeated
 
 non_claims:
-  no_formula_implementation: true
+  no_formula_implementation: false
   no_source_translation: true
   no_scilab_execution_result: true
   no_sgp4_certification_claim: true

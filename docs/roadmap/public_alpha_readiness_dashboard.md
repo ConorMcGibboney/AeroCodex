@@ -15,11 +15,11 @@ The public alpha friend-test package is intended to answer four narrow questions
 
 ## Current main governed counts
 
-The current main counts below are verifier-derived and include Session G plus later Stage 5 work through BioSim B2c and the final Stage 5 closeout/status consolidation. Session G itself historically added `+1` validation card, `+1` source-registry seed, `+1` validation-card-only record, and `+0` to the other four governed counters; the absolute values here are the current-main values, not the old Session G branch-local snapshot. The final closeout/status consolidation has zero governed-count delta.
+The current main counts below are verifier-derived and include Session G, later Stage 5 work through BioSim B2c and the final Stage 5 closeout/status consolidation, plus the bounded Post-Stage-5 `m00_wrap2pi` runtime deployment. Session G itself historically added `+1` validation card, `+1` source-registry seed, `+1` validation-card-only record, and `+0` to the other four governed counters; the absolute values here are the current-main values, not the old Session G branch-local snapshot. The wrap2pi runtime deployment adds `+1` executable research equation and zero change to the other governed counters.
 
 | Inventory class | Current main count | Meaning |
 |---|---:|---|
-| Executable research equations | 151 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
+| Executable research equations | 152 | Public Rust research/preliminary-design equation kernels inventoried by `validation/equation_inventory.tsv`. |
 | Metadata-only formula-vault candidates | 27 | Formula-vault candidate metadata records; not implementations by themselves. |
 | External M07 backlog rows | 1,323 | Registered external M07 represented rows not yet selected as formula-vault candidates. C2 classification does not remove rows from this backlog. |
 | Validation cards | 46 | Conservative validation/governance records. They are not certification evidence. |
@@ -35,13 +35,13 @@ The current main counts below are verifier-derived and include Session G plus la
 | Expected-output guide | `docs/testing/friend_test_expected_output.md` | research_required | Output varies by toolchain and is not validation evidence. |
 | Safety caveats | `docs/testing/research_safety_caveats_for_testers.md` | research_required | Caveats must stay visible for public testers. |
 | Equation inventory | `validation/equation_inventory.tsv` and `cargo run -p xtask -- verify equation-inventory` | research_required | Inventory rows classify items; they do not validate formulas. |
-| Formula-vault metadata | `formula-vault/` and `cargo run -p xtask -- verify formula-vault` | research_required | Candidate records remain metadata-only until a later authorized implementation chunk. |
+| Formula-vault metadata | `formula-vault/` and `cargo run -p xtask -- verify formula-vault` | research_required | Candidate records remain research_required; only `m00_wrap2pi` has a bounded runtime deployment and no candidate metadata implies certification or parity. |
 | Dependency policy | `cargo run -p xtask -- dependency-policy` | research_required | Dependency hygiene is not physical validation or safety approval. |
 | Documentation build | `cargo doc --workspace --all-features --no-deps` | research_required | Documentation generation does not create validation evidence. |
 
 ## Known blocked public-facing items
 
-- `wrap2pi` contract/test metadata exists, but executable/public runtime implementation remains blocked pending a separate endpoint-behavior decision.
+- `m00_wrap2pi` has a bounded executable/public Rust runtime for `formula_vault.m00.angle.wrap2pi`, remains research_required/non-certified, and makes no M07/Scilab parity claim; alternate aliases remain blocked.
 - `app_resolve_coplanar` remains blocked for least-squares, rank, singularity, and tolerance policy.
 - Orekit v3 O2a/O2b/O2c/O2d exist as bounded research/preliminary-only foundations and metadata helpers; O2d is contract/source-policy only and does not provide two-line-element parsing, checksums, field decoding, SGP4, TEME transforms, propagation, operational tracking, or parity.
 - BioSim docs/contracts, flat resource/tick primitives, corrected B2a scenario-domain structural validation, B2b-1 process/intent-planner helpers, B2b-2 bounded replay/digest/event helpers, and B2c replay-integrity/ledger/report/example helpers remain research-only and incomplete as a full scenario engine or controller; no flat-resource adapter exists in B2c, B2b-3 is skipped/not required for the deployed B2c consumer path, and no biological-fidelity, habitat-safety, medical, operational, parity, certification, or regulated-use claim is made.
