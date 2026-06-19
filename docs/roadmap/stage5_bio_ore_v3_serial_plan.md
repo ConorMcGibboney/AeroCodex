@@ -1,6 +1,6 @@
 # Stage 5 BioSim/Orekit v3 Serial Plan
 
-This document records the current BioSim and Orekit v3 serial plan after deployed O2a, deployed O2b, deployed O2c, deployed O2d, adapted Session E, and adapted Session F slices. It is documentation/status control only. It does not authorize additional Orekit runtime/code, approve source-locator normalization, import external source, or change governed inventories outside a bounded deployment chunk.
+This document records the current BioSim and Orekit v3 serial plan after deployed O2a, deployed O2b, deployed O2c, deployed O2d, corrected BioSim B2a, adapted Session E, and adapted Session F slices. It is documentation/status control only. It does not authorize additional Orekit runtime/code, approve source-locator normalization, import external source, or change governed inventories outside a bounded deployment chunk.
 
 ## Summary
 
@@ -10,7 +10,7 @@ This document records the current BioSim and Orekit v3 serial plan after deploye
 - Orekit O2d two-line-element contract/source-policy review is deployed/completed as contract-only metadata and fail-closed prerequisite evaluation; it remains historically classified `needs_review` and is not a parser, checksum, decoder, SGP4, TEME, propagation, or operational-tracking implementation.
 - Adapted Session F reference-oracle planning metadata is deployed at `68dc10fc9215df2be9bc64e0f2a94121250c361a`, but it is not a replacement for O2c or O2d; O2c and O2d are separately deployed bounded slices.
 - Adapted Session E BioSim-plus docs/contracts are deployed at `9dcc303336d12e401c4a866b3bc2410c937014dd`, but they are not a replacement for BioSim B2a, B2b, or B2c.
-- Corrected BioSim B2a remains `needs_review`; BioSim B2b and BioSim B2c remain `blocked` by predecessors.
+- Corrected BioSim B2a is deployed/completed at bounded research-required scope; BioSim B2b-1 is the next `needs_review` candidate, and B2b-2/B2b-3/B2c remain `blocked` by predecessors.
 - Legacy Session E/F, old v1/v2, B1a, O1a, and aggregate wrappers are audit/history references, not direct deployment targets.
 
 ## Orekit v3 serial order
@@ -26,8 +26,8 @@ This document records the current BioSim and Orekit v3 serial plan after deploye
 
 | Order | Slice | Current status | Classification | Evidence / dependency | Remaining scope |
 |---:|---|---|---|---|---|
-| 1 | Corrected B2a domain and structural validation | outstanding future candidate | needs_review | Separate BioSim prompt required. | Correct known test-literal issue, run source-boundary review, rustfmt/compile/tests, inventory/regeneration, full gates, and CI. |
-| 2 | B2b-1 process/planner | blocked_until_predecessor | blocked | Depends on accepted corrected B2a. | Re-cut B2b into smaller review units before any deployment. |
+| 1 | Corrected B2a domain and structural validation | deployed/completed | needs_review | Bounded B2a deployment. | Scenario-domain and structural validation only; no process flows, replay, adapter, ledger, report, example, complete engine, controller, biological-fidelity, habitat-safety, medical, operational, parity, or certification claim. |
+| 2 | B2b-1 process/planner re-cut | next bounded implementation candidate | needs_review | Depends on accepted corrected B2a. | Separate prompt required; do not bulk-apply monolithic B2b. |
 | 3 | B2b-2 bounded replay/event model | blocked_until_predecessor | blocked | Depends on B2b-1. | Resolve hard limits, checked allocation, underflow, and event semantics. |
 | 4 | B2b-3 optional flat-resource adapter proof | blocked_until_predecessor | blocked | Depends on B2b-2. | Optional and non-authoritative exact-mapping proof only. |
 | 5 | B2c ledger/report/example/governance | blocked_until_predecessor | blocked | Depends on final accepted B2b contract. | Requires example execution evidence and report-integrity review. |
@@ -40,7 +40,7 @@ This document records the current BioSim and Orekit v3 serial plan after deploye
 | Adapted Session F Orekit reference-oracle planning metadata | Deployed as planning metadata only; O2b, O2c, and O2d were deployed separately as bounded research/preliminary-only slices. | superseded |
 | Session E original BioSim-plus handoff | Older direct lane replaced by BioSim v3 serial intake or adapted bounded docs/contracts where explicitly deployed. | superseded |
 | Session F original Orekit handoff | Older direct lane replaced by Orekit v3 serial intake or adapted bounded reference-oracle metadata where explicitly deployed. | superseded |
-| Older BioSim v1/v2 materials, B1a, and companion notes | Audit inputs only; corrected B2a is the future first BioSim lane. | superseded |
+| Older BioSim v1/v2 materials, B1a, and companion notes | Audit inputs only; corrected B2a is now the bounded deployed foundation for the v3 BioSim lane. | superseded |
 | Older Orekit v1/v2 materials, O1a, and companion notes | Audit inputs only; deployed O2a/O2b/O2c/O2d define the Orekit v3 lane. | superseded |
 | Aggregate wrappers such as `stage 5.zip`, `files-aerocodex.zip`, `BioSim and Orekit v.zip`, and `Orekit and Bio new v.zip` | Not deployment patches; do not deploy aggregate/source containers. | blocked |
 
@@ -54,6 +54,6 @@ This document records the current BioSim and Orekit v3 serial plan after deploye
 
 ## Known blockers
 
-- BioSim B2a corrections and source-boundary review.
-- BioSim B2b re-cut requirement.
+- BioSim B2b-1 re-cut requirement.
+- BioSim B2b-2/B2b-3/B2c predecessor gates.
 - BioSim B2c example execution and report-integrity evidence.

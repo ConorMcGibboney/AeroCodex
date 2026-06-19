@@ -16,6 +16,8 @@
 
 /// Clean-room BioSim-RS resource-identity and tick-validation primitives.
 pub mod biosim_resource_tick;
+/// Clean-room BioSim-plus synthetic scenario domain and structural validation.
+pub mod biosim_scenario;
 /// Common BLSS mass-balance, stoichiometric, closure, and ESM helpers derived from the thin-film report.
 pub mod brlss_backbone;
 /// MELiSSA C4a photobioreactor, gas-balance, carbonate, and controller helpers.
