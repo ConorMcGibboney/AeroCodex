@@ -8,7 +8,7 @@ artifacts:
     artifact_kind: repo_file_manifest
     origin: current_repo
     license: MIT OR Apache-2.0 with source-material attribution boundaries
-    sha256: fc4b1fd6d7971b358cf119ce32f6f58d32975967cd3a4d6b0215f620004e077a
+    sha256: 4d5ed624688667863b19a30e364621036d3be50f65c401a814a0676477585c86
     hash_status: sha256_verified_current_repo_file
     allowed_use: in-repository provenance and thin-film source manifest tracking only
     bundling_decision: bundled repo-relative governance artifact; not an external-code import
@@ -50,7 +50,7 @@ artifacts:
     artifact_kind: repo_directory_validation_cards
     origin: current_repo
     license: MIT OR Apache-2.0
-    sha256: 5ffe9d1ec3c7bef5d15d2cec0e5eb87c8e2f347e68609cadf209105312c9f30b
+    sha256: 32bb1d709c43588f07021587fe13f25836a257c43511820c67c04e7ff9ed0d73
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: validation-card metadata and source-status tracking only
     bundling_decision: bundled repo-relative validation metadata; no external archive import
@@ -64,7 +64,7 @@ artifacts:
     artifact_kind: repo_directory_source_registry
     origin: current_repo
     license: MIT OR Apache-2.0 metadata with cited-source boundaries
-    sha256: 4b5ae825ce6b9f5f833b9760ac77683bd6f6a3039f829ba5ae89841c3a0b8735
+    sha256: 967623b402264253b4000f6e337d49b1f4dbc42cfca92be959b7f0f4709849f5
     hash_status: aggregate_sha256_current_tracked_tree
     allowed_use: source seed registry and validation-card linkage only
     bundling_decision: bundled repo-relative source metadata; not external source-code import
@@ -78,7 +78,7 @@ artifacts:
     artifact_kind: repo_file_validation_inventory
     origin: current_repo
     license: MIT OR Apache-2.0 metadata
-    sha256: 392fadb7583a75dfffb2993d921dabb495e6583dd2e8f4442081ae65f80d9b06
+    sha256: 4d37e163ce2438c7f56c82d98484920cbb5a244152e5c1ab36a703a15f01a021
     hash_status: sha256_verified_current_repo_file
     allowed_use: machine-readable equation inventory and readiness-dashboard counts only
     bundling_decision: bundled repo-relative validation metadata; no formula implementation, source archive import, generated code, fixture, or public application programming interface promotion

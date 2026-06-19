@@ -21,13 +21,13 @@ sha256 = "cbca8994de4ffe26e4ba28d9b004f6745195b3172f7839b3510f0be27c3be37d"
 
 [[files]]
 path = "README.md"
-bytes = 11774
-sha256 = "82fa756b6a4e75921e24f0cf57a9de8119d334a21596f7bff6d92824e60d4a66"
+bytes = 12152
+sha256 = "042b45ffc448043356bdc964c0e83ab0e6101dfb7d3f9f963621ee8f2aa0bec9"
 
 [[files]]
 path = "checksums/SHA256SUMS"
 bytes = 6583
-sha256 = "3e5520e5057e8355e09673d037c65024faefd97489995a0951735cded3b187a6"
+sha256 = "dad09b14408a2e0ca9e515e2b741b15f5b3a957073479ed793e30bd4273403ee"
 
 [[files]]
 path = "citations/blss_thinfilm_refs.bib"

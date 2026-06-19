@@ -1,0 +1,50 @@
+id: validation.astrodynamics.time_frame_tle_foundation
+name: Astrodynamics time, frame, Cartesian state, elliptic helper, oracle-record, and TLE-contract foundation
+category: astrodynamics
+status: research_required
+source:
+  id: source.astrodynamics.time_frame_tle_foundation.research_required
+  status: research_required
+assumptions:
+  - Time values are finite scalar seconds carrying labels; UTC offsets are label-preserving only and are not civil UTC or leap-second arithmetic.
+  - Frame values are labels; only same-label identity is supported and no numerical frame transform is implemented.
+  - Cartesian position is in metres, velocity is in metres per second, and gravitational parameter is in cubic metres per square second.
+  - Classical element and Kepler helpers are bounded to explicitly validated elliptic domains and return errors at singular or unsupported boundaries.
+  - Oracle records compare caller-supplied values only after units, frame, time scale, epoch, source, summaries, tolerance, and evidence state are validated.
+  - The TLE layer is contract-only and contains no parser, checksum implementation, field decoder, fixture, SGP4 model, or TEME transform.
+  - All implementation and tests are independently written and do not import Orekit Java source, tests, fixtures, class hierarchy, comments, or control flow.
+domain: "Research-only astrodynamics foundation: finite labeled scalar time; same-frame identity; finite SI Cartesian states; non-singular elliptic element extraction; elliptic Kepler equation with e in [0,1); context-complete oracle records; metadata-only TLE source policy."
+inputs:
+  - finite scalar epoch and duration values with explicit time-scale labels
+  - explicit frame labels and requested transform direction
+  - finite SI Cartesian position/velocity and positive finite gravitational parameter
+  - positive finite orbital-element singularity thresholds
+  - elliptic Kepler inputs and explicit solver tolerance/iteration cap
+  - complete oracle comparison metadata and caller-supplied values
+  - TLE source-review locator metadata only
+outputs:
+  - label-preserving time results or explicit cross-scale/conversion errors
+  - same-frame identity or explicit blocked/unsupported frame status
+  - validated Cartesian records and finite vector norms
+  - bounded classical elements, two-body specific energy, and elliptic Kepler scalar results
+  - deterministic oracle comparison status and metrics for validated records
+  - fail-closed TLE contract review status with parser authorization always false
+  - deterministic non-operational smoke report
+tests:
+  - all time-scale labels, cross-scale rejection, UTC scalar-offset caveat, and arithmetic overflow paths
+  - all frame labels/statuses, same-frame identity for every label, and blocked non-identity requests
+  - finite versus orbital-use state validation, direct norm values, nonfinite components, zero radius, invalid mu, and norm overflow
+  - angular momentum, node/eccentricity vectors, specific energy, elliptic elements, singularities, quadrants, and tolerance failures
+  - elliptic Kepler circular/low-e/near-one cases, invalid domains, iteration-cap failure, normalization, negative duration, and overflow
+  - oracle context completeness, evidence states, exact/absolute/relative tolerance behavior, component failures, and arithmetic overflow
+  - TLE review-topic completeness, missing/duplicate/placeholder locators, fixture prohibition, and deterministic blocked summaries
+  - cargo run -p aero-codex-astrodynamics --example astrodynamics_foundation_smoke
+failure_modes:
+  - Cross-scale or leap-sensitive time operation is rejected without a reviewed conversion policy.
+  - Non-identity frame transform is blocked or unsupported.
+  - Nonfinite Cartesian input, invalid gravitational parameter, zero orbital radius, or nonfinite norm is rejected.
+  - Circular, equatorial, zero-angular-momentum, near-parabolic, parabolic, hyperbolic, or invalid-tolerance element case is rejected.
+  - Invalid elliptic domain, invalid solver options, non-convergence, or nonfinite Kepler arithmetic is rejected.
+  - Missing oracle context, invalid tolerance/evidence metadata, or nonfinite comparison arithmetic is rejected or blocked.
+  - Missing, duplicate, placeholder, or structurally invalid TLE source locator keeps parser implementation blocked.
+notes: "Validation-planning scaffold only. Exact external source locators, external reference evidence, source-backed tolerance rationales, parser design, SGP4/TEME policy, and fixture provenance remain pending. No source equivalence, parser approval, operational tracking, flight, mission, navigation, certification, or regulated-use claim is made."

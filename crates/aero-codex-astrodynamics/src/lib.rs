@@ -20,6 +20,7 @@ pub mod kepler;
 pub mod oracle;
 pub mod state;
 pub mod time;
+pub mod tle;
 
 use aero_codex_core::{validation, AeroError, AeroResult, VerificationRecord};
 use std::f64::consts::PI;

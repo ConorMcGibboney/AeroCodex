@@ -1,0 +1,26 @@
+id: source.astrodynamics.time_frame_tle_foundation.research_required
+title: Astrodynamics time/frame/state, elliptic helper, oracle-record, and TLE-contract source-review seed
+category: astrodynamics
+status: research_required
+intended_use:
+  - Identify exact public sources for time-scale terminology and the boundary between scalar labeled offsets and leap-second-aware civil UTC arithmetic.
+  - Identify exact sources for Cartesian-state units, vector relations, classical orbital elements, singularities, and elliptic Kepler equations/numerical policy.
+  - Define AeroCodex-native validation policy for context-complete oracle comparison records and explicit tolerances.
+  - Record exact public-format locators required before any TLE parser, checksum, epoch decoder, field decoder, SGP4 coupling, or TEME interpretation is proposed.
+requested_details:
+  - Exact source edition, revision, section/equation identifiers, symbols, SI units, frame assumptions, time-scale assumptions, and valid domains for each mathematical helper.
+  - Source-backed rationale for circular, equatorial, zero-angular-momentum, near-parabolic, parabolic, and hyperbolic exclusion policies and angle quadrant conventions.
+  - Numerical-method reference and reviewed tolerance/iteration policy for safeguarded elliptic Kepler solving.
+  - Internal validation-policy locator for absolute-plus-relative scalar/vector comparisons, finite arithmetic, context completeness, evidence states, and hash metadata format.
+  - One exact source locator for every TLE line/field/model/frame topic named by TleSourceReviewTopic, including license/access and fixture-provenance review.
+implementation_notes:
+  - Rust implementation is independently written from standard mathematical definitions and AeroCodex clean-room rules.
+  - Orekit is limited to a possible future external oracle or architecture-comparison role; no Java source, comments, tests, fixtures, class hierarchy, method decomposition, or control flow is imported.
+  - The TLE layer remains contract-only; no parser/checksum/decoder behavior or TLE-like fixture is included.
+  - No external runtime, Java interoperability, network access, file-backed fixture loading, SGP4, numerical frame transform, or new dependency is introduced.
+  - Validation status remains research_required until exact locators and live implementation/reference evidence are reviewed.
+limits:
+  - Does not establish correctness, source equivalence, accuracy, orbit-determination suitability, operational tracking capability, or external-tool parity.
+  - Does not authorize flight, mission, navigation, conjunction assessment, certification, safety-critical use, or regulated use.
+  - Does not authorize use of live/historical satellite records or external fixtures without provenance and license review.
+notes: "Conservative source-research seed for the bounded Rust astrodynamics foundation; exact locators and reference evidence remain pending."
