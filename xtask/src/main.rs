@@ -4,6 +4,7 @@ use std::{
     collections::{BTreeMap, BTreeSet},
     env, fs,
     path::{Path, PathBuf},
+    process::Command,
 };
 
 const REQUIRED_CARD_FIELDS: &[&str] = &[
@@ -282,6 +283,10 @@ fn main() {
             let root = repo_root();
             verify_beta1(&root)
         }
+        ["verify", "beta1-automated", remaining @ ..] => {
+            let root = repo_root();
+            run_beta1_automated_gate(&root, remaining)
+        }
         ["dependency-policy"] => dependency_policy(),
         ["help"] | ["--help"] | ["-h"] => {
             print_usage();
@@ -301,8 +306,46 @@ fn main() {
 
 fn print_usage() {
     eprintln!(
-        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- verify formula-vault\n  cargo run -p xtask -- verify equation-inventory\n  cargo run -p xtask -- verify beta1\n  cargo run -p xtask -- dependency-policy"
+        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- verify formula-vault\n  cargo run -p xtask -- verify equation-inventory\n  cargo run -p xtask -- verify beta1\n  cargo run -p xtask -- verify beta1-automated [--output-dir <output-directory>] [--timeout-seconds <seconds>]\n  cargo run -p xtask -- dependency-policy"
     );
+}
+
+fn run_beta1_automated_gate(root: &Path, remaining: &[&str]) -> Result<(), String> {
+    let script = root.join("scripts/beta1_automated_gate.py");
+    if !script.is_file() {
+        return Err(format!(
+            "missing Beta 1 automated gate: {}",
+            script.display()
+        ));
+    }
+
+    let candidates = ["python", "python3"];
+
+    let python = candidates
+        .into_iter()
+        .find(|candidate| {
+            Command::new(*candidate)
+                .arg("--version")
+                .output()
+                .map(|output| output.status.success())
+                .unwrap_or(false)
+        })
+        .ok_or_else(|| {
+            "no usable Python interpreter found for Beta 1 automated gate".to_string()
+        })?;
+
+    let status = Command::new(python)
+        .arg(&script)
+        .arg("--repo")
+        .arg(root)
+        .args(remaining.iter().copied())
+        .status()
+        .map_err(|error| format!("failed to start Beta 1 automated gate with {python}: {error}"))?;
+    if status.success() {
+        Ok(())
+    } else {
+        Err(format!("Beta 1 automated gate failed with status {status}"))
+    }
 }
 
 fn verify_beta1(root: &Path) -> Result<(), String> {
@@ -315,6 +358,7 @@ fn verify_beta1(root: &Path) -> Result<(), String> {
         "docs/beta1/release_testing.md",
         "scripts/package_beta1_release.py",
         "scripts/verify_beta1_release.py",
+        "scripts/beta1_automated_gate.py",
         ".github/workflows/beta1-package.yml",
     ];
     for relative in required_files {
@@ -439,6 +483,22 @@ fn verify_beta1(root: &Path) -> Result<(), String> {
         }
     }
 
+    let automated_gate = fs::read_to_string(root.join("scripts/beta1_automated_gate.py"))
+        .map_err(|error| format!("Beta 1 automated gate: {error}"))?;
+    for marker in [
+        "beta1-test-report.json",
+        "beta1-test-report.junit.xml",
+        "actual_archive_tamper_rejection",
+        "deterministic_repeatability",
+        "bounded_round_trip",
+    ] {
+        if !automated_gate.contains(marker) {
+            return Err(format!(
+                "scripts/beta1_automated_gate.py missing marker `{marker}`"
+            ));
+        }
+    }
+
     let package_workflow = fs::read_to_string(root.join(".github/workflows/beta1-package.yml"))
         .map_err(|error| format!("Beta 1 package workflow: {error}"))?;
     for marker in [
@@ -446,7 +506,7 @@ fn verify_beta1(root: &Path) -> Result<(), String> {
         "ubuntu-latest",
         "windows-latest",
         "macos-latest",
-        "package_beta1_release.py",
+        "verify beta1-automated",
         "actions/upload-artifact@v4",
     ] {
         if !package_workflow.contains(marker) {
@@ -458,13 +518,15 @@ fn verify_beta1(root: &Path) -> Result<(), String> {
 
     let workflow = fs::read_to_string(root.join(".github/workflows/ci.yml"))
         .map_err(|error| format!("CI workflow: {error}"))?;
+    if !workflow.contains("cargo run -p xtask -- verify beta1-automated") {
+        return Err(".github/workflows/ci.yml missing Beta 1 automated gate command".to_string());
+    }
     let bash_friend_test = fs::read_to_string(root.join("scripts/friend_test_local.sh"))
         .map_err(|error| format!("Bash friend test: {error}"))?;
     let powershell_friend_test = fs::read_to_string(root.join("scripts/friend_test_local.ps1"))
         .map_err(|error| format!("PowerShell friend test: {error}"))?;
     let smoke_marker = "cargo run -p aero-codex-cli -- self-check --json";
     for (name, text) in [
-        (".github/workflows/ci.yml", workflow),
         ("scripts/friend_test_local.sh", bash_friend_test),
         ("scripts/friend_test_local.ps1", powershell_friend_test),
     ] {

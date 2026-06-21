@@ -76,3 +76,28 @@ A candidate is testable when:
 - no operational-readiness, certification, full-inventory, external-parity, or safety claim is added.
 
 Passing this gate authorizes private or internal Beta 1 concept testing only. Publication, signing, tagging, or broader distribution requires a separate release decision.
+
+## One-command automated qualification
+
+The preferred agent and CI entrypoint is:
+
+```bash
+cargo run -p xtask -- verify beta1-automated
+```
+
+An explicit report directory may be supplied:
+
+```bash
+cargo run -p xtask -- verify beta1-automated --output-dir /path/outside/repository/beta1-gate
+```
+
+The command snapshots the current tracked and untracked source state into an isolated temporary Git repository, then runs the repository gates, a black-box CLI matrix, deterministic repeatability and bounded round-trip checks, native release packaging, live packaged-binary verification, and an actual archive-tamper rejection check. The source repository is compared before and after the run and must remain unchanged.
+
+The report directory contains:
+
+- `beta1-test-report.json` for machine processing;
+- `beta1-test-report.junit.xml` for CI test reporting;
+- `beta1-test.log` with complete command output;
+- `native-package/` with the native candidate archive and package report when the gate reaches packaging.
+
+The automated gate does not promote validation status, certify equations, complete the full equation inventory, tag a release, or publish an artifact.

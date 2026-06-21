@@ -33,6 +33,16 @@ python --version || python3 --version
 
 On Windows, PowerShell users can run the `.ps1` script. On Linux, Git Bash, or Windows Subsystem for Linux, use the `.sh` script. On macOS, install a package that provides `sha256sum` or run the commands manually with an equivalent checksum manifest checker.
 
+## Automated qualification gate
+
+For the complete machine-readable Beta 1 gate, including CLI edge cases, deterministic repeatability, native packaging, packaged-binary checks, and tamper rejection, run:
+
+```bash
+cargo run -p xtask -- verify beta1-automated
+```
+
+This writes JSON, JUnit report, and a full log under `target/beta1-automated/<UTC timestamp>/` unless `--output-dir` is supplied. The friend-test scripts below remain a useful readable local diagnostic sequence.
+
 ## One-command local run
 
 From the repository root:
