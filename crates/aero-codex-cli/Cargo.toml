@@ -1,0 +1,18 @@
+[package]
+name = "aero-codex-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "aerocodex"
+path = "src/main.rs"
+
+[dependencies]
+aero-codex-astrodynamics = { path = "../aero-codex-astrodynamics" }
+aero-codex-core = { path = "../aero-codex-core" }
+
+[lints]
+workspace = true

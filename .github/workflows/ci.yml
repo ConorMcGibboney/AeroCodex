@@ -21,6 +21,9 @@ jobs:
       - run: cargo check --workspace --all-targets --all-features
       - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
       - run: cargo test --workspace --all-targets --all-features
+      - run: cargo run -p aero-codex-cli -- version --json
+      - run: cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
+      - run: cargo run -p aero-codex-cli -- self-check --json
       - run: cargo run -p xtask -- verify --all
       - run: cargo run -p xtask -- dependency-policy
       - run: python scripts/verify_thinfilm_artifact.py

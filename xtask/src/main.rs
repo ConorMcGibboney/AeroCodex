@@ -278,6 +278,10 @@ fn main() {
             let root = repo_root();
             verify_equation_inventory(&root).map(|_| ())
         }
+        ["verify", "beta1"] => {
+            let root = repo_root();
+            verify_beta1(&root)
+        }
         ["dependency-policy"] => dependency_policy(),
         ["help"] | ["--help"] | ["-h"] => {
             print_usage();
@@ -297,8 +301,108 @@ fn main() {
 
 fn print_usage() {
     eprintln!(
-        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- verify formula-vault\n  cargo run -p xtask -- verify equation-inventory\n  cargo run -p xtask -- dependency-policy"
+        "usage:\n  cargo run -p xtask -- verify --all\n  cargo run -p xtask -- verify cards\n  cargo run -p xtask -- verify source-registry\n  cargo run -p xtask -- verify data-registry\n  cargo run -p xtask -- verify status-vocabulary\n  cargo run -p xtask -- verify formula-vault\n  cargo run -p xtask -- verify equation-inventory\n  cargo run -p xtask -- verify beta1\n  cargo run -p xtask -- dependency-policy"
     );
+}
+
+fn verify_beta1(root: &Path) -> Result<(), String> {
+    let required_files = [
+        "crates/aero-codex-cli/Cargo.toml",
+        "crates/aero-codex-cli/src/main.rs",
+        "crates/aero-codex-cli/tests/cli.rs",
+        "docs/beta1/release_concept.md",
+        "docs/beta1/cli_quickstart.md",
+    ];
+    for relative in required_files {
+        let path = root.join(relative);
+        if !path.is_file() {
+            return Err(format!("missing Beta 1 artifact: {}", path.display()));
+        }
+    }
+
+    let workspace_manifest = fs::read_to_string(root.join("Cargo.toml"))
+        .map_err(|error| format!("Cargo.toml: {error}"))?;
+    for marker in [
+        "\"crates/aero-codex-cli\"",
+        "version = \"0.0.1\"",
+        "rust-version = \"1.74\"",
+    ] {
+        if !workspace_manifest.contains(marker) {
+            return Err(format!("Cargo.toml missing Beta 1 marker `{marker}`"));
+        }
+    }
+
+    let cli_manifest = fs::read_to_string(root.join("crates/aero-codex-cli/Cargo.toml"))
+        .map_err(|error| format!("aero-codex-cli Cargo.toml: {error}"))?;
+    for marker in [
+        "name = \"aero-codex-cli\"",
+        "name = \"aerocodex\"",
+        "aero-codex-astrodynamics",
+        "aero-codex-core",
+    ] {
+        if !cli_manifest.contains(marker) {
+            return Err(format!(
+                "crates/aero-codex-cli/Cargo.toml missing marker `{marker}`"
+            ));
+        }
+    }
+
+    let cli_source = fs::read_to_string(root.join("crates/aero-codex-cli/src/main.rs"))
+        .map_err(|error| format!("aero-codex-cli main.rs: {error}"))?;
+    for marker in [
+        "fn release_channel() -> &'static str",
+        "fn validation_status() -> &'static str",
+        "fn supported_formula_count() -> usize",
+        "formula_vault.m00.canonical.time_unit_from_mu_du",
+        "formula_vault.m00.canonical.speed_from_canonical",
+        "self-check",
+        "fn safety_notice() -> &'static str",
+    ] {
+        if !cli_source.contains(marker) {
+            return Err(format!(
+                "crates/aero-codex-cli/src/main.rs missing marker `{marker}`"
+            ));
+        }
+    }
+
+    let release_concept = fs::read_to_string(root.join("docs/beta1/release_concept.md"))
+        .map_err(|error| format!("Beta 1 release concept: {error}"))?;
+    for marker in [
+        "Beta 1 concept",
+        "Cargo version remains `0.0.1`",
+        "research_required",
+        "not certified",
+        "ten canonical-unit formulas",
+        "1,000+",
+    ] {
+        if !release_concept.contains(marker) {
+            return Err(format!(
+                "docs/beta1/release_concept.md missing marker `{marker}`"
+            ));
+        }
+    }
+
+    let workflow = fs::read_to_string(root.join(".github/workflows/ci.yml"))
+        .map_err(|error| format!("CI workflow: {error}"))?;
+    let bash_friend_test = fs::read_to_string(root.join("scripts/friend_test_local.sh"))
+        .map_err(|error| format!("Bash friend test: {error}"))?;
+    let powershell_friend_test = fs::read_to_string(root.join("scripts/friend_test_local.ps1"))
+        .map_err(|error| format!("PowerShell friend test: {error}"))?;
+    let smoke_marker = "cargo run -p aero-codex-cli -- self-check --json";
+    for (name, text) in [
+        (".github/workflows/ci.yml", workflow),
+        ("scripts/friend_test_local.sh", bash_friend_test),
+        ("scripts/friend_test_local.ps1", powershell_friend_test),
+    ] {
+        if !text.contains(smoke_marker) {
+            return Err(format!("{name} missing Beta 1 self-check command"));
+        }
+    }
+
+    println!(
+        "verified Beta 1 concept: channel=beta1-concept; cargo_version=0.0.1; supported_formulas=10; validation_status=research_required"
+    );
+    Ok(())
 }
 
 fn repo_root() -> PathBuf {
@@ -317,6 +421,7 @@ fn verify_all() -> Result<(), String> {
     verify_status_vocabulary(&root)?;
     verify_formula_vault(&root)?;
     verify_equation_inventory(&root)?;
+    verify_beta1(&root)?;
     Ok(())
 }
 

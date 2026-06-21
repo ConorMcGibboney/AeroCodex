@@ -38,6 +38,7 @@ The current main counts below are verifier-derived and include Session G, later 
 | Formula-vault metadata | `formula-vault/` and `cargo run -p xtask -- verify formula-vault` | research_required | Candidate records remain research_required; only `m00_wrap2pi` has a bounded runtime deployment and no candidate metadata implies certification or parity. |
 | Dependency policy | `cargo run -p xtask -- dependency-policy` | research_required | Dependency hygiene is not physical validation or safety approval. |
 | Documentation build | `cargo doc --workspace --all-features --no-deps` | research_required | Documentation generation does not create validation evidence. |
+| Beta 1 concept CLI | `aerocodex` commands and `cargo run -p aero-codex-cli -- self-check --json` | research_required | The vertical slice exposes ten governed canonical-unit formulas for software testing only; it is not the full 1,000+ equation program or an operational release. |
 
 ## Known blocked public-facing items
 

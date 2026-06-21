@@ -26,6 +26,18 @@ During Phase 0.001:
 
 The next Cargo version must be chosen deliberately after the project has a tested, reviewed release process. Phase labels such as `0.01`, `0.1`, and `0.5` are roadmap milestones, not automatic Cargo package versions.
 
+## Beta 1 concept channel
+
+`beta1-concept` is a bounded software release-channel label for testing the user-facing CLI, deterministic output, negative paths, friend-test workflow, and release gates. It is not a Cargo version, roadmap phase promotion, validation-status promotion, API-stability promise, or operational-readiness claim.
+
+During the Beta 1 concept:
+
+- Cargo version remains `0.0.1`;
+- validation remains `research_required`;
+- the initial executable surface is exactly the ten governed M00 canonical-unit formulas;
+- release artifacts must identify one Git commit and pass the CLI self-check;
+- later bulk equation ingestion remains automated-and-exception-reviewed work, not a claim that the 1,000+ backlog is complete.
+
 ## Roadmap ladder
 
 | Roadmap level | Intent | Readiness boundary |

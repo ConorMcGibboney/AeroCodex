@@ -6,7 +6,7 @@ AeroCodex is research/preliminary-design software. These outputs are local softw
 
 ## Script output shape
 
-The Bash and PowerShell scripts print a short banner, the repository root, Rust tool versions when available, the selected Python command, the current Git commit when available, and fifteen numbered check steps. A typical clean run has this structure:
+The Bash and PowerShell scripts print a short banner, the repository root, Rust tool versions when available, the selected Python command, the current Git commit when available, and eighteen numbered check steps. A typical clean run has this structure:
 
 ```text
 [friend-test] AeroCodex local friend-test package
@@ -15,21 +15,24 @@ The Bash and PowerShell scripts print a short banner, the repository root, Rust 
 [friend-test] cargo: <version>
 [friend-test] python command: <python-or-python3> (<version>)
 [friend-test] git commit: <short-sha>
-[friend-test] step 1/15: git status --short
-[friend-test] step 2/15: git diff --check
-[friend-test] step 3/15: sha256sum -c checksums/SHA256SUMS
-[friend-test] step 4/15: cargo fmt --all -- --check
-[friend-test] step 5/15: cargo check --workspace --all-targets --all-features
-[friend-test] step 6/15: cargo clippy --workspace --all-targets --all-features -- -D warnings
-[friend-test] step 7/15: cargo test --workspace --all-targets --all-features
-[friend-test] step 8/15: cargo run -p xtask -- verify --all
-[friend-test] step 9/15: cargo run -p xtask -- dependency-policy
-[friend-test] step 10/15: <python> scripts/verify_thinfilm_artifact.py
-[friend-test] step 11/15: <python> nomenclature/tooling/aerocodex_nom_lint.py --root nomenclature
-[friend-test] step 12/15: <python> nomenclature/tooling/aerocodex_acronym_inventory.py --repo-root . --nomenclature-root nomenclature --check-new --baseline nomenclature/generated/current_repo_acronym_baseline.json
-[friend-test] step 13/15: <python> nomenclature/tooling/aerocodex_terminology.py --root nomenclature export-jsonl --output nomenclature/generated/terminology/index.jsonl
-[friend-test] step 14/15: git diff --exit-code nomenclature/generated/terminology/index.jsonl
-[friend-test] step 15/15: RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
+[friend-test] step 1/18: git status --short
+[friend-test] step 2/18: git diff --check
+[friend-test] step 3/18: sha256sum -c checksums/SHA256SUMS
+[friend-test] step 4/18: cargo fmt --all -- --check
+[friend-test] step 5/18: cargo check --workspace --all-targets --all-features
+[friend-test] step 6/18: cargo clippy --workspace --all-targets --all-features -- -D warnings
+[friend-test] step 7/18: cargo test --workspace --all-targets --all-features
+[friend-test] step 8/18: cargo run -p aero-codex-cli -- version --json
+[friend-test] step 9/18: cargo run -p aero-codex-cli -- run canonical distance smoke
+[friend-test] step 10/18: cargo run -p aero-codex-cli -- self-check --json
+[friend-test] step 11/18: cargo run -p xtask -- verify --all
+[friend-test] step 12/18: cargo run -p xtask -- dependency-policy
+[friend-test] step 13/18: <python> scripts/verify_thinfilm_artifact.py
+[friend-test] step 14/18: <python> nomenclature/tooling/aerocodex_nom_lint.py --root nomenclature
+[friend-test] step 15/18: <python> nomenclature/tooling/aerocodex_acronym_inventory.py --repo-root . --nomenclature-root nomenclature --check-new --baseline nomenclature/generated/current_repo_acronym_baseline.json
+[friend-test] step 16/18: <python> nomenclature/tooling/aerocodex_terminology.py --root nomenclature export-jsonl --output nomenclature/generated/terminology/index.jsonl
+[friend-test] step 17/18: git diff --exit-code nomenclature/generated/terminology/index.jsonl
+[friend-test] step 18/18: RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
 [friend-test] completed all requested local checks
 ```
 
@@ -46,6 +49,9 @@ If a step fails, the scripts stop at that step and return a non-zero exit code. 
 | `cargo check --workspace --all-targets --all-features` | exits successfully | The workspace type-checks under all targets/features. |
 | `cargo clippy --workspace --all-targets --all-features -- -D warnings` | exits successfully | Lints configured as warnings did not fire for the workspace under the selected toolchain. |
 | `cargo test --workspace --all-targets --all-features` | exits successfully | Workspace tests passed under the selected toolchain and platform. |
+| `cargo run -p aero-codex-cli -- version --json` | exits successfully | The Beta 1 concept binary reports its bounded release identity and research-only status. |
+| `cargo run -p aero-codex-cli -- run ... --json` | exits successfully and reports `canonical_distance=-6` in JSON | One exact signed conversion reaches the existing checked Rust kernel through the user-facing CLI. |
+| `cargo run -p aero-codex-cli -- self-check --json` | exits successfully with `passed=14` and `failed=0` | All ten supported formulas and four fail-closed negative cases pass the bounded CLI smoke gate. |
 | `cargo run -p xtask -- verify --all` | exits successfully | The configured governance verifiers completed as a group. |
 | `cargo run -p xtask -- dependency-policy` | exits successfully | The workspace did not add dependency tokens blocked by the current policy. |
 | `python scripts/verify_thinfilm_artifact.py` | exits successfully, or `python3` fallback succeeds when bare `python` is unavailable | Thin-film governed artifact checks pass. |

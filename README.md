@@ -49,6 +49,7 @@ It also provides governance machinery:
 - a nomenclature/acronym policy and generated terminology index;
 - clean-room BioSim-RS-style resource identity, transaction, deterministic replay, ledger, and smoke/friend-test primitives;
 - clean-room BioSim-plus synthetic scenario-domain records, deterministic structural validation, process records, one-tick intent-planning helpers, bounded compartment replay/digest/event helpers, and B2c replay-integrity/ledger/report helpers for research metadata only.
+- a bounded `aerocodex` Beta 1 concept CLI for deterministic text/JSON execution and self-checking of the ten governed M00 canonical-unit formulas.
 
 AeroCodex does **not** currently provide certified flight software, a complete BioSim scenario engine, an operational BLSS controller, a validated habitat-safety model, a medical model, or certified M07/Orekit parity.
 
@@ -68,6 +69,7 @@ AeroCodex does **not** currently provide certified flight software, a complete B
 | `aero-codex-flight-dynamics` | Level-turn, stall-speed, turn-rate/radius, and specific-excess-power helpers. |
 | `aero-codex-astrodynamics` | Two-body orbital helpers, Hohmann transfer helpers, sphere of influence, bounded M00 angle/unit/vector helpers including `m00_wrap2pi`, bounded classical-elements and elliptic-Kepler research helpers, O2c oracle-record/tolerance-comparison metadata helpers, O2d contract-only two-line-element source-policy helpers, and staged formula-vault candidates. |
 | `aero-codex-life-support` | BLSS mass-balance helpers, thin-film/MELiSSA research kernels, clean-room BioSim-style resource/tick primitives, BioSim-plus synthetic scenario-domain structural validation, bounded process/intent-planning helpers, bounded compartment replay/digest/event helpers, and B2c replay-integrity/ledger/report helpers. |
+| `aero-codex-cli` | User-facing `aerocodex` Beta 1 concept binary for the ten governed M00 canonical-unit formulas, stable JSON output, exit codes, and bounded self-checks. |
 | `xtask` | Dependency-free local governance, validation, data-registry, formula-vault, and inventory checks. |
 
 ## Quick start
@@ -78,6 +80,21 @@ cd AeroCodex
 cargo test --workspace --all-features
 cargo run -p xtask -- verify --all
 ```
+
+## Beta 1 concept CLI
+
+The first testable release vertical slice exposes exactly ten governed M00 canonical-unit formulas without changing their `research_required` status or duplicating their mathematics:
+
+```bash
+cargo run -p aero-codex-cli -- version --json
+cargo run -p aero-codex-cli -- formulas
+cargo run -p aero-codex-cli -- run \
+  formula_vault.m00.canonical.distance_to_canonical \
+  distance=-42 distance_unit=7 --json
+cargo run -p aero-codex-cli -- self-check --json
+```
+
+A clean self-check reports 14 passing checks and zero failures. See [`docs/beta1/release_concept.md`](docs/beta1/release_concept.md) and [`docs/beta1/cli_quickstart.md`](docs/beta1/cli_quickstart.md). The `beta1-concept` label is a software release-channel experiment; Cargo versions remain `0.0.1`, and no operational, parity, safety, or certification claim is made.
 
 Minimal example:
 
@@ -131,6 +148,9 @@ cargo fmt --all -- --check
 cargo check --workspace --all-targets --all-features
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-targets --all-features
+cargo run -p aero-codex-cli -- version --json
+cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
+cargo run -p aero-codex-cli -- self-check --json
 cargo run -p xtask -- verify --all
 cargo run -p xtask -- dependency-policy
 python scripts/verify_thinfilm_artifact.py

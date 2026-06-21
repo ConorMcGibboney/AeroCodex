@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
 cd "${REPO_ROOT}"
 
-TOTAL_STEPS=15
+TOTAL_STEPS=18
 CURRENT_STEP=0
 
 info() {
@@ -84,6 +84,12 @@ run_step "cargo clippy --workspace --all-targets --all-features -- -D warnings" 
   cargo clippy --workspace --all-targets --all-features -- -D warnings
 run_step "cargo test --workspace --all-targets --all-features" \
   cargo test --workspace --all-targets --all-features
+run_step "cargo run -p aero-codex-cli -- version --json" \
+  cargo run -p aero-codex-cli -- version --json
+run_step "cargo run -p aero-codex-cli -- run canonical distance smoke" \
+  cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
+run_step "cargo run -p aero-codex-cli -- self-check --json" \
+  cargo run -p aero-codex-cli -- self-check --json
 run_step "cargo run -p xtask -- verify --all" \
   cargo run -p xtask -- verify --all
 run_step "cargo run -p xtask -- dependency-policy" \

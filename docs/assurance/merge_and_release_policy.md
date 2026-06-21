@@ -48,6 +48,8 @@ Use conservative status language:
 
 Do not use flight-ready, mission-ready, habitat-safe, medical, operational, regulated-use-approved, or certified language unless a separate scoped assurance package exists and explicitly authorizes that claim.
 
+The `beta1-concept` label is permitted only as a software release-channel experiment. It does not alter the Cargo `0.0.1` version lock, validation status, external parity status, public API stability promise, or any safety/certification boundary.
+
 ## Required closeout evidence
 
 Every Stage 4 chunk closeout must include:

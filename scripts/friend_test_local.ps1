@@ -4,7 +4,7 @@ Set-StrictMode -Version Latest
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 Set-Location $RepoRoot
 
-$script:TotalSteps = 15
+$script:TotalSteps = 18
 $script:CurrentStep = 0
 
 function Write-FriendTestInfo {
@@ -120,6 +120,15 @@ Invoke-FriendTestStep "cargo clippy --workspace --all-targets --all-features -- 
 }
 Invoke-FriendTestStep "cargo test --workspace --all-targets --all-features" {
     cargo test --workspace --all-targets --all-features
+}
+Invoke-FriendTestStep "cargo run -p aero-codex-cli -- version --json" {
+    cargo run -p aero-codex-cli -- version --json
+}
+Invoke-FriendTestStep "cargo run -p aero-codex-cli -- run canonical distance smoke" {
+    cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
+}
+Invoke-FriendTestStep "cargo run -p aero-codex-cli -- self-check --json" {
+    cargo run -p aero-codex-cli -- self-check --json
 }
 Invoke-FriendTestStep "cargo run -p xtask -- verify --all" {
     cargo run -p xtask -- verify --all

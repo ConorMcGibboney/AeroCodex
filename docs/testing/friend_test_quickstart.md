@@ -10,6 +10,7 @@ The friend-test package covers repository hygiene and governance checks:
 
 - Git status, whitespace, checksum, and generated-file cleanliness;
 - Rust formatting, checking, linting, all-target tests, and warning-deny documentation generation;
+- the Beta 1 concept CLI version, exact signed-conversion smoke, and bounded self-check;
 - validation-card, source-registry, equation-inventory, formula-vault, data-registry, status-vocabulary, and dependency-policy gates exposed through `xtask`;
 - thin-film provenance artifact verification;
 - nomenclature, acronym, and generated terminology checks;
@@ -64,6 +65,9 @@ cargo fmt --all -- --check
 cargo check --workspace --all-targets --all-features
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-targets --all-features
+cargo run -p aero-codex-cli -- version --json
+cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
+cargo run -p aero-codex-cli -- self-check --json
 cargo run -p xtask -- verify --all
 cargo run -p xtask -- dependency-policy
 python scripts/verify_thinfilm_artifact.py

@@ -13,6 +13,7 @@ members = [
     "crates/aero-codex-flight-dynamics",
     "crates/aero-codex-astrodynamics",
     "crates/aero-codex-life-support",
+    "crates/aero-codex-cli",
     "xtask",
 ]
 
