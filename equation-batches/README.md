@@ -24,6 +24,10 @@ cargo run -p xtask -- equation-batch verify --manifest equation-batches/a4-atmos
 cargo run -p xtask -- equation-batch plan --manifest equation-batches/a5-aerodynamics-flight-structures.tsv
 cargo run -p xtask -- equation-batch generate --manifest equation-batches/a5-aerodynamics-flight-structures.tsv --output-dir <a5-directory-outside-the-repository>
 cargo run -p xtask -- equation-batch verify --manifest equation-batches/a5-aerodynamics-flight-structures.tsv --output-dir <a5-directory-outside-the-repository>
+
+cargo run -p xtask -- equation-batch plan --manifest equation-batches/a6-propulsion-heat-transfer.tsv
+cargo run -p xtask -- equation-batch generate --manifest equation-batches/a6-propulsion-heat-transfer.tsv --output-dir <a6-directory-outside-the-repository>
+cargo run -p xtask -- equation-batch verify --manifest equation-batches/a6-propulsion-heat-transfer.tsv --output-dir <a6-directory-outside-the-repository>
 ```
 
 `plan` validates the manifest and prints a stable json plan. `generate` writes a deterministic probe crate and artifact hashes outside the repository. `verify` regenerates the expected artifacts, checks their hashes, and runs the probe crate with Cargo in offline mode.
@@ -55,5 +59,6 @@ Rules:
 - `m00-angle-vector.tsv` covers 17 existing angle, wrapping, and vector-algebra runtime equations.
 - `a4-atmosphere-thermo-gasdynamics.tsv` covers 28 existing atmosphere, thermodynamics, and gas-dynamics runtime equations.
 - `a5-aerodynamics-flight-structures.tsv` covers 15 existing aerodynamics, flight-dynamics, and structures runtime equations.
+- `a6-propulsion-heat-transfer.tsv` covers 9 existing propulsion and heat-transfer runtime equations.
 
-The four manifests provide compiler-verified coverage for 70 existing runtime paths. Runtime identity is package-scoped, and typed test inputs can reference reviewed workspace dependencies without parsing Rust source. They do not change runtime kernels, expand the Beta 1 command-line surface, claim external reference parity, or imply that the full equation inventory is complete or operationally ready.
+The five manifests provide compiler-verified coverage for 79 existing runtime paths. Runtime identity is package-scoped, and typed test inputs can reference reviewed workspace dependencies without parsing Rust source. They do not change runtime kernels, expand the Beta 1 command-line surface, claim external reference parity, or imply that the full equation inventory is complete or operationally ready.

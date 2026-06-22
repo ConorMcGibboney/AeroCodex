@@ -1,0 +1,65 @@
+# Governed existing-runtime equation contract backfill.
+# Metadata and compiler-probe contract only; no runtime kernel is changed.
+
+schema_version: formula_vault_runtime_contract.v1
+record_status: existing_runtime_contract_research_required
+contract_id: formula_vault.propulsion.rocket_nozzle_basics
+title: Ideal rocket and nozzle basic contracts
+validation_status: research_required
+primary_validation_card: validation/cards/propulsion_rocket_nozzle_basics.yaml
+primary_source_seed: validation/source_registry/propulsion_rocket_nozzle_basics.yaml
+runtime_policy:
+  finite_inputs_required: true
+  invalid_domain_returns_error: true
+  nonfinite_outputs_rejected: true
+  signed_pressure_thrust_preserved: true
+  ieee754_f64_rounding_applies: true
+  deterministic_same_build_platform: true
+evidence_policy:
+  compiler_verified_runtime_symbols: true
+  bounded_contract_probes: true
+  inverse_relation_probe_retained: true
+  validation_status_upgrade: blocked_without_source_and_tolerance_review
+non_claims:
+  no_combustion_or_engine_cycle_model: true
+  no_trajectory_or_mission_readiness_claim: true
+  no_certification_evidence: true
+  no_operational_readiness_claim: true
+  no_external_reference_parity_claim: true
+  no_full_equation_inventory_completion_claim: true
+formulas:
+  - formula_id: formula_vault.propulsion.rocket.tsiolkovsky_delta_v
+    runtime_symbol: tsiolkovsky_delta_v
+    output_variable: delta_v_m_s
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_positive_isp_g0_and_mass_order_reject_nonfinite_result
+    numerical_policy: bounded_f64_logarithmic_probe
+  - formula_id: formula_vault.propulsion.rocket.mass_ratio_from_delta_v
+    runtime_symbol: mass_ratio_from_delta_v
+    output_variable: mass_ratio
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_nonnegative_delta_v_and_positive_isp_g0_reject_nonfinite_result
+    numerical_policy: bounded_f64_exponential_inverse_probe
+  - formula_id: formula_vault.propulsion.nozzle.ideal_thrust
+    runtime_symbol: ideal_thrust
+    output_variable: thrust_n
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_nonnegative_inputs_preserve_signed_pressure_term_reject_nonfinite_result
+    numerical_policy: bounded_f64_momentum_plus_pressure_probe
+  - formula_id: formula_vault.propulsion.rocket.specific_impulse_from_effective_exhaust_velocity
+    runtime_symbol: specific_impulse_from_effective_exhaust_velocity
+    output_variable: specific_impulse_s
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_positive_effective_exhaust_velocity_and_g0_reject_nonfinite_result
+    numerical_policy: bounded_f64_ratio_probe
+  - formula_id: formula_vault.propulsion.nozzle.choked_mass_flux_per_area
+    runtime_symbol: choked_mass_flux_per_area
+    output_variable: mass_flux_kg_m2_s
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_gamma_above_one_positive_gas_data_and_nonnegative_pressure_reject_nonfinite_result
+    numerical_policy: bounded_f64_power_law_probe

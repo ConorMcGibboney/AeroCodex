@@ -1,0 +1,57 @@
+# Governed existing-runtime equation contract backfill.
+# Metadata and compiler-probe contract only; no runtime kernel is changed.
+
+schema_version: formula_vault_runtime_contract.v1
+record_status: existing_runtime_contract_research_required
+contract_id: formula_vault.heat_transfer.basic_primitives
+title: Basic radiation, convection, and conduction contracts
+validation_status: research_required
+primary_validation_card: validation/cards/heat_transfer_basic_primitives.yaml
+primary_source_seed: validation/source_registry/heat_transfer_basic_primitives.yaml
+runtime_policy:
+  finite_inputs_required: true
+  invalid_domain_returns_error: true
+  nonfinite_outputs_rejected: true
+  signed_temperature_difference_preserved: true
+  ieee754_f64_rounding_applies: true
+  deterministic_same_build_platform: true
+evidence_policy:
+  compiler_verified_runtime_symbols: true
+  bounded_contract_probes: true
+  validation_status_upgrade: blocked_without_source_and_tolerance_review
+non_claims:
+  no_cfd_or_thermal_network_solver: true
+  no_material_property_database_claim: true
+  no_certification_evidence: true
+  no_operational_readiness_claim: true
+  no_external_reference_parity_claim: true
+  no_full_equation_inventory_completion_claim: true
+formulas:
+  - formula_id: formula_vault.heat_transfer.radiation.stefan_boltzmann_radiative_flux
+    runtime_symbol: stefan_boltzmann_radiative_flux
+    output_variable: radiative_heat_flux_w_m2
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_emissivity_in_unit_interval_and_nonnegative_absolute_temperatures
+    numerical_policy: bounded_f64_fourth_power_difference_probe
+  - formula_id: formula_vault.heat_transfer.convection.convective_heat_flux
+    runtime_symbol: convective_heat_flux
+    output_variable: convective_heat_flux_w_m2
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_nonnegative_coefficient_and_absolute_temperatures_preserve_signed_difference
+    numerical_policy: bounded_f64_product_probe
+  - formula_id: formula_vault.heat_transfer.conduction.thermal_resistance
+    runtime_symbol: thermal_resistance_conduction
+    output_variable: thermal_resistance_k_w
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_nonnegative_thickness_positive_conductivity_and_area_reject_nonfinite_result
+    numerical_policy: bounded_f64_ratio_probe
+  - formula_id: formula_vault.heat_transfer.conduction.heat_rate
+    runtime_symbol: conduction_heat_rate
+    output_variable: conduction_heat_rate_w
+    test_strategy: tolerance
+    contract_state: compiler_probe_ready
+    failure_policy: require_finite_signed_delta_t_and_positive_resistance_reject_nonfinite_result
+    numerical_policy: bounded_f64_signed_ratio_probe
