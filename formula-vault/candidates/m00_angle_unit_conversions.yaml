@@ -1,12 +1,24 @@
-# Stage 4 Chunk 7B formula-vault candidate metadata slice.
+# Historical Stage 4 Chunk 7B intake metadata with a current runtime-resolution overlay.
 #
-# Metadata only: this file has no formula implementation code, no generated
-# Rust, no Scilab execution output, no certification evidence, no flight
-# readiness, no mission readiness, no operational approval, and no regulated-use
-# approval.
+# This file remains metadata only and contains no implementation source. All three
+# formula IDs are now linked to existing governed Rust runtimes by the A10
+# resolution manifest. That linkage does not establish Scilab parity, certification,
+# flight readiness, mission readiness, operational approval, or regulated-use approval.
 
 schema_version: formula_vault_candidate_slice.v1
-record_status: metadata_only_research_required
+record_status: metadata_record_runtime_linked_research_required
+
+runtime_resolution:
+  schema_version: aerocodex.formula_vault_runtime_resolution.v1
+  manifest_path: formula-vault/resolutions/m00_runtime_links.tsv
+  disposition: linked_to_existing_runtime
+  formula_count: 3
+  unresolved_formula_count: 0
+  validation_status: research_required
+  precedence: this_runtime_resolution_overlay_supersedes_historical_intake_implementation_status_fields
+  non_claims:
+    no_external_source_parity_claim: true
+    no_certification_or_operational_readiness_claim: true
 
 slice:
   id: formula_vault.m00_angle_unit_conversions.v1
@@ -14,11 +26,11 @@ slice:
   lifecycle_label: bounded_runtime_deployed_research_required
   stage4_chunk: stage4_chunk7b_formula_vault_first_metadata_slice
   public_api_surface: public_runtime_exists_blocked_from_readiness_or_certification_promotion
-  implementation_surface: bounded_aerocodex_rust_runtime_deployed_for_wrap2pi_only
+  implementation_surface: existing_aerocodex_rust_runtimes_linked_for_all_formula_ids
   notes:
-    - First bounded formula-vault metadata slice after the Chunk 7A candidate gate.
-    - Selects three low-risk M00 unit/angle helper rows only.
-    - Post-Stage-5 deploys only `m00_wrap2pi` as a bounded Rust research/preliminary public API with `research_required` status.
+    - Historical bounded formula-vault intake slice after the Chunk 7A candidate gate.
+    - A10 links all three selected M00 unit/angle formula IDs to compiler-verified equation-batch runtimes.
+    - The linked runtimes remain bounded Rust research/preliminary APIs with `research_required` status.
     - Does not import or translate the M07 implementation source.
     - Does not cover the remaining M00 rows or any non-M00 astrodynamics formulas.
 
@@ -73,13 +85,13 @@ candidate_manifest:
       source_function_alias: foa_app_ast_app_deg2rad
       equivalence_job_alias: equivalence job 002
       source_expression_status: pending_future_human_review_no_source_import
-      implementation_status: blocked_no_formula_implementation
+      implementation_status: existing_runtime_linked_research_required_no_scilab_parity_claim
     - formula_id: formula_vault.m00.angle.rad2deg
       release_gate_row_alias: release-gate status csv row 4
       source_function_alias: foa_app_ast_app_rad2deg
       equivalence_job_alias: equivalence job 002
       source_expression_status: pending_future_human_review_no_source_import
-      implementation_status: blocked_no_formula_implementation
+      implementation_status: existing_runtime_linked_research_required_no_scilab_parity_claim
     - formula_id: formula_vault.m00.angle.wrap2pi
       release_gate_row_alias: release-gate status csv row 5
       source_function_alias: foa_app_ast_app_wrap2pi
@@ -97,7 +109,7 @@ source_expression_contract:
     - formula_vault.m00.angle.deg2rad
     - formula_vault.m00.angle.rad2deg
     - formula_vault.m00.angle.wrap2pi
-  implementation_status: partially_implemented_research_required_wrap2pi_runtime_only
+  implementation_status: all_formula_ids_linked_to_existing_runtime_research_required
   public_surface_status: public_runtime_exists_blocked_from_readiness_or_certification_promotion
 
 formula_contract:
@@ -108,10 +120,10 @@ formula_contract:
   selected_functions:
     - rust_function: app_deg2rad
       scilab_function: foa_app_ast_app_deg2rad
-      contract_intent: convert finite degree-valued angle metadata to radians; exact expression remains pending future source review before implementation.
+      contract_intent: convert finite degree-valued angles to radians using the linked independent Rust runtime; M07/Scilab source parity remains pending.
     - rust_function: app_rad2deg
       scilab_function: foa_app_ast_app_rad2deg
-      contract_intent: convert finite radian-valued angle metadata to degrees; exact expression remains pending future source review before implementation.
+      contract_intent: convert finite radian-valued angles to degrees using the linked independent Rust runtime; M07/Scilab source parity remains pending.
     - rust_function: app_wrap2pi
       scilab_function: foa_app_ast_app_wrap2pi
       contract_intent: normalize a finite radian angle into the reviewed [0, 2*pi) interval using bounded Rust research/preliminary runtime behavior; no source translation or Scilab parity claim is made.

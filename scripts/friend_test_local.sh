@@ -90,8 +90,8 @@ run_step "cargo run -p aero-codex-cli -- run canonical distance smoke" \
   cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
 run_step "cargo run -p aero-codex-cli -- self-check --json" \
   cargo run -p aero-codex-cli -- self-check --json
-run_step "cargo run -p xtask -- verify --all" \
-  cargo run -p xtask -- verify --all
+run_step "${PYTHON_CMD} scripts/verify_governance.py --repo ." \
+  "${PYTHON_CMD}" scripts/verify_governance.py --repo .
 run_step "cargo run -p xtask -- dependency-policy" \
   cargo run -p xtask -- dependency-policy
 run_step "${PYTHON_CMD} scripts/verify_thinfilm_artifact.py" \

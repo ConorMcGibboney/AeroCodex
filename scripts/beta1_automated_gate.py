@@ -390,7 +390,7 @@ def main(argv: list[str] | None = None) -> int:
             execute_step("cargo_check", ["cargo", "check", "--workspace", "--all-targets", "--all-features"])
             execute_step("cargo_clippy", ["cargo", "clippy", "--workspace", "--all-targets", "--all-features", "--", "-D", "warnings"])
             execute_step("cargo_test", ["cargo", "test", "--workspace", "--all-targets", "--all-features"])
-            execute_step("xtask_verify_all", ["cargo", "run", "-p", "xtask", "--", "verify", "--all"])
+            execute_step("xtask_verify_all", [python, "scripts/verify_governance.py", "--repo", "."])
             execute_step("dependency_policy", ["cargo", "run", "-p", "xtask", "--", "dependency-policy"])
             execute_step("thinfilm_verification", [python, "scripts/verify_thinfilm_artifact.py"])
             execute_step("nomenclature_lint", [python, "nomenclature/tooling/aerocodex_nom_lint.py", "--root", "nomenclature"])

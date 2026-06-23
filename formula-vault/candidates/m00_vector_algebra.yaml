@@ -1,23 +1,35 @@
-# Stage 4 M00 vector-algebra formula-vault candidate expansion.
+# Historical Stage 4 M00 vector-algebra intake metadata with a runtime-resolution overlay.
 #
-# Metadata only: this file has no copied M07 source, no generated Rust, no
-# Scilab execution output, no certification evidence, no flight-readiness claim,
-# no mission-readiness claim, no operational approval, and no regulated-use
-# approval.
+# This file remains metadata only and contains no copied M07 source. All fourteen
+# formula IDs are now linked to existing governed Rust runtimes by the A10
+# resolution manifest. That linkage adds no Scilab parity, certification, flight
+# readiness, mission readiness, operational approval, or regulated-use approval.
 
 schema_version: formula_vault_candidate_slice.v1
-record_status: metadata_only_research_required
+record_status: metadata_record_runtime_linked_research_required
+
+runtime_resolution:
+  schema_version: aerocodex.formula_vault_runtime_resolution.v1
+  manifest_path: formula-vault/resolutions/m00_runtime_links.tsv
+  disposition: linked_to_existing_runtime
+  formula_count: 14
+  unresolved_formula_count: 0
+  validation_status: research_required
+  precedence: this_runtime_resolution_overlay_supersedes_historical_intake_implementation_status_fields
+  non_claims:
+    no_external_source_parity_claim: true
+    no_certification_or_operational_readiness_claim: true
 
 slice:
   id: formula_vault.m00_vector_algebra.v1
   title: M00 vector algebra candidate metadata expansion
-  lifecycle_label: equation_contract_drafted
+  lifecycle_label: runtime_linked_research_required
   stage4_chunk: stage4_chunk8a_m00_vector_equation_expansion
-  public_api_surface: blocked_research_rust_functions_only_no_application_interface_promotion
-  implementation_surface: bounded_research_kernel_candidate
+  public_api_surface: existing_research_runtime_blocked_from_readiness_or_certification_promotion
+  implementation_surface: existing_aerocodex_rust_runtimes_linked_for_all_formula_ids
   notes:
-    - Adds the remaining low-risk M00 vector helper rows as a bounded formula-vault candidate slice.
-    - Does not import or translate the M07 implementation source.
+    - Historical intake selected the remaining low-risk M00 vector helper rows as a bounded candidate slice.
+    - A10 links all fourteen formula IDs to compiler-verified independent Rust runtimes without importing or translating M07 source.
     - Excludes app_resolve_coplanar because least-squares rank policy needs a separate contract.
 
 sources:

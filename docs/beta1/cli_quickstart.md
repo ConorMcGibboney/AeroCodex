@@ -71,7 +71,7 @@ cargo run -p aero-codex-cli -- self-check --json
 cargo run -p xtask -- verify beta1
 ```
 
-The complete repository gate remains `cargo run -p xtask -- verify --all` plus the other CI commands documented in the friend-test quickstart.
+The complete repository gate remains `python scripts/verify_governance.py --repo .` plus the other CI commands documented in the friend-test quickstart.
 ## Build a testable release archive
 
 From a clean committed checkout:

@@ -1,24 +1,36 @@
-# Stage 4 Chunk 8C formula-vault candidate metadata slice.
+# Historical Stage 4 Chunk 8C intake metadata with a current runtime-resolution overlay.
 #
-# Metadata plus implementation-handoff scope only: this file has no copied M07
-# source, no generated Rust, no Scilab output, no external fixture, no
-# certification evidence, no flight-readiness claim, no mission-readiness claim,
-# no operational approval, and no regulated-use approval.
+# This file remains metadata only and contains no copied M07 source. All ten
+# formula IDs are now linked to existing governed Rust runtimes by the A10
+# resolution manifest. That linkage adds no external parity, certification,
+# flight-readiness, mission-readiness, operational, or regulated-use claim.
 
 schema_version: formula_vault_candidate_slice.v1
-record_status: metadata_only_research_required
+record_status: metadata_record_runtime_linked_research_required
+
+runtime_resolution:
+  schema_version: aerocodex.formula_vault_runtime_resolution.v1
+  manifest_path: formula-vault/resolutions/m00_runtime_links.tsv
+  disposition: linked_to_existing_runtime
+  formula_count: 10
+  unresolved_formula_count: 0
+  validation_status: research_required
+  precedence: this_runtime_resolution_overlay_supersedes_historical_intake_implementation_status_fields
+  non_claims:
+    no_external_source_parity_claim: true
+    no_certification_or_operational_readiness_claim: true
 
 slice:
   id: formula_vault.m00_canonical_unit_conversions.v1
   title: M00 canonical unit scalar conversion candidate expansion
-  lifecycle_label: equation_contract_drafted
+  lifecycle_label: runtime_linked_research_required
   stage4_chunk: stage4_chunk8c_m00_canonical_unit_conversion_expansion
-  public_api_surface: blocked_research_kernel_only_pending_deployment_agent_review
-  implementation_surface: bounded_astrodynamics_crate_research_kernel_handoff
+  public_api_surface: existing_research_runtime_blocked_from_readiness_or_certification_promotion
+  implementation_surface: existing_aerocodex_rust_runtimes_linked_for_all_formula_ids
   notes:
-    - Selects scalar canonical-unit formulas that avoid frame, epoch, solver, table, and branch-cut dependencies.
+    - Historical intake selected scalar canonical-unit formulas that avoid frame, epoch, solver, table, and branch-cut dependencies.
     - Does not include wrap2pi, app_resolve_coplanar, string-dispatch unit APIs, external data tables, least-squares solvers, or iterative methods.
-    - Uses caller-supplied positive unit scales for implementation to avoid importing M07 hard-coded constant tables.
+    - A10 links all ten formula IDs to compiler-verified independent Rust runtimes using caller-supplied positive unit scales.
     - Source rows are used as locators only; independent scalar formulas and analytical tests define the AeroCodex contract.
 
 sources:

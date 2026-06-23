@@ -4,14 +4,15 @@ category: validation
 status: research_required
 intended_use:
   - Register the Stage 4 Chunk 7E equation inventory and readiness dashboard verifier as governance metadata.
-  - Preserve the distinction between executable research kernels, metadata-only formula-vault candidates, external M07 backlog rows, validation-card-only records, and helper algorithms.
+  - Preserve the distinction between executable research kernels, metadata-only formula-vault intake records, explicit runtime-resolution links, external M07 backlog rows, validation-card-only records, and helper algorithms.
 requested_details:
   - Machine-readable inventory row coverage for current public Rust functions.
-  - Formula-vault metadata-only candidate count cross-check.
+  - Formula-vault metadata-only candidate-record count cross-check.
+  - Exact candidate-to-runtime resolution cross-check against governed M00 equation-batch manifests.
   - External M07 backlog aggregate count cross-check.
   - Validation-card and source-registry seed count cross-checks.
 implementation_notes:
-  - Dependency-free xtask verifier only.
+  - Dependency-free Python resolution verifier plus the existing xtask verifier.
   - No formula implementation is introduced.
   - No M07 source code, fixture, generated binary, or Scilab execution output is imported.
 limits:

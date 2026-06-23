@@ -8,7 +8,8 @@ source:
 assumptions:
   - The inventory is a machine-readable governance index, not formula implementation code.
   - Public Rust functions are classified as executable research equations or helper algorithms without creating new public application programming interfaces.
-  - The external M07 backlog count remains a governed aggregate derived from the existing registered row count and metadata-only candidate count.
+  - The external M07 backlog count remains a governed aggregate derived from the existing registered row count and selected candidate-record count.
+  - Runtime resolution is a link to an existing governed equation-batch runtime, not a new implementation or readiness promotion.
 domain:
   discipline: validation
   scope: Stage 4 equation inventory and readiness dashboard metadata
@@ -17,9 +18,12 @@ inputs:
   - validation/cards/
   - validation/source_registry/
   - formula-vault/candidates/
+  - formula-vault/resolutions/m00_runtime_links.tsv
+  - equation-batches/m00-angle-vector.tsv
+  - equation-batches/m00-canonical-units.tsv
   - crates/*/src/*.rs public function declarations
 outputs:
-  - machine-readable counts for executable research equations, metadata-only candidates, external M07 backlog rows, validation cards, source-registry seeds, validation-card-only records, and helper algorithms
+  - machine-readable counts for executable research equations, metadata-only candidate records, resolved runtime links, unresolved candidate IDs, external M07 backlog rows, validation cards, source-registry seeds, validation-card-only records, and helper algorithms
   - blocked item reasons for every inventory row
 tests:
   - cargo test -p xtask equation_inventory
@@ -29,6 +33,8 @@ failure_modes:
   - Inventory row count does not match governed counts.
   - Public Rust function is missing from executable/helper inventory coverage.
   - Formula-vault metadata candidate count diverges from inventory count.
+  - Candidate formula IDs and runtime-resolution rows are not an exact union.
+  - A resolution row disagrees with its governed equation-batch runtime, contract, validation-card, source-seed, or status.
   - External M07 backlog row aggregate diverges from represented-row minus metadata-candidate count.
   - Inventory row is not blocked or lacks a block reason.
 notes: Research-required governance verifier only; no formula implementation, source import, generated formula code, public application programming interface, flight readiness, mission readiness, certification, operational approval, or regulated-use approval is claimed.

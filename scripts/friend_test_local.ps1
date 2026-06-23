@@ -130,8 +130,8 @@ Invoke-FriendTestStep "cargo run -p aero-codex-cli -- run canonical distance smo
 Invoke-FriendTestStep "cargo run -p aero-codex-cli -- self-check --json" {
     cargo run -p aero-codex-cli -- self-check --json
 }
-Invoke-FriendTestStep "cargo run -p xtask -- verify --all" {
-    cargo run -p xtask -- verify --all
+Invoke-FriendTestStep "$PythonExe scripts/verify_governance.py --repo ." {
+    & $PythonExe scripts/verify_governance.py --repo .
 }
 Invoke-FriendTestStep "cargo run -p xtask -- dependency-policy" {
     cargo run -p xtask -- dependency-policy

@@ -39,7 +39,7 @@ Future batches should generate registry entries from governed contract and inven
 A Beta 1 candidate is acceptable only when all of these are true:
 
 - the full existing workspace CI is green;
-- `cargo run -p xtask -- verify --all` and `verify beta1` pass;
+- `python scripts/verify_governance.py --repo .` and `verify beta1` pass;
 - the `aerocodex` binary builds on the supported Rust toolchain;
 - `aerocodex self-check --json` reports zero failures;
 - integration tests verify stable success and error exit codes;

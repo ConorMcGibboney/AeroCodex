@@ -14,7 +14,7 @@ cargo run -p xtask -- verify --all
 
 ## Scope
 
-This chunk is inventory/governance only.
+This inventory remains governance-only. A10 adds a machine-readable resolution overlay that links the 27 existing formula-vault metadata records to already governed runtimes without adding formula implementations.
 
 It does not implement formulas, import M07 code, generate formula code, create a new runtime, create public application programming interfaces, execute Scilab jobs, bundle M07 archive contents, or promote any flight, mission, operational, certification, or regulated-use claim.
 
@@ -23,12 +23,12 @@ It does not implement formulas, import M07 code, generate formula code, create a
 The inventory distinguishes:
 
 - `executable_research_equation` — currently public Rust research/preliminary-design equation kernels in repository crates. These are executable but remain blocked from readiness promotion.
-- `metadata_only_formula_vault_candidate` — formula-vault formula identifiers selected as metadata-only candidates, currently the M00 angle/unit slice.
+- `metadata_only_formula_vault_candidate` — metadata intake/provenance records. A10 resolves all 27 represented formula IDs to existing governed runtimes; the records remain metadata-only artifacts, while the mathematics lives in Rust crates.
 - `external_m07_backlog_row` — aggregate external M07 backlog rows not represented as metadata-only formula-vault candidates.
 - `validation_card_only_record` — validation-card metadata rows. These records are not formula implementations.
 - `helper_algorithm` — public support/helper routines, validation helpers, type constructors, provenance helpers, BioSim governance primitives, and other support algorithms not counted as executable research equations.
 
-## Final Stage 4 Chunk 7E counts
+## Historical Stage 4 Chunk 7E counts
 
 The verifier is expected to report:
 
@@ -41,6 +41,19 @@ The verifier is expected to report:
 - helper algorithms: 89
 
 The external M07 count is derived from the existing registered M07 represented function-row count of 1350 minus the three metadata-only formula-vault candidate identifiers already selected for M00 angle/unit review.
+
+
+## Current post-A10 resolution state
+
+The current governed inventory still contains 152 executable research equations, 27 metadata-only intake records, 1,323 external M07 backlog rows, 46 validation-card-only records, and 262 helper algorithms. The derived A10 resolution counters are:
+
+- runtime-linked formula-vault records: 27;
+- unresolved formula-vault candidate formula IDs: 0;
+- angle/unit links: 3;
+- vector-algebra links: 14;
+- canonical-unit links: 10.
+
+`formula-vault/resolutions/m00_runtime_links.tsv` must exactly match the formula IDs in the candidate records and the runtime, contract, validation-card, and source-seed fields in the two governed M00 equation-batch manifests. The external backlog remains 1,323 because these 27 selected rows were already excluded from that aggregate.
 
 ## Readiness rule
 

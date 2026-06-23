@@ -78,7 +78,7 @@ cargo test --workspace --all-targets --all-features
 cargo run -p aero-codex-cli -- version --json
 cargo run -p aero-codex-cli -- run formula_vault.m00.canonical.distance_to_canonical distance=-42 distance_unit=7 --json
 cargo run -p aero-codex-cli -- self-check --json
-cargo run -p xtask -- verify --all
+python scripts/verify_governance.py --repo .
 cargo run -p xtask -- dependency-policy
 python scripts/verify_thinfilm_artifact.py
 python nomenclature/tooling/aerocodex_nom_lint.py --root nomenclature

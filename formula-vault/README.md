@@ -1,6 +1,6 @@
 # Formula vault
 
-This directory is a Stage 4 skeleton for future formula-vault metadata. It intentionally contains no imported M07 source code, no external archives, no generated binaries, and no public AeroCodex implementation application programming interfaces.
+This directory contains formula-vault intake metadata, contracts, and explicit links to governed AeroCodex runtimes. It intentionally contains no imported M07 source code, external archives, generated binaries, or implementation source; executable mathematics remains in the Rust crates.
 
 AeroCodex remains research and preliminary-design software. This skeleton does not imply certification, flight readiness, mission readiness, habitat-safety approval, medical-use approval, operational approval, or regulated-use approval.
 
@@ -56,6 +56,30 @@ Stage 4 Chunk 7D adds the first per-candidate manifest/reference-link package wi
 The Chunk 7D manifest links each selected formula identifier to row/function/source-file aliases, pending source-expression review status, and assurance/validation/source/intake records. It does not copy source expressions, import M07 source, execute Scilab, promote fixtures, implement formulas, or create public application programming interfaces.
 
 The M07 source artifact remains registered externally as `stage4.m07_rust_port_v14.2026_06_15` in `data-governance/DATA_REGISTRY.yaml`.
+
+
+## A10 runtime resolution
+
+A10 resolves every existing formula-vault intake formula ID without adding or duplicating a Rust kernel:
+
+- `formula-vault/resolutions/m00_runtime_links.tsv` links all 27 candidate formula IDs to the existing `m00-angle-vector` and `m00-canonical-units` equation batches;
+- 3 angle/unit, 14 vector-algebra, and 10 canonical-unit records have disposition `linked_to_existing_runtime`;
+- unresolved candidate formula IDs: 0;
+- validation remains `research_required`;
+- the candidate YAML files remain metadata/provenance records and are not implementation source;
+- no M07/Scilab parity, certification, flight readiness, mission readiness, operational approval, or regulated-use approval is claimed.
+
+Run the dependency-free resolution check with:
+
+```text
+python3 scripts/verify_formula_vault_resolutions.py --repo .
+```
+
+The complete governance wrapper runs this check before the existing xtask gate:
+
+```text
+python3 scripts/verify_governance.py --repo .
+```
 
 ## Future allowed contents
 
