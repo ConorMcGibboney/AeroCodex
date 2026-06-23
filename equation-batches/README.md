@@ -37,6 +37,10 @@ cargo run -p xtask -- equation-batch verify --manifest equation-batches/a7-astro
 cargo run -p xtask -- equation-batch plan --manifest equation-batches/a8-life-support-biosim-foundation.tsv
 cargo run -p xtask -- equation-batch generate --manifest equation-batches/a8-life-support-biosim-foundation.tsv --output-dir <a8-directory-outside-the-repository>
 cargo run -p xtask -- equation-batch verify --manifest equation-batches/a8-life-support-biosim-foundation.tsv --output-dir <a8-directory-outside-the-repository>
+
+cargo run -p xtask -- equation-batch plan --manifest equation-batches/a9-life-support-thinfilm-pde-rom.tsv
+cargo run -p xtask -- equation-batch generate --manifest equation-batches/a9-life-support-thinfilm-pde-rom.tsv --output-dir <a9-directory-outside-the-repository>
+cargo run -p xtask -- equation-batch verify --manifest equation-batches/a9-life-support-thinfilm-pde-rom.tsv --output-dir <a9-directory-outside-the-repository>
 ```
 
 `plan` validates the manifest and prints a stable json plan. `generate` writes a deterministic probe crate and artifact hashes outside the repository. `verify` regenerates the expected artifacts, checks their hashes, and runs the probe crate with Cargo in offline mode.
@@ -72,5 +76,6 @@ Rules:
 - `a6-propulsion-heat-transfer.tsv` covers 9 existing propulsion and heat-transfer runtime equations.
 - `a7-astrodynamics-orekit-foundation.tsv` covers 23 existing two-body, transfer, elliptic-element, and non-solver Kepler runtime equations.
 - `a8-life-support-biosim-foundation.tsv` covers 40 existing bioregenerative, BLSS-backbone, MELiSSA, nitrifying-biofilm, and attached-algal foundation runtime equations.
+- `a9-life-support-thinfilm-pde-rom.tsv` covers the remaining 10 attached-algal PDE residual, reduced-order service, and habitat-coupling runtime equations.
 
-The seven manifests provide compiler-verified coverage for 142 existing runtime paths. Runtime identity is package-scoped, and typed test inputs can reference reviewed workspace dependencies without parsing Rust source. The A8 batch keeps BioSim resource-ledger, transaction, scenario, replay, reporting, and CLI-smoke helpers outside formula scope because they are support algorithms rather than executable research equations. Ten advanced attached-algal PDE/ROM and habitat-coupling runtime equations remain explicitly deferred to a later bounded batch. Equation-traceable governance evidence is consumed conservatively while batch exposure remains `research_required`. These manifests do not change runtime kernels, expand the Beta 1 command-line surface, claim external reference parity, or imply that the full equation inventory is complete or operationally ready.
+The eight manifests provide compiler-verified coverage for all 152 existing runtime equation paths in the governed executable inventory. Runtime identity is package-scoped, and typed test inputs can reference reviewed workspace dependencies without parsing Rust source. The A8 and A9 batches keep BioSim resource-ledger, transaction, scenario, replay, reporting, and CLI-smoke helpers outside formula scope because they are support algorithms rather than executable research equations. A9 covers bounded helpers for PDE residuals, reduced-order service projections, and habitat coupling; it does not claim to solve or externally validate the underlying PDE, ROM basis, calibration, or habitat controller. Equation-traceable governance evidence is consumed conservatively while batch exposure remains `research_required`. These manifests do not change runtime kernels, expand the Beta 1 command-line surface, claim external reference parity, or imply that the external equation backlog is complete or operationally ready.
