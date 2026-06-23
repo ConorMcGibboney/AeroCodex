@@ -16,6 +16,11 @@ Scope: repeated module-local scalar/vector helpers such as dot product, cross pr
 
 Recommended action: decide whether each row is a provenance alias to existing central M00 helper kernels or a separate metadata candidate. Prefer aliasing and deduplication over public API multiplication.
 
+
+### Post-Stage-5 A11 execution overlay
+
+A11 executes the first bounded external-backlog wave against the low-risk `8D_deduplicated_unit_conversion_helpers` subset. It assigns terminal dispositions to 38 rows: 37 are provenance aliases to existing governed M00 conversion runtimes and one `earth_rotation_rate_canonical` row remains blocked pending an angular-rate contract and runtime. The wave adds no formula node or Rust kernel and reduces the unprocessed external backlog from 1,323 to 1,285 rows.
+
 ## Wave 3 - classical two-body algebra contracts
 
 Scope: low-to-medium risk algebraic formulas from classical astrodynamics families, including circular speed, escape speed, vis-viva speed, mean motion, period, specific energy, semimajor-axis relations, and periapsis/apoapsis radius relations.
@@ -54,4 +59,4 @@ Required action: keep these families policy-gated until dedicated source, frame/
 
 ## Non-claims
 
-This wave plan does not promote any row out of the external M07 backlog. It does not add validation cards, source-registry seeds, formula-vault candidates, executable research equations, helper algorithms, source archives, fixtures, public APIs, generated code, or operational evidence. Every future modifying slice requires a separate prompt, live main sync, patch preflight, governed count verification, local gates, and exact-commit CI.
+This wave plan by itself does not promote any row. The later A11 overlay records metadata-only terminal dispositions, not formula implementations. It adds no validation card, source-registry seed, formula-vault candidate, executable research equation, helper algorithm, source archive, fixture, public API, generated equation code, or operational evidence. Every later modifying slice requires a separate prompt, live main sync, patch preflight, governed count verification, local gates, and exact-commit CI.

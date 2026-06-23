@@ -9,7 +9,7 @@ This directory contains Phase 0.001 validation-planning artifacts. These files a
 - `status_vocabulary.md`: human-facing status vocabulary guidance and forbidden readiness-claim notes.
 - `cards/`: validation-planning cards for implemented or planned engineering primitives.
 - `source_registry/`: conservative source-research seeds that cards can reference by source ID.
-- `equation_inventory.tsv`: machine-readable equation inventory/readiness dashboard for executable research equations, formula-vault metadata candidates, external M07 backlog rows, validation-card-only records, and helper algorithms.
+- `equation_inventory.tsv`: machine-readable equation inventory/readiness dashboard for executable research equations, formula-vault metadata candidates, external M07 rows with terminal dispositions, remaining external M07 backlog rows, validation-card-only records, and helper algorithms.
 
 ## Verification status ladder
 
@@ -46,6 +46,8 @@ cargo run -p xtask -- dependency-policy
 ```
 
 The `xtask` checks intentionally avoid YAML/JSON parser dependencies in Phase 0.001. They check required top-level fields, nonempty list sections, known status/category strings, card-to-source-registry ID links, schema markers, formula-vault candidate metadata cross-links, equation-inventory counts/block reasons, data-governance status vocabulary coverage, forbidden readiness markers, and native-dependency policy. They are a scaffold, not a replacement for later schema validation, source review, numerical validation, or certification evidence.
+
+A11 adds `python3 scripts/verify_external_m07_unit_conversion_wave1.py --repo .` to the governance wrapper. It verifies metadata-only terminal dispositions and does not read raw M07 or Scilab implementation source.
 
 ## Card authoring rules
 

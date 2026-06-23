@@ -81,6 +81,15 @@ The complete governance wrapper runs this check before the existing xtask gate:
 python3 scripts/verify_governance.py --repo .
 ```
 
+## A11 external unit-conversion resolution
+
+A11 processes 38 low-risk external unit-conversion classifier rows without adding a formula node or Rust kernel. Thirty-seven rows are recorded as deduplicated aliases of existing governed M00 runtimes; `earth_rotation_rate_canonical` remains contract-blocked. The remaining external backlog is 1,285 rows.
+
+- disposition manifest: `formula-vault/resolutions/m07_unit_conversion_wave1.tsv`;
+- verifier: `python3 scripts/verify_external_m07_unit_conversion_wave1.py --repo .`;
+- validation status: `research_required`;
+- new validation cards or source seeds: none.
+
 ## Future allowed contents
 
 Future chunks may add reviewed metadata such as:

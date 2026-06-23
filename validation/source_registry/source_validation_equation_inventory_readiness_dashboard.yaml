@@ -3,20 +3,22 @@ title: Equation inventory and readiness dashboard source seed
 category: validation
 status: research_required
 intended_use:
-  - Register the Stage 4 Chunk 7E equation inventory and readiness dashboard verifier as governance metadata.
-  - Preserve the distinction between executable research kernels, metadata-only formula-vault intake records, explicit runtime-resolution links, external M07 backlog rows, validation-card-only records, and helper algorithms.
+  - Register the equation inventory and readiness dashboard verifier as governance metadata.
+  - Preserve the distinction between executable research kernels, metadata-only formula-vault intake records, explicit runtime-resolution links, external rows with terminal dispositions, remaining external M07 backlog rows, validation-card-only records, and helper algorithms.
 requested_details:
   - Machine-readable inventory row coverage for current public Rust functions.
   - Formula-vault metadata-only candidate-record count cross-check.
   - Exact candidate-to-runtime resolution cross-check against governed M00 equation-batch manifests.
-  - External M07 backlog aggregate count cross-check.
+  - Exact A11 classifier-to-terminal-disposition cross-check for the bounded external unit-conversion wave.
+  - External M07 processed and remaining-backlog aggregate count cross-checks.
   - Validation-card and source-registry seed count cross-checks.
 implementation_notes:
-  - Dependency-free Python resolution verifier plus the existing xtask verifier.
+  - Dependency-free Python resolution verifiers plus the existing xtask verifier.
+  - A11 reuses existing M00 runtime, contract, validation-card, and source-seed records for aliases.
   - No formula implementation is introduced.
   - No M07 source code, fixture, generated binary, or Scilab execution output is imported.
 limits:
   - Does not certify or validate any formula for flight, mission, habitat, medical, operational, or regulated use.
   - Does not authorize a public application programming interface or runtime surface.
-  - Does not inspect external M07 archive contents beyond already-registered aggregate row-count metadata.
-notes: Stage 4 Chunk 7E source seed for inventory/readiness governance only; all rows remain blocked with row-local block reasons.
+  - Uses existing classifier metadata and registered source locators only; it does not inspect raw external M07 or Scilab source text.
+notes: Inventory/readiness governance source seed only; all rows remain blocked with row-local reasons, and terminal external dispositions do not imply parity or readiness.

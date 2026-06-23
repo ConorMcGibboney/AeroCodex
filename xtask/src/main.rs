@@ -221,6 +221,120 @@ fn m07_represented_function_rows() -> usize {
     1_350
 }
 
+fn external_m07_resolution_header() -> &'static str {
+    "schema_version\tresolution_id\tsource_artifact_id\tclassifier_path\tsource_row_locator\tsource_row_number\trust_function_alias\tscilab_function_alias\tsource_file_locator\tformula_family\trisk_tier\trecommended_chunk_group\ttarget_formula_id\ttarget_resolution_id\ttarget_batch_manifest\ttarget_package\ttarget_crate_name\ttarget_runtime_symbol\ttarget_runtime_path\ttarget_contract_path\ttarget_validation_card_path\ttarget_source_seed_path\tvalidation_status\tdisposition\tblock_reason"
+}
+
+fn count_external_m07_processed_rows(root: &Path) -> Result<usize, String> {
+    let resolution_dir = root.join("formula-vault/resolutions");
+    let entries =
+        fs::read_dir(&resolution_dir).map_err(|e| format!("{}: {e}", resolution_dir.display()))?;
+    let mut paths = Vec::new();
+    for entry in entries {
+        let entry = entry.map_err(|e| format!("{}: {e}", resolution_dir.display()))?;
+        let path = entry.path();
+        let name = path
+            .file_name()
+            .and_then(|value| value.to_str())
+            .unwrap_or_default();
+        if path.is_file() && name.starts_with("m07_") && name.ends_with(".tsv") {
+            paths.push(path);
+        }
+    }
+    paths.sort();
+    if paths.is_empty() {
+        return Err(format!(
+            "{} has no external M07 resolution manifests",
+            resolution_dir.display()
+        ));
+    }
+
+    let mut source_row_locators = BTreeSet::new();
+    let mut resolution_ids = BTreeSet::new();
+    let mut total_rows = 0usize;
+    for path in paths {
+        let text = fs::read_to_string(&path).map_err(|e| format!("{}: {e}", path.display()))?;
+        let mut lines = text.lines().filter(|line| !line.trim().is_empty());
+        let header = lines
+            .next()
+            .ok_or_else(|| format!("{} has no header", path.display()))?;
+        if header != external_m07_resolution_header() {
+            return Err(format!("{} has an unsupported header", path.display()));
+        }
+        let mut file_rows = 0usize;
+        for (index, line) in lines.enumerate() {
+            let line_no = index + 2;
+            let fields: Vec<&str> = line.split('\t').collect();
+            if fields.len() != 25 {
+                return Err(format!(
+                    "{} line {} has {} fields; expected 25",
+                    path.display(),
+                    line_no,
+                    fields.len()
+                ));
+            }
+            if fields[0] != "aerocodex.external_m07_resolution.v1" {
+                return Err(format!(
+                    "{} line {} has unsupported schema `{}`",
+                    path.display(),
+                    line_no,
+                    fields[0]
+                ));
+            }
+            if fields[1].is_empty() || !resolution_ids.insert(fields[1].to_string()) {
+                return Err(format!(
+                    "{} line {} has an empty or duplicate resolution_id `{}`",
+                    path.display(),
+                    line_no,
+                    fields[1]
+                ));
+            }
+            if fields[4].is_empty() || !source_row_locators.insert(fields[4].to_string()) {
+                return Err(format!(
+                    "{} line {} has an empty or duplicate source_row_locator `{}`",
+                    path.display(),
+                    line_no,
+                    fields[4]
+                ));
+            }
+            if fields[22] != "research_required" {
+                return Err(format!(
+                    "{} line {} validation_status must remain research_required",
+                    path.display(),
+                    line_no
+                ));
+            }
+            let disposition = fields[23];
+            if disposition.is_empty()
+                || disposition.contains("pending")
+                || disposition.contains("unresolved")
+            {
+                return Err(format!(
+                    "{} line {} disposition `{}` is not terminal",
+                    path.display(),
+                    line_no,
+                    disposition
+                ));
+            }
+            if fields[24].is_empty() {
+                return Err(format!(
+                    "{} line {} is missing block_reason",
+                    path.display(),
+                    line_no
+                ));
+            }
+            file_rows += 1;
+        }
+        if file_rows == 0 {
+            return Err(format!("{} has no data rows", path.display()));
+        }
+        total_rows = total_rows
+            .checked_add(file_rows)
+            .ok_or_else(|| "external M07 processed row count overflow".to_string())?;
+    }
+    Ok(total_rows)
+}
+
 fn governed_executable_research_equation_count() -> usize {
     152
 }
@@ -1435,6 +1549,7 @@ impl PublicFunctionRef {
 struct EquationInventoryExpectedCounts {
     executable_research_equations: usize,
     metadata_only_candidates: usize,
+    external_m07_processed_rows: usize,
     external_m07_backlog_rows: usize,
     validation_cards: usize,
     source_registry_seeds: usize,
@@ -1446,6 +1561,7 @@ struct EquationInventoryExpectedCounts {
 struct EquationInventorySummary {
     executable_research_equations: usize,
     metadata_only_candidates: usize,
+    external_m07_processed_rows: usize,
     external_m07_backlog_rows: usize,
     validation_cards: usize,
     source_registry_seeds: usize,
@@ -1493,12 +1609,17 @@ fn verify_equation_inventory(root: &Path) -> Result<EquationInventorySummary, St
                 governed_executable_count
             )
         })?;
+    let external_m07_processed_rows = count_external_m07_processed_rows(root)?;
+    let selected_external_rows = metadata_only_candidates
+        .checked_add(external_m07_processed_rows)
+        .ok_or_else(|| "selected external row count overflow".to_string())?;
     let expected = EquationInventoryExpectedCounts {
         executable_research_equations: governed_executable_count,
         metadata_only_candidates,
+        external_m07_processed_rows,
         external_m07_backlog_rows: m07_represented_function_rows()
-            .checked_sub(metadata_only_candidates)
-            .ok_or_else(|| "metadata candidate count exceeds m07 represented rows".to_string())?,
+            .checked_sub(selected_external_rows)
+            .ok_or_else(|| "selected external rows exceed m07 represented rows".to_string())?,
         validation_cards,
         source_registry_seeds,
         validation_card_only_records: validation_cards,
@@ -1508,9 +1629,10 @@ fn verify_equation_inventory(root: &Path) -> Result<EquationInventorySummary, St
     let summary =
         verify_equation_inventory_text(&inventory_path, &text, &expected, Some(&public_functions))?;
     println!(
-        "verified equation inventory: executable_research_equations={}; metadata_only_candidates={}; external_m07_backlog_rows={}; validation_cards={}; source_registry_seeds={}; validation_card_only_records={}; helper_algorithms={}",
+        "verified equation inventory: executable_research_equations={}; metadata_only_candidates={}; external_m07_processed_rows={}; external_m07_backlog_rows={}; validation_cards={}; source_registry_seeds={}; validation_card_only_records={}; helper_algorithms={}",
         summary.executable_research_equations,
         summary.metadata_only_candidates,
+        summary.external_m07_processed_rows,
         summary.external_m07_backlog_rows,
         summary.validation_cards,
         summary.source_registry_seeds,
@@ -1608,6 +1730,18 @@ fn verify_equation_inventory_text(
                 }
                 summary.metadata_only_candidates += row.row_count;
             }
+            "external_m07_processed_row" => {
+                require_repo_source_path(path, row, "formula-vault/resolutions/")?;
+                if row.line != 0 {
+                    return Err(format!(
+                        "{} line {} external processed row `{}` must use line 0",
+                        path.display(),
+                        row.line_no,
+                        row.id
+                    ));
+                }
+                summary.external_m07_processed_rows += row.row_count;
+            }
             "external_m07_backlog_row" => {
                 if !row.source_path.starts_with("external://stage4/") {
                     return Err(format!(
@@ -1659,6 +1793,14 @@ fn verify_equation_inventory_text(
             path.display(),
             summary.metadata_only_candidates,
             expected.metadata_only_candidates
+        ));
+    }
+    if summary.external_m07_processed_rows != expected.external_m07_processed_rows {
+        return Err(format!(
+            "{} external_m07_processed_row count {} does not match expected {}",
+            path.display(),
+            summary.external_m07_processed_rows,
+            expected.external_m07_processed_rows
         ));
     }
     if summary.external_m07_backlog_rows != expected.external_m07_backlog_rows {
@@ -2646,7 +2788,8 @@ mod tests {
         "category\tid\tsource_path\tline\tfunction_or_ref\tstatus\tblocked\tblock_reason\trow_count\n\
 executable_research_equation\texecutable.fixture.dynamic_pressure\tcrates/aero-codex-aerodynamics/src/lib.rs\t130\tdynamic_pressure\tresearch_required\ttrue\tresearch_preliminary_only_no_certification_or_operational_evidence\t1\n\
 metadata_only_formula_vault_candidate\tformula_vault.m00.angle.fixture\tformula-vault/candidates/fixture.yaml\t0\tformula_vault.m00.angle.fixture\tresearch_required\ttrue\tmetadata_only_no_formula_implementation_no_source_import_no_public_interface\t1\n\
-external_m07_backlog_row\tstage4.m07.remaining_backlog.fixture\texternal://stage4/aerocodex_rust_port_v14_m07_final_bundle.zip\t0\tremaining_m07_rows_after_metadata_candidates\tresearch_required\ttrue\texternal_quarantine_m07_rows_not_imported_minus_selected_metadata_candidates\t2\n\
+external_m07_processed_row\tstage4.m07.processed.fixture\tformula-vault/resolutions/fixture.tsv\t0\tfixture_terminal_disposition\tresearch_required\ttrue\tprocessed_external_row_fixture\t1\n\
+external_m07_backlog_row\tstage4.m07.remaining_backlog.fixture\texternal://stage4/aerocodex_rust_port_v14_m07_final_bundle.zip\t0\tremaining_m07_rows_after_metadata_candidates_and_processed_rows\tresearch_required\ttrue\texternal_quarantine_m07_rows_not_imported_minus_selected_metadata_candidates_and_terminal_dispositions\t2\n\
 validation_card_only_record\tvalidation.fixture.card\tvalidation/cards/fixture.yaml\t0\tvalidation.fixture.card\tresearch_required\ttrue\tvalidation_metadata_only_not_formula_implementation\t1\n\
 helper_algorithm\thelper.fixture.ensure_finite\tcrates/aero-codex-core/src/validation.rs\t2\tensure_finite\tresearch_required\ttrue\tsupport_algorithm_not_counted_as_executable_research_equation\t1\n".to_string()
     }
@@ -2655,6 +2798,7 @@ helper_algorithm\thelper.fixture.ensure_finite\tcrates/aero-codex-core/src/valid
         EquationInventoryExpectedCounts {
             executable_research_equations: 1,
             metadata_only_candidates: 1,
+            external_m07_processed_rows: 1,
             external_m07_backlog_rows: 2,
             validation_cards: 1,
             source_registry_seeds: 1,
@@ -2685,6 +2829,7 @@ helper_algorithm\thelper.fixture.ensure_finite\tcrates/aero-codex-core/src/valid
         )
         .expect("minimal equation inventory should pass");
         assert_eq!(summary.executable_research_equations, 1);
+        assert_eq!(summary.external_m07_processed_rows, 1);
         assert_eq!(summary.external_m07_backlog_rows, 2);
     }
 

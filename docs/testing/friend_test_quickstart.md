@@ -11,10 +11,10 @@ The friend-test package covers repository hygiene and governance checks:
 - Git status, whitespace, checksum, and generated-file cleanliness;
 - Rust formatting, checking, linting, all-target tests, and warning-deny documentation generation;
 - the Beta 1 concept CLI version, exact signed-conversion smoke, and bounded self-check;
-- validation-card, source-registry, equation-inventory, formula-vault, data-registry, status-vocabulary, and dependency-policy gates exposed through `xtask`;
+- validation-card, source-registry, equation-inventory, formula-vault, external M07 terminal-resolution, data-registry, status-vocabulary, and dependency-policy gates exposed through `xtask` and `scripts/verify_governance.py`;
 - thin-film provenance artifact verification;
 - nomenclature, acronym, and generated terminology checks;
-- a clear distinction between executable research equations, formula-vault metadata candidates, validation-card-only records, helper algorithms, and blocked items.
+- a clear distinction between executable research equations, formula-vault metadata candidates, external rows with terminal dispositions, unprocessed external backlog rows, validation-card-only records, helper algorithms, and blocked items.
 
 It does not validate flight behavior, mission behavior, habitat safety, medical behavior, regulated use, or formula physical correctness beyond the repository checks that already exist.
 

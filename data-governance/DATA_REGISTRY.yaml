@@ -78,7 +78,7 @@ artifacts:
     artifact_kind: repo_file_validation_inventory
     origin: current_repo
     license: MIT OR Apache-2.0 metadata
-    sha256: 62f72a9b4ea5e743fe2de2609468279145f48a6675735c9d08905d352ed008c2
+    sha256: e1d4cb820e3c070f04c9f0dd747b05919bb75de91d601528f691575c9d6d9da7
     hash_status: sha256_verified_current_repo_file
     allowed_use: machine-readable equation inventory and readiness-dashboard counts only
     bundling_decision: bundled repo-relative validation metadata; no formula implementation, source archive import, generated code, fixture, or public application programming interface promotion
@@ -226,6 +226,20 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: refresh only through explicit C2/classifier governance chunks
     notes: Research_required 154-row derivative of the core classifier; low-risk classification is prioritization metadata only, not implementation approval or validation-status promotion.
+  - id: post_stage5.a11.m07_unit_conversion_wave1_resolution.2026_06_23
+    title: A11 external M07 unit-conversion Wave 1 terminal resolutions
+    local_path: formula-vault/resolutions/m07_unit_conversion_wave1.tsv
+    artifact_kind: repo_file_external_backlog_resolution_research_metadata
+    origin: Post-Stage-5 A11 derivative of the registered M07 classifier metadata tied to stage4.m07_rust_port_v14.2026_06_15
+    license: MIT OR Apache-2.0 metadata with M07 source-boundary restrictions
+    sha256: 7af671a007ac1ce611bec07168b209b3c631a9a2e91912d99393703b915ca390
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: terminal alias and contract-blocked disposition tracking for the bounded 38-row unit-conversion wave only
+    bundling_decision: bundled repo-relative metadata only; no raw M07 or Scilab source, generated equation code, fixture, or public API promotion
+    validation_status: repository_tracked_research_data
+    owner: AeroCodex maintainers
+    update_cadence: append or revise only through explicit external-backlog resolution waves with deterministic verification
+    notes: Records 37 aliases to existing governed M00 runtimes and one angular-rate contract block; reduces unprocessed backlog accounting from 1,323 to 1,285 without adding a Rust kernel, parity claim, certification claim, or operational-readiness claim.
   - id: stage5.c2.m07_blocked_high_risk_derivative.2026_06_18
     title: M07 blocked/high-risk derivative metadata
     local_path: docs/source_intake/m07_formula_family_classifier/blocked_high_risk_rows.csv

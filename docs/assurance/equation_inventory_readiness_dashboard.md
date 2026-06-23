@@ -24,7 +24,8 @@ The inventory distinguishes:
 
 - `executable_research_equation` — currently public Rust research/preliminary-design equation kernels in repository crates. These are executable but remain blocked from readiness promotion.
 - `metadata_only_formula_vault_candidate` — metadata intake/provenance records. A10 resolves all 27 represented formula IDs to existing governed runtimes; the records remain metadata-only artifacts, while the mathematics lives in Rust crates.
-- `external_m07_backlog_row` — aggregate external M07 backlog rows not represented as metadata-only formula-vault candidates.
+- `external_m07_processed_row` — aggregate external rows assigned a terminal alias or blocked disposition by a bounded reviewed wave.
+- `external_m07_backlog_row` — aggregate external M07 rows that still lack a terminal disposition.
 - `validation_card_only_record` — validation-card metadata rows. These records are not formula implementations.
 - `helper_algorithm` — public support/helper routines, validation helpers, type constructors, provenance helpers, BioSim governance primitives, and other support algorithms not counted as executable research equations.
 
@@ -40,12 +41,12 @@ The verifier is expected to report:
 - validation-card-only records: 36
 - helper algorithms: 89
 
-The external M07 count is derived from the existing registered M07 represented function-row count of 1350 minus the three metadata-only formula-vault candidate identifiers already selected for M00 angle/unit review.
+The remaining external M07 backlog is derived from the registered 1,350 represented rows minus 27 formula-vault candidate records and minus rows with terminal external-resolution dispositions. A11 adds the first 38 terminal dispositions, leaving 1,285 rows unprocessed.
 
 
-## Current post-A10 resolution state
+## Current post-A11 resolution state
 
-The current governed inventory still contains 152 executable research equations, 27 metadata-only intake records, 1,323 external M07 backlog rows, 46 validation-card-only records, and 262 helper algorithms. The derived A10 resolution counters are:
+The current governed inventory contains 152 executable research equations, 27 metadata-only intake records, 38 external M07 rows with terminal dispositions, 1,285 remaining external M07 backlog rows, 46 validation-card-only records, and 262 helper algorithms. The A10 runtime-resolution counters remain:
 
 - runtime-linked formula-vault records: 27;
 - unresolved formula-vault candidate formula IDs: 0;
@@ -53,7 +54,7 @@ The current governed inventory still contains 152 executable research equations,
 - vector-algebra links: 14;
 - canonical-unit links: 10.
 
-`formula-vault/resolutions/m00_runtime_links.tsv` must exactly match the formula IDs in the candidate records and the runtime, contract, validation-card, and source-seed fields in the two governed M00 equation-batch manifests. The external backlog remains 1,323 because these 27 selected rows were already excluded from that aggregate.
+`formula-vault/resolutions/m00_runtime_links.tsv` must exactly match the formula IDs in the candidate records and the runtime, contract, validation-card, and source-seed fields in the two governed M00 equation-batch manifests. A11 then processes the 38-row low-risk unit-conversion family: 37 rows deduplicate to existing M00 runtimes and one angular-rate row remains contract-blocked. No executable or metadata-candidate count changes.
 
 ## Readiness rule
 

@@ -33,6 +33,11 @@ The classifier is planning metadata and does not change governed equation-invent
 
 C2 does not remove classifier rows from `external_m07_backlog_rows`, does not promote source or validation status, and remains research/planning metadata.
 
+
+### Post-Stage-5 A11 overlay
+
+The table above is the historical C2 reconciliation baseline. A11 subsequently processes 38 low-risk rows from `8D_deduplicated_unit_conversion_helpers` using classifier metadata only. Thirty-seven rows are deduplicated aliases to existing governed M00 runtimes; `earth_rotation_rate_canonical` remains contract-blocked. Current external accounting is 38 terminally processed rows and 1,285 remaining backlog rows. No raw M07 or Scilab source is imported or executed.
+
 ## Counts by formula family
 
 | Formula family | Rows |

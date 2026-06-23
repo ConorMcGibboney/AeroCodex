@@ -21,7 +21,35 @@ SCHEMA_VERSION = "aerocodex.formula_vault_runtime_resolution.v1"
 RESOLUTION_MANIFEST = "formula-vault/resolutions/m00_runtime_links.tsv"
 EXPECTED_RESOLUTION_ROWS = 27
 EXPECTED_EXECUTABLE_INVENTORY_ROWS = 152
-EXPECTED_EXTERNAL_BACKLOG_ROWS = 1323
+M07_REPRESENTED_FUNCTION_ROWS = 1350
+EXTERNAL_RESOLUTION_SCHEMA = "aerocodex.external_m07_resolution.v1"
+EXTERNAL_RESOLUTION_HEADER = [
+    "schema_version",
+    "resolution_id",
+    "source_artifact_id",
+    "classifier_path",
+    "source_row_locator",
+    "source_row_number",
+    "rust_function_alias",
+    "scilab_function_alias",
+    "source_file_locator",
+    "formula_family",
+    "risk_tier",
+    "recommended_chunk_group",
+    "target_formula_id",
+    "target_resolution_id",
+    "target_batch_manifest",
+    "target_package",
+    "target_crate_name",
+    "target_runtime_symbol",
+    "target_runtime_path",
+    "target_contract_path",
+    "target_validation_card_path",
+    "target_source_seed_path",
+    "validation_status",
+    "disposition",
+    "block_reason",
+]
 EXPECTED_FAMILY_COUNTS = {
     "angle_unit_conversions": 3,
     "canonical_unit_conversions": 10,
@@ -101,6 +129,50 @@ def unique_map(rows: Iterable[dict[str, str]], key: str, label: str) -> dict[str
         require(value not in mapped, f"duplicate {label} {key}: {value}")
         mapped[value] = row
     return mapped
+
+
+def external_resolution_summary(repo: Path) -> dict[str, Any]:
+    paths = sorted((repo / "formula-vault/resolutions").glob("m07_*.tsv"))
+    require(paths, "no external M07 resolution manifests found")
+    resolution_ids: set[str] = set()
+    source_row_locators: set[str] = set()
+    row_count = 0
+    for path in paths:
+        rows = read_tsv(path, EXTERNAL_RESOLUTION_HEADER)
+        for index, row in enumerate(rows, 1):
+            require(
+                row["schema_version"] == EXTERNAL_RESOLUTION_SCHEMA,
+                f"external resolution row {path}:{index} schema mismatch",
+            )
+            require(
+                row["resolution_id"] not in resolution_ids,
+                f"duplicate external resolution_id: {row['resolution_id']}",
+            )
+            resolution_ids.add(row["resolution_id"])
+            require(
+                row["source_row_locator"] not in source_row_locators,
+                f"duplicate external source_row_locator: {row['source_row_locator']}",
+            )
+            source_row_locators.add(row["source_row_locator"])
+            require(
+                row["validation_status"] == "research_required",
+                f"external resolution row {path}:{index} status mismatch",
+            )
+            disposition = row["disposition"]
+            require(
+                disposition
+                and "pending" not in disposition
+                and "unresolved" not in disposition,
+                f"external resolution row {path}:{index} is not terminal",
+            )
+            require(row["block_reason"] != "", f"external resolution row {path}:{index} lacks block_reason")
+            row_count += 1
+    return {
+        "manifests": [path.relative_to(repo).as_posix() for path in paths],
+        "row_count": row_count,
+        "resolution_ids_unique": len(resolution_ids) == row_count,
+        "source_row_locators_unique": len(source_row_locators) == row_count,
+    }
 
 
 def extract_candidate_formula_ids(path: Path) -> list[str]:
@@ -231,11 +303,26 @@ def verify_repo(repo: Path) -> dict[str, Any]:
     inventory_rows = read_tsv(repo_path(repo, "validation/equation_inventory.tsv"))
     metadata_rows = [row for row in inventory_rows if row["category"] == "metadata_only_formula_vault_candidate"]
     executable_rows = [row for row in inventory_rows if row["category"] == "executable_research_equation"]
+    processed_rows = [row for row in inventory_rows if row["category"] == "external_m07_processed_row"]
     external_rows = [row for row in inventory_rows if row["category"] == "external_m07_backlog_row"]
+    external_resolution = external_resolution_summary(repo)
+    expected_external_backlog = (
+        M07_REPRESENTED_FUNCTION_ROWS
+        - EXPECTED_RESOLUTION_ROWS
+        - external_resolution["row_count"]
+    )
     require(len(metadata_rows) == EXPECTED_RESOLUTION_ROWS, f"metadata inventory row count mismatch: {len(metadata_rows)}")
     require(len(executable_rows) == EXPECTED_EXECUTABLE_INVENTORY_ROWS, f"executable inventory row count mismatch: {len(executable_rows)}")
+    require(len(processed_rows) == 1, f"expected one external processed aggregate row, found {len(processed_rows)}")
+    require(
+        int(processed_rows[0]["row_count"]) == external_resolution["row_count"],
+        "external processed count does not match resolution manifests",
+    )
     require(len(external_rows) == 1, f"expected one external backlog aggregate row, found {len(external_rows)}")
-    require(int(external_rows[0]["row_count"]) == EXPECTED_EXTERNAL_BACKLOG_ROWS, "external backlog count changed")
+    require(
+        int(external_rows[0]["row_count"]) == expected_external_backlog,
+        "external backlog count does not match represented minus candidate and processed rows",
+    )
     inventory_candidates = unique_map(metadata_rows, "id", "metadata inventory")
     require(set(inventory_candidates) == set(resolutions), "metadata inventory and resolution IDs differ")
     for formula_id, inventory_row in inventory_candidates.items():
@@ -259,7 +346,11 @@ def verify_repo(repo: Path) -> dict[str, Any]:
         "batch_manifests": sorted(batch_cache),
         "metadata_inventory_records": len(metadata_rows),
         "executable_research_equations": len(executable_rows),
-        "external_m07_backlog_rows": int(external_rows[0]["row_count"]),
+        "external_m07_resolution_manifests": external_resolution["manifests"],
+        "external_m07_processed_rows": external_resolution["row_count"],
+        "external_m07_backlog_rows": expected_external_backlog,
+        "external_resolution_ids_unique": external_resolution["resolution_ids_unique"],
+        "external_source_row_locators_unique": external_resolution["source_row_locators_unique"],
         "formula_ids_unique": len(resolutions) == len(set(resolutions)),
         "runtime_paths_unique": len(runtime_paths) == len(resolutions),
         "package_scoped_runtime_identities_unique": len(runtime_identities) == len(resolutions),
