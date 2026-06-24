@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Run the fail-closed AeroCodex Beta 1 automated qualification gate.
 
-The gate snapshots the current tracked and untracked source state into a temporary
-Git repository, executes repository, CLI, packaging, archive, and tamper checks,
-and writes machine-readable JSON, JUnit XML, and a full text log. It never
-modifies the source repository.
+The gate restores the repository's no-root-Cargo.lock policy by deleting only a
+verified untracked transient root Cargo.lock before it captures the source
+baseline. It then snapshots the current tracked and untracked source state into a
+temporary Git repository, executes repository, CLI, packaging, archive, and
+tamper checks, and writes machine-readable JSON, JUnit XML, and a full text log.
+It does not modify tracked source files.
 """
 from __future__ import annotations
 
@@ -86,6 +88,24 @@ def git(repo: Path, args: list[str], *, timeout: int = 120) -> str:
     completed = run_raw(["git", *args], cwd=repo, timeout=timeout)
     require(completed.returncode == 0, f"git {' '.join(args)} failed: {completed.stderr.strip()}")
     return completed.stdout.strip()
+
+
+def remove_transient_root_cargo_lock(repo: Path) -> dict[str, str]:
+    """Restore the repository's no-root-lock policy without deleting tracked data."""
+    cargo_lock = repo / "Cargo.lock"
+    if not cargo_lock.exists():
+        return {"result": "PASS", "action": "not_present"}
+
+    tracked = run_raw(["git", "ls-files", "--error-unmatch", "--", "Cargo.lock"], cwd=repo)
+    require(tracked.returncode != 0, "tracked root Cargo.lock is present contrary to repository policy")
+    status = git(repo, ["status", "--porcelain=v1", "--untracked-files=all", "--", "Cargo.lock"])
+    require(
+        status == "?? Cargo.lock",
+        f"root Cargo.lock is present but is not a removable untracked file: {status!r}",
+    )
+    cargo_lock.unlink()
+    require(not cargo_lock.exists(), "failed to remove transient untracked root Cargo.lock")
+    return {"result": "PASS", "action": "removed_untracked"}
 
 
 def discover_python() -> str:
@@ -352,12 +372,18 @@ def main(argv: list[str] | None = None) -> int:
         require((repo / ".git").exists(), f"repository has no .git directory: {repo}")
         output_dir.mkdir(parents=True)
 
+        root_cargo_lock_cleanup = remove_transient_root_cargo_lock(repo)
         python = discover_python()
         base_head = git(repo, ["rev-parse", "HEAD"])
         baseline_status = git(repo, ["status", "--porcelain=v1", "--untracked-files=all"])
         require(run_raw(["git", "diff", "--cached", "--quiet"], cwd=repo).returncode == 0, "source repository index is not clean")
         require(not (repo / "Cargo.lock").exists(), "root Cargo.lock is present contrary to repository policy")
-        report["source"] = {"base_head": base_head, "baseline_status": baseline_status.splitlines(), "index_clean": True}
+        report["source"] = {
+            "base_head": base_head,
+            "baseline_status": baseline_status.splitlines(),
+            "index_clean": True,
+            "root_cargo_lock_cleanup": root_cargo_lock_cleanup,
+        }
 
         with log_path.open("w", encoding="utf-8", newline="\n") as log_handle, tempfile.TemporaryDirectory(prefix="aerocodex-beta1-gate-") as temporary_name:
             temporary = Path(temporary_name)
