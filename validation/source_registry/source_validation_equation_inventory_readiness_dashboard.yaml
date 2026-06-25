@@ -19,6 +19,7 @@ requested_details:
   - Exact A19 fourth-40 cross-check for the same group, including A16-A18 exclusion, alias/helper/block totals, remaining-group count, and preservation of 37 medium-risk plus 3 high-risk labels.
   - Exact A20 fifth-40 cross-check for the same group, including A16-A19 exclusion, helper/block totals, remaining-group count, and preservation of 26 medium-risk plus 14 high-risk labels.
   - Exact A21 sixth-40 cross-check for the same group, including A16-A20 exclusion, alias/helper/block totals, remaining-group count, and preservation of 18 medium-risk plus 22 high-risk labels.
+  - Exact A22 seventh-40 cross-check for the same group, including A16-A21 exclusion, alias/helper/block totals, remaining-group count, and preservation of 38 medium-risk plus 2 high-risk labels.
   - External M07 processed and remaining-backlog aggregate count cross-checks.
   - Validation-card and source-registry seed count cross-checks.
 implementation_notes:
@@ -31,6 +32,7 @@ implementation_notes:
   - A19 reuses existing A7 semimajor-axis, elliptic anomaly-conversion, and eccentricity-vector records for exact aliases; excludes internal/composite Lagrange, orbit-summary, and universal-variable helpers; and keeps anomaly, time-of-flight, Stumpff, and state-derived conic rows contract- or policy-blocked.
   - A20 excludes internal f/g intermediates, solver residual/search orchestration, sighting linear-system, Stumpff bundle, and ballistic classification/summary helpers; and keeps f/g series, Gauss/Lambert, frame rotation, orbit determination, Stumpff scalar, ballistic parameter, and free-flight range/time rows contract- or policy-blocked.
   - A21 reuses the existing A7 eccentricity-vector record for one exact alias; excludes generic atan2, launch-error summary bundles, and gravity-assist orchestration helpers; and keeps spherical navigation, launch-error sensitivity, ballistic targeting, rotating-body transform, conic time-of-flight, and B-plane rows contract- or policy-blocked.
+  - A22 reuses the existing A7 sphere-of-influence record for one exact alias; excludes composite gravity-assist, patched-conic, state-construction, coordinate-rotation, scalar-validation, scalar-math, and I/O helpers; and keeps hyperbolic geometry, capture/departure, flyby feasibility, conic radius, and elliptic-period rows contract- or policy-blocked.
   - A12-A13 exclude internal shape helpers from formula scope and keep determinant/frame, skew-matrix, and true-anomaly contract-sensitive rows blocked.
   - No formula implementation is introduced.
   - No M07 source code, fixture, generated binary, or Scilab execution output is imported.
