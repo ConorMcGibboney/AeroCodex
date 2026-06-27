@@ -210,3 +210,8 @@ A33 closes the relative-motion and finite-burn scalar policy slice: 0 aliases, 0
 ### A34 attitude frame policy Wave 1 summary
 
 Selected 40 rows from `10A_attitude_quaternion_DCM_contracts`. All remain blocked until attitude representation and inertia policy is approved. External M07 processed/backlog after A34: 895/428.
+
+
+### A35 attitude frame policy Wave 2 summary
+
+Selected the remaining 19 rows from `10A_attitude_quaternion_DCM_contracts`. All remain blocked until attitude representation and inertia policy is approved. External M07 processed/backlog after A35: 914/409.

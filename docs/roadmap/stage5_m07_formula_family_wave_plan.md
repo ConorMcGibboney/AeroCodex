@@ -162,3 +162,8 @@ A33 processes the final 29 source-ordered rows from the governed relative-motion
 ### Post-Stage-5 A34 execution overlay
 
 A34 executes the first bounded slice of `10A_attitude_quaternion_DCM_contracts`. It records 40 terminal contract/policy blocks for attitude representation, inertia, quaternion, and DCM rows, without runtime import or parity claims. External M07 backlog changes from 468 to 428.
+
+
+### Post-Stage-5 A35 execution overlay
+
+A35 closes the remaining source-ordered rows from `10A_attitude_quaternion_DCM_contracts`. It records 19 terminal contract/policy blocks for attitude representation, inertia, quaternion, and DCM rows, without runtime import or parity claims. External M07 backlog changes from 428 to 409.

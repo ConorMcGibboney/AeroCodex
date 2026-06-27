@@ -67,3 +67,8 @@ A clean report is still not a safety or certification claim.
 ### A34 external M07 attitude / inertia / quaternion policy Wave 1
 
 A34 is metadata-only and blocks 40 attitude / inertia / quaternion source rows pending representation, frame, source-registry, and validation-oracle policy. External M07 counters after A34: 895 processed / 428 backlog.
+
+
+### A35 external M07 attitude / inertia / quaternion policy Wave 2
+
+A35 is metadata-only and blocks the remaining 19 attitude / inertia / quaternion source rows pending representation, frame, source-registry, and validation-oracle policy. External M07 counters after A35: 914 processed / 409 backlog.

@@ -63,3 +63,8 @@ Every inventory row is explicitly blocked. The block reason is row-local and mac
 ### A34 attitude frame policy Wave 1
 
 External M07 processed rows increase to 895; remaining backlog is 428. A34 adds only research-required metadata dispositions.
+
+
+### A35 attitude frame policy Wave 2
+
+External M07 processed rows increase to 914; remaining backlog is 409. A35 adds only research-required metadata dispositions and closes the attitude representation candidate pool.
