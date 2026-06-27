@@ -297,3 +297,14 @@ A28 processes the first 40 source-ordered rows in the governed 9C solver-policy 
 - remaining external backlog: 660;
 - validation status: `research_required`;
 - no raw Rust-port, M07, or Scilab source review or parity claim.
+
+
+## A29 external solver / numerical propagation policy Wave 2
+
+A29 processes the second 40 source-ordered rows in the governed 9C/10B solver-policy backlog without adding a formula node or Rust kernel. All 40 rows remain contract- or policy-blocked pending explicit iteration, root-selection, integration tolerance, convergence/failure-state, source-registry, and independent numerical-oracle policies. The selected risk tiers remain unchanged: 40 solver-policy blocked rows. This leaves 43 rows in the solver-policy candidate pool.
+
+- resolution manifest: `formula-vault/resolutions/m07_solver_policy_wave2.tsv`;
+- verifier: `scripts/verify_external_m07_solver_policy_wave2.py --repo .`;
+- cumulative external terminal dispositions: 703;
+- remaining external backlog: 620;
+- no M07/Scilab parity, certification, operational-readiness, or public api claim is made.

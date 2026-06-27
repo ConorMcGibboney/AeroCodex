@@ -135,3 +135,8 @@ A27 processes the remaining 45 source-ordered rows from the governed coordinate-
 ### Post-Stage-5 A28 overlay
 
 A28 processes the first 40 source-ordered rows from the governed solver / least-squares / root-selection policy backlog: 0 exact aliases, 0 helper exclusions, and 40 rows remain contract- or policy-blocked. The selected rows span `9C_kepler_lambert_gauss_solver_policy_or_10B_numerical_propagation_policy` (36), `9C_solver_rank_tolerance_and_observation_policy` (3), and `9C_solver_rank_tolerance_policy_before_any_promotion` (1), while retaining 40 `blocked_until_solver_policy` labels. A28 leaves 83 rows in this solver-policy candidate pool and updates external accounting to 663 terminally processed rows and 660 remaining backlog rows. No raw Rust-port, M07, or Scilab source is imported or executed.
+
+
+### Post-Stage-5 A29 overlay
+
+A29 processes the next 40 source-ordered rows from the remaining governed solver / numerical propagation policy backlog: 0 exact aliases, 0 helper exclusions, and 40 rows remain contract- or policy-blocked. The selected rows span `9C_kepler_lambert_gauss_solver_policy_or_10B_numerical_propagation_policy` (26) and `9C_or_10B_generic_numerical_method_policy` (14), while retaining 40 `blocked_until_solver_policy` labels. A29 leaves 43 rows in this solver-policy candidate pool and updates external accounting to 703 terminally processed rows and 620 remaining backlog rows. No raw Rust-port, M07, or Scilab source is imported or executed.

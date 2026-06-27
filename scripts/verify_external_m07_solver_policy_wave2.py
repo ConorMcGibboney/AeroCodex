@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify A28 external M07 solver / least-squares / root-selection policy Wave 1 terminal dispositions.
+"""Verify A29 external M07 solver / numerical propagation policy Wave 2 terminal dispositions.
 
 Dependency-free metadata verifier. It consumes only governed classifier metadata,
 external resolution manifests, and the repository inventory; it never opens raw
@@ -13,53 +13,50 @@ from typing import Any,Iterable
 
 SCHEMA_VERSION='aerocodex.external_m07_resolution.v1'
 CLASSIFIER_PATH='docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier.csv'
-RESOLUTION_PATH='formula-vault/resolutions/m07_solver_policy_wave1.tsv'
-future_same_pool_resolution_paths={
-  'formula-vault/resolutions/m07_solver_policy_wave2.tsv'
-}
+RESOLUTION_PATH='formula-vault/resolutions/m07_solver_policy_wave2.tsv'
 INVENTORY_PATH='validation/equation_inventory.tsv'
 SOURCE_ARTIFACT_ID='stage4.m07_rust_port_v14.2026_06_15'
 SELECTED_LOCATORS=[
-  "PORT_STATUS_RELEASE_GATE.csv:row_0025",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0066",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0162",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0165",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0166",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0178",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0179",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0180",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0181",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0182",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0183",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0184",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0281",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0282",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0283",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0284",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0319",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0320",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0338",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0346",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0353",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0354",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0355",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0356",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0357",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0358",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0359",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0389",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0390",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0391",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0392",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0393",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0396",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0397",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0398",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0399",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0402",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0408",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0414",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0415"
+  "PORT_STATUS_RELEASE_GATE.csv:row_0416",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0479",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0497",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0499",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0500",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0515",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0516",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0517",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0518",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0520",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0521",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0522",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0523",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0525",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0526",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0527",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0528",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0532",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0533",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0538",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0539",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0540",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0541",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0542",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0544",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0545",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0547",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0560",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0577",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0579",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0703",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0704",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0710",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0842",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0843",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0848",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0849",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0879",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0883",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0884"
 ]
 CANDIDATE_GROUPS=[
   "9C_kepler_lambert_gauss_solver_policy_or_10B_numerical_propagation_policy",
@@ -68,22 +65,18 @@ CANDIDATE_GROUPS=[
   "9C_solver_rank_tolerance_policy_before_any_promotion"
 ]
 M07_REPRESENTED_FUNCTION_ROWS=1350
-EXPECTED_CANDIDATE_POOL_ROWS=123
+EXPECTED_CANDIDATE_POOL_ROWS=83
 EXPECTED_ROWS=40
-EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=83
+EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=43
 EXPECTED_EXECUTABLE_ROWS=152
 EXPECTED_METADATA_ROWS=27
 EXPECTED_CUMULATIVE_PROCESSED=703
 EXPECTED_REMAINING_BACKLOG=620
 EXPECTED_RISK_COUNTS=Counter({'blocked_until_solver_policy': 40})
-EXPECTED_FAMILY_COUNTS=Counter({'least_squares_or_solver': 4, 'iterative_solver': 36})
-EXPECTED_SOURCE_GROUP_COUNTS=Counter({'9C_solver_rank_tolerance_policy_before_any_promotion': 1, '9C_kepler_lambert_gauss_solver_policy_or_10B_numerical_propagation_policy': 36, '9C_solver_rank_tolerance_and_observation_policy': 3})
-EXPECTED_BLOCK_REASON_COUNTS=Counter({'blocked_app_resolve_coplanar_least_squares_rank_policy_required': 1, 'blocked_until_iteration_root_selection_and_equivalence_policy': 36, 'blocked_until_least_squares_rank_and_numerical_policy': 3})
-BLOCK_TEXT={
-  "blocked_app_resolve_coplanar_least_squares_rank_policy_required": "Classifier row remains blocked until least-squares rank/tolerance policy and coplanar-resolution failure semantics are explicitly approved; no runtime alias or implementation claim is made in A28.",
-  "blocked_until_iteration_root_selection_and_equivalence_policy": "Classifier row remains blocked until solver iteration limits, root selection, branch handling, convergence failure states, tolerance policy, source registry, and independent equivalence oracles are explicitly approved; no runtime alias or implementation claim is made in A28.",
-  "blocked_until_least_squares_rank_and_numerical_policy": "Classifier row remains blocked until least-squares rank policy, conditioning thresholds, finite-difference step policy, convergence/failure semantics, source registry, and independent numerical oracles are explicitly approved; no runtime alias or implementation claim is made in A28."
-}
+EXPECTED_FAMILY_COUNTS=Counter({'iterative_solver': 40})
+EXPECTED_SOURCE_GROUP_COUNTS=Counter({'9C_kepler_lambert_gauss_solver_policy_or_10B_numerical_propagation_policy': 26, '9C_or_10B_generic_numerical_method_policy': 14})
+EXPECTED_BLOCK_REASON_COUNTS=Counter({'blocked_until_iteration_root_selection_and_equivalence_policy': 26, 'blocked_until_numerical_algorithm_tolerance_and_validation_policy': 14})
+BLOCK_TEXT={'blocked_until_iteration_root_selection_and_equivalence_policy': 'Classifier row remains blocked until solver iteration limits, root selection, branch handling, convergence failure states, tolerance policy, source registry, and independent equivalence oracles are explicitly approved; no runtime alias or implementation claim is made in A29.', 'blocked_until_numerical_algorithm_tolerance_and_validation_policy': 'Classifier row remains blocked until numerical algorithm tolerance policy, step-size or integration-order policy, stability and failure-state semantics, source registry, and independent numerical oracles are explicitly approved; no runtime alias or implementation claim is made in A29.'}
 EXPECTED_HEADER=['schema_version', 'resolution_id', 'source_artifact_id', 'classifier_path', 'source_row_locator', 'source_row_number', 'rust_function_alias', 'scilab_function_alias', 'source_file_locator', 'formula_family', 'risk_tier', 'recommended_chunk_group', 'target_formula_id', 'target_resolution_id', 'target_batch_manifest', 'target_package', 'target_crate_name', 'target_runtime_symbol', 'target_runtime_path', 'target_contract_path', 'target_validation_card_path', 'target_source_seed_path', 'validation_status', 'disposition', 'block_reason']
 
 class VerificationError(RuntimeError): pass
@@ -119,7 +112,7 @@ def prior_external_locators(repo:Path)->set[str]:
     locators:set[str]=set()
     for path in sorted((repo/'formula-vault/resolutions').glob('m07_*.tsv')):
         rel=path.relative_to(repo).as_posix()
-        if rel==RESOLUTION_PATH or rel in future_same_pool_resolution_paths:
+        if rel==RESOLUTION_PATH:
             continue
         for row in read_delimited(path,'\t',EXPECTED_HEADER):
             locators.add(row['source_row_locator'])
@@ -176,12 +169,10 @@ def verify_repo(repo:Path)->dict[str,Any]:
     backlog_rows=[row for row in inventory if row['category']=='external_m07_backlog_row']
     require(len(backlog_rows)==1,'expected one external backlog aggregate row')
     require(int(backlog_rows[0]['row_count'])==EXPECTED_REMAINING_BACKLOG,'external backlog count mismatch')
-    processed_total=0
-    for row in processed.values():
-        processed_total+=int(row['row_count'])
+    processed_total=sum(int(row['row_count']) for row in processed.values())
     require(processed_total==EXPECTED_CUMULATIVE_PROCESSED,f'cumulative processed mismatch: {processed_total}')
     return {
-        'schema_version':'aerocodex.external_m07.solver_policy_wave1.verifier.v1',
+        'schema_version':'aerocodex.external_m07.solver_policy_wave2.verifier.v1',
         'result':'PASS',
         'resolution_path':RESOLUTION_PATH,
         'selected_rows':SELECTED_LOCATORS,
@@ -203,13 +194,15 @@ def verify_repo(repo:Path)->dict[str,Any]:
         'no_certification_or_operational_readiness_claim':True,
     }
 def self_test()->dict[str,Any]:
-    require(source_row_number('PORT_STATUS_RELEASE_GATE.csv:row_0025')==25,'row parser failed')
+    require(source_row_number('PORT_STATUS_RELEASE_GATE.csv:row_0416')==416,'row parser failed')
     require(stable_json({'b':2,'a':1}).startswith('{\n  "a"'),'stable JSON ordering failed')
     require(len(SELECTED_LOCATORS)==EXPECTED_ROWS,'self-test selected count mismatch')
-    require(SELECTED_LOCATORS[0]=='PORT_STATUS_RELEASE_GATE.csv:row_0025','self-test first locator mismatch')
-    require(SELECTED_LOCATORS[-1]=='PORT_STATUS_RELEASE_GATE.csv:row_0415','self-test last locator mismatch')
+    require(SELECTED_LOCATORS[0]=='PORT_STATUS_RELEASE_GATE.csv:row_0416','self-test first locator mismatch')
+    require(SELECTED_LOCATORS[-1]=='PORT_STATUS_RELEASE_GATE.csv:row_0884','self-test last locator mismatch')
+    require(EXPECTED_CUMULATIVE_PROCESSED==703,'self-test processed counter mismatch')
+    require(EXPECTED_REMAINING_BACKLOG==620,'self-test backlog counter mismatch')
     return {
-        'schema_version':'aerocodex.external_m07.solver_policy_wave1.self_test.v1',
+        'schema_version':'aerocodex.external_m07.solver_policy_wave2.self_test.v1',
         'result':'PASS',
         'selected_count':len(SELECTED_LOCATORS),
         'candidate_pool_rows':EXPECTED_CANDIDATE_POOL_ROWS,
@@ -218,7 +211,7 @@ def self_test()->dict[str,Any]:
         'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG,
     }
 def main()->int:
-    parser=argparse.ArgumentParser(description='Verify A28 external M07 solver / least-squares / root-selection policy Wave 1 metadata.')
+    parser=argparse.ArgumentParser(description='Verify A29 external M07 solver / numerical propagation policy Wave 2 metadata.')
     parser.add_argument('--repo',type=Path,help='Repository root to validate.')
     parser.add_argument('--self-test',action='store_true',help='Run dependency-free verifier self-test.')
     args=parser.parse_args()
