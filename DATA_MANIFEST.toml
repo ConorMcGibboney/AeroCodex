@@ -27,7 +27,7 @@ sha256 = "3738b357633a89210acdbee99abf4d2f3e91cc4d40da31a80678ffe02e8bb091"
 [[files]]
 path = "checksums/SHA256SUMS"
 bytes = 10173
-sha256 = "bbd6f6ab6e6a00d3671d631cfb292aba0c4ab0f1b531bcc1eef283c68be43c88"
+sha256 = "c87552213d070849c70404d6b834a09d445cbfedc253b7834f665a4d3652606c"
 
 [[files]]
 path = "citations/blss_thinfilm_refs.bib"
@@ -286,8 +286,8 @@ sha256 = "4c2a14ff5ab0ffc65b27c62b0953274230312924efd3481ef5c6273e87283a67"
 
 [[files]]
 path = "scripts/verify_external_m07_coordinate_transform_frame_time_policy_wave1.py"
-bytes = 16097
-sha256 = "c2692f115f8bf1be8d788f17b4be63c6cabb50b32d273d7c3e94331cbc63b4a1"
+bytes = 16262
+sha256 = "f1676da674ee0daa26fc0db92be076603472a7263eeccb0456078a6e63d889ec"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave1.py"

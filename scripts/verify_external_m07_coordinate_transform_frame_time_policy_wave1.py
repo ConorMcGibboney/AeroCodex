@@ -13,6 +13,9 @@ from typing import Any,Iterable
 SCHEMA_VERSION='aerocodex.external_m07_resolution.v1'
 CLASSIFIER_PATH='docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier.csv'
 RESOLUTION_PATH='formula-vault/resolutions/m07_coordinate_transform_frame_time_policy_wave1.tsv'
+future_same_pool_resolution_paths={
+  'formula-vault/resolutions/m07_coordinate_transform_frame_time_policy_wave2.tsv'
+}
 INVENTORY_PATH='validation/equation_inventory.tsv'
 SOURCE_ARTIFACT_ID='stage4.m07_rust_port_v14.2026_06_15'
 SELECTED_LOCATORS=[
@@ -115,7 +118,7 @@ def verify_repo(repo:Path)->dict[str,Any]:
     prior_locators=set()
     for path in sorted((repo/'formula-vault/resolutions').glob('m07_*.tsv')):
         rel=path.relative_to(repo).as_posix()
-        if rel==RESOLUTION_PATH: continue
+        if rel==RESOLUTION_PATH or rel in future_same_pool_resolution_paths: continue
         for row in read_delimited(path,'\t',EXPECTED_HEADER): prior_locators.add(row['source_row_locator'])
     candidate_pool=[]
     for row in classifier_rows:
