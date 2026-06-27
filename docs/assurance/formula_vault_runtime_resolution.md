@@ -40,3 +40,5 @@ The verifier fails closed on duplicate or missing formula IDs, unresolved candid
 - `formula-vault/resolutions/m07_attitude_dynamics_control_policy_wave1.tsv`: A36 attitude dynamics/control policy Wave 1, 38 research-required blocked rows, no runtime mappings.
 
 - `formula-vault/resolutions/m07_j2_perturbation_policy_wave1.tsv`: A37 J2 perturbation / numerical propagation policy Wave 1, 40 research-required blocked rows, no runtime mappings.
+
+- `formula-vault/resolutions/m07_j2_perturbation_policy_wave2.tsv`: A38 J2 perturbation / numerical propagation policy Wave 2, 40 research-required blocked rows, no runtime mappings.

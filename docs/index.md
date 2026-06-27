@@ -132,3 +132,5 @@ The Phase 0.001 life-support crate has reviewed scalar closure-fraction, require
 - [A36 external M07 attitude dynamics/control policy Wave 1](assurance/m07_attitude_dynamics_control_policy_wave1_resolution.md)
 
 - [A37 external M07 J2 perturbation / numerical propagation policy Wave 1](assurance/m07_j2_perturbation_policy_wave1_resolution.md)
+
+- [A38 external M07 J2 perturbation / numerical propagation policy Wave 2](assurance/m07_j2_perturbation_policy_wave2_resolution.md)

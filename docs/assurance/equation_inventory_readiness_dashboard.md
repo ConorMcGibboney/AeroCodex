@@ -76,3 +76,7 @@ External M07 processed rows increase to 952; remaining backlog is 371. A36 adds 
 ### A37 external M07 J2 perturbation / numerical propagation policy Wave 1
 
 A37 adds 40 research-required terminal dispositions for `10B_J2_perturbation_and_numerical_policy`, bringing external M07 processed/backlog counters to 992/331.
+
+### A38 external M07 J2 perturbation / numerical propagation policy Wave 2
+
+A38 adds 40 research-required terminal dispositions for `10B_J2_perturbation_and_numerical_policy`, bringing external M07 processed/backlog counters to 1032/291.

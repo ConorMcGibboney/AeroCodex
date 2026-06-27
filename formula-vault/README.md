@@ -362,3 +362,5 @@ A33 records:
 - `formula-vault/resolutions/m07_attitude_dynamics_control_policy_wave1.tsv` records A36 metadata-only terminal dispositions for 38 attitude dynamics/control policy rows.
 
 - `formula-vault/resolutions/m07_j2_perturbation_policy_wave1.tsv` records A37 metadata-only terminal dispositions for the first bounded J2 perturbation / numerical propagation slice.
+
+- `formula-vault/resolutions/m07_j2_perturbation_policy_wave2.tsv` records A38 metadata-only terminal dispositions for the second bounded J2 perturbation / numerical propagation slice.
