@@ -566,3 +566,17 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: immutable bounded wave; leaves later solver-policy waves for bounded rollout
     notes: Records zero aliases, zero helper exclusions, and forty contract or policy blocks; preserves forty blocked-until-solver-policy labels; no source import, runtime promotion, or parity claim.
+  - id: stage4.m07.solver_policy_wave3.2026_06_27
+    title: External M07 solver / numerical propagation policy Wave 3 terminal resolutions
+    local_path: formula-vault/resolutions/m07_solver_policy_wave3.tsv
+    artifact_kind: repo_file_external_backlog_resolution_research_metadata
+    origin: Post-Stage-5 A30 derivative of the registered M07 classifier metadata tied to stage4.m07_rust_port_v14.2026_06_15
+    license: MIT OR Apache-2.0 metadata with M07 source-boundary restrictions
+    sha256: 53ef2528f3467519efcbca59b912813cf1d332a5f41d1613e99d05c764e5e341
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: terminal contract-or-policy-block disposition metadata only
+    bundling_decision: bundled repo-relative metadata only; no source/code/fixture import and no public API promotion
+    validation_status: repository_tracked_research_data
+    owner: AeroCodex maintainers
+    update_cadence: immutable bounded wave; closes the current solver-policy candidate pool
+    notes: Records zero aliases, zero helper exclusions, and forty-three contract or policy blocks; preserves forty-three blocked-until-solver-policy labels; no source import, runtime promotion, or parity claim.

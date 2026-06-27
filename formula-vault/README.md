@@ -308,3 +308,13 @@ A29 processes the second 40 source-ordered rows in the governed 9C/10B solver-po
 - cumulative external terminal dispositions: 703;
 - remaining external backlog: 620;
 - no M07/Scilab parity, certification, operational-readiness, or public api claim is made.
+
+## A30 external solver / numerical propagation policy Wave 3
+
+A30 processes the remaining 43 source-ordered rows in the governed 9C solver-policy backlog without adding a formula node or Rust kernel. All 43 rows remain contract- or policy-blocked pending explicit iteration, root-selection, integration tolerance, convergence/failure-state, source-registry, and independent numerical-oracle policies. The selected risk tiers remain unchanged: 43 solver-policy blocked rows. This closes the solver-policy candidate pool.
+
+- resolution manifest: `formula-vault/resolutions/m07_solver_policy_wave3.tsv`;
+- verifier: `scripts/verify_external_m07_solver_policy_wave3.py --repo .`;
+- cumulative external terminal dispositions: 746;
+- remaining external backlog: 577;
+- no runtime implementation, parity, certification, or operational-readiness claim is made.

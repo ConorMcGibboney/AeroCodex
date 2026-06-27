@@ -14,6 +14,9 @@ from typing import Any,Iterable
 SCHEMA_VERSION='aerocodex.external_m07_resolution.v1'
 CLASSIFIER_PATH='docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier.csv'
 RESOLUTION_PATH='formula-vault/resolutions/m07_solver_policy_wave2.tsv'
+future_same_pool_resolution_paths={
+  'formula-vault/resolutions/m07_solver_policy_wave3.tsv'
+}
 INVENTORY_PATH='validation/equation_inventory.tsv'
 SOURCE_ARTIFACT_ID='stage4.m07_rust_port_v14.2026_06_15'
 SELECTED_LOCATORS=[
@@ -70,8 +73,8 @@ EXPECTED_ROWS=40
 EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=43
 EXPECTED_EXECUTABLE_ROWS=152
 EXPECTED_METADATA_ROWS=27
-EXPECTED_CUMULATIVE_PROCESSED=703
-EXPECTED_REMAINING_BACKLOG=620
+EXPECTED_CUMULATIVE_PROCESSED=746
+EXPECTED_REMAINING_BACKLOG=577
 EXPECTED_RISK_COUNTS=Counter({'blocked_until_solver_policy': 40})
 EXPECTED_FAMILY_COUNTS=Counter({'iterative_solver': 40})
 EXPECTED_SOURCE_GROUP_COUNTS=Counter({'9C_kepler_lambert_gauss_solver_policy_or_10B_numerical_propagation_policy': 26, '9C_or_10B_generic_numerical_method_policy': 14})
@@ -112,7 +115,7 @@ def prior_external_locators(repo:Path)->set[str]:
     locators:set[str]=set()
     for path in sorted((repo/'formula-vault/resolutions').glob('m07_*.tsv')):
         rel=path.relative_to(repo).as_posix()
-        if rel==RESOLUTION_PATH:
+        if rel==RESOLUTION_PATH or rel in future_same_pool_resolution_paths:
             continue
         for row in read_delimited(path,'\t',EXPECTED_HEADER):
             locators.add(row['source_row_locator'])
@@ -199,8 +202,8 @@ def self_test()->dict[str,Any]:
     require(len(SELECTED_LOCATORS)==EXPECTED_ROWS,'self-test selected count mismatch')
     require(SELECTED_LOCATORS[0]=='PORT_STATUS_RELEASE_GATE.csv:row_0416','self-test first locator mismatch')
     require(SELECTED_LOCATORS[-1]=='PORT_STATUS_RELEASE_GATE.csv:row_0884','self-test last locator mismatch')
-    require(EXPECTED_CUMULATIVE_PROCESSED==703,'self-test processed counter mismatch')
-    require(EXPECTED_REMAINING_BACKLOG==620,'self-test backlog counter mismatch')
+    require(EXPECTED_CUMULATIVE_PROCESSED==746,'self-test processed counter mismatch')
+    require(EXPECTED_REMAINING_BACKLOG==577,'self-test backlog counter mismatch')
     return {
         'schema_version':'aerocodex.external_m07.solver_policy_wave2.self_test.v1',
         'result':'PASS',

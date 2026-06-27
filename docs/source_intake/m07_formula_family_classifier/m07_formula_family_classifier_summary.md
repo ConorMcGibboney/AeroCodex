@@ -199,3 +199,5 @@ A28 adds the first 40-row governed solver / least-squares / root-selection polic
 
 
 A29 adds the second 40-row governed solver / numerical propagation policy slice: 0 existing-runtime aliases, 0 helper exclusions, and 40 contract or policy blocks, while retaining 40 blocked-until-solver-policy labels. The selected rows span 26 Kepler/Lambert/Gauss or numerical-propagation solver-policy rows and 14 generic numerical-method policy rows, leave 43 rows in the solver-policy candidate pool, and update external accounting to 703 terminally processed rows and 620 remaining backlog rows.
+
+A30 closes the remaining 43-row governed solver / numerical propagation policy slice: 0 aliases, 0 helper exclusions, and 43 contract or policy blocks, while retaining 43 blocked-until-solver-policy labels. The selected rows all belong to the Kepler/Lambert/Gauss or numerical-propagation solver-policy group and update external accounting to 746 terminally processed rows and 577 remaining backlog rows.

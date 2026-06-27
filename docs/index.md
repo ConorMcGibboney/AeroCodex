@@ -119,3 +119,4 @@ The Phase 0.001 life-support crate has reviewed scalar closure-fraction, require
 - [A28 solver policy Wave 1 resolution](assurance/m07_solver_policy_wave1_resolution.md)
 
 - [A29 solver policy Wave 2 resolution](assurance/m07_solver_policy_wave2_resolution.md)
+- [A30 solver policy Wave 3 resolution](assurance/m07_solver_policy_wave3_resolution.md)
