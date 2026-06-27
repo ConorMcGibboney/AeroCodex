@@ -42,3 +42,4 @@ The verifier fails closed on duplicate or missing formula IDs, unresolved candid
 - `formula-vault/resolutions/m07_j2_perturbation_policy_wave1.tsv`: A37 J2 perturbation / numerical propagation policy Wave 1, 40 research-required blocked rows, no runtime mappings.
 
 - `formula-vault/resolutions/m07_j2_perturbation_policy_wave2.tsv`: A38 J2 perturbation / numerical propagation policy Wave 2, 40 research-required blocked rows, no runtime mappings.
+- `formula-vault/resolutions/m07_j2_perturbation_policy_wave3.tsv`: A39 J2 perturbation / numerical propagation policy Wave 3, 48 research-required blocked rows, no runtime mappings.

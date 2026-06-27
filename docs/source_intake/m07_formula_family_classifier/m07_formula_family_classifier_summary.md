@@ -227,3 +227,7 @@ Selected 40 rows from `10B_J2_perturbation_and_numerical_policy`. All remain blo
 ### A38 J2 perturbation / numerical propagation policy Wave 2 summary
 
 Selected 40 rows from `10B_J2_perturbation_and_numerical_policy`. All remain blocked until J2 perturbation force-model and numerical validation policy is approved. External M07 processed/backlog after A38: 1032/291.
+
+### A39 J2 perturbation / numerical propagation policy Wave 3 summary
+
+Selected 48 rows from `10B_J2_perturbation_and_numerical_policy`, closing that governed candidate pool. All remain blocked until J2 perturbation force-model and numerical validation policy is approved. External M07 processed/backlog after A39: 1080/243.

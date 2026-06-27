@@ -204,3 +204,6 @@ A37 records 40 metadata-only terminal dispositions for the first bounded J2 pert
 ### A38 external M07 J2 perturbation / numerical propagation policy Wave 2
 
 A38 records 40 metadata-only terminal dispositions for the second bounded J2 perturbation / numerical-propagation policy slice. It raises the external M07 processed counter to 1032 rows and leaves 291 rows in the external backlog. No runtime source, Scilab source, certification, or external parity claim is added.
+### A39 external M07 J2 perturbation / numerical propagation policy Wave 3
+
+A39 closes the remaining 48 metadata-only terminal dispositions for the J2 perturbation / numerical-propagation policy candidate pool. It raises the external M07 processed counter to 1080 rows and leaves 243 rows in the external backlog. No runtime source, Scilab source, certification, or external parity claim is added.

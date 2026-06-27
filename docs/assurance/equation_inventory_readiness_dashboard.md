@@ -80,3 +80,7 @@ A37 adds 40 research-required terminal dispositions for `10B_J2_perturbation_and
 ### A38 external M07 J2 perturbation / numerical propagation policy Wave 2
 
 A38 adds 40 research-required terminal dispositions for `10B_J2_perturbation_and_numerical_policy`, bringing external M07 processed/backlog counters to 1032/291.
+
+### A39 external M07 J2 perturbation / numerical propagation policy Wave 3
+
+A39 adds 48 research-required terminal dispositions for `10B_J2_perturbation_and_numerical_policy`, closing that governed candidate pool and bringing external M07 processed/backlog counters to 1080/243.
