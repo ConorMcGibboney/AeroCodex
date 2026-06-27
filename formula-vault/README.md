@@ -329,3 +329,14 @@ A31 processes the first 40 source-ordered rows in the governed relative-motion a
 - cumulative external terminal dispositions: 786;
 - remaining external backlog: 537;
 - no runtime implementation, parity, certification, or operational-readiness claim is made.
+
+## A32 external relative-motion and finite-burn scalar policy Wave 2
+
+A32 processes the second 40 source-ordered rows in the governed relative-motion and finite-burn scalar policy backlog without adding a formula node or Rust kernel. All 40 rows remain contract- or policy-blocked pending explicit relative-frame, finite-burn, rocket-vehicle, unit-domain, source-registry, and independent validation-oracle policies. The selected risk tiers remain unchanged: 10 frame/time-policy blocked rows, 23 high-risk numerical-policy rows, and 7 medium-risk contract-review rows.
+
+- resolution manifest: `formula-vault/resolutions/m07_relative_motion_finite_burn_policy_wave2.tsv`;
+- verifier: `scripts/verify_external_m07_relative_motion_finite_burn_policy_wave2.py --repo .`;
+- cumulative external terminal dispositions: 826;
+- remaining external backlog: 497;
+- no runtime implementation, parity, certification, or operational-readiness claim is made.
+
