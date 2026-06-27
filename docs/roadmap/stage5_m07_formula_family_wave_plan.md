@@ -167,3 +167,7 @@ A34 executes the first bounded slice of `10A_attitude_quaternion_DCM_contracts`.
 ### Post-Stage-5 A35 execution overlay
 
 A35 closes the remaining source-ordered rows from `10A_attitude_quaternion_DCM_contracts`. It records 19 terminal contract/policy blocks for attitude representation, inertia, quaternion, and DCM rows, without runtime import or parity claims. External M07 backlog changes from 428 to 409.
+
+### Post-Stage-5 A36 execution overlay
+
+A36 processes the 38 source-ordered rows from `10A_attitude_dynamics_and_control_policy`. It records 38 terminal contract/policy blocks for attitude dynamics, torque, inertia, control-law, and integration-policy rows, preserving 38 `high_risk_requires_numerical_policy` labels. A36 leaves 0 rows in this candidate pool and updates external accounting to 952 terminally processed rows and 371 remaining backlog rows. No raw Rust-port, M07, or Scilab source is imported or executed.

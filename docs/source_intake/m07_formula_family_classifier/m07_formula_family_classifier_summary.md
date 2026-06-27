@@ -215,3 +215,7 @@ Selected 40 rows from `10A_attitude_quaternion_DCM_contracts`. All remain blocke
 ### A35 attitude frame policy Wave 2 summary
 
 Selected the remaining 19 rows from `10A_attitude_quaternion_DCM_contracts`. All remain blocked until attitude representation and inertia policy is approved. External M07 processed/backlog after A35: 914/409.
+
+### A36 attitude dynamics/control policy Wave 1 summary
+
+Selected 38 rows from `10A_attitude_dynamics_and_control_policy`. All remain blocked until attitude dynamics/control, torque/inertia, integration, and validation-oracle policy is approved. External M07 processed/backlog after A36: 952/371.

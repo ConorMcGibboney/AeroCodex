@@ -68,3 +68,7 @@ External M07 processed rows increase to 895; remaining backlog is 428. A34 adds 
 ### A35 attitude frame policy Wave 2
 
 External M07 processed rows increase to 914; remaining backlog is 409. A35 adds only research-required metadata dispositions and closes the attitude representation candidate pool.
+
+### A36 attitude dynamics/control policy Wave 1
+
+External M07 processed rows increase to 952; remaining backlog is 371. A36 adds only research-required metadata dispositions for the attitude dynamics/control policy candidate pool.

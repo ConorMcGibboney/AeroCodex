@@ -192,3 +192,7 @@ A34 records 40 metadata-only terminal dispositions for the first bounded attitud
 ### A35 external M07 attitude / inertia / quaternion policy Wave 2
 
 A35 closes the remaining 19 metadata-only terminal dispositions for the attitude representation, inertia, quaternion, and DCM policy candidate pool. It raises the external M07 processed counter to 914 rows and leaves 409 rows in backlog. No runtime source, Scilab source, certification, or external parity claim is added.
+
+### A36 external M07 attitude dynamics/control policy Wave 1
+
+A36 records 38 metadata-only terminal dispositions for the attitude dynamics/control policy candidate pool. It raises the external M07 processed counter to 952 rows and leaves 371 rows in backlog. No runtime source, Scilab source, certification, or external parity claim is added.

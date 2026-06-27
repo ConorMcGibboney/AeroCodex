@@ -358,3 +358,5 @@ A33 records:
 - `formula-vault/resolutions/m07_attitude_frame_policy_wave1.tsv` records A34 metadata-only terminal dispositions for 40 attitude representation / inertia / quaternion policy rows.
 
 - `formula-vault/resolutions/m07_attitude_frame_policy_wave2.tsv` records A35 metadata-only terminal dispositions for the remaining 19 attitude representation / inertia / quaternion policy rows.
+
+- `formula-vault/resolutions/m07_attitude_dynamics_control_policy_wave1.tsv` records A36 metadata-only terminal dispositions for 38 attitude dynamics/control policy rows.

@@ -128,3 +128,5 @@ The Phase 0.001 life-support crate has reviewed scalar closure-fraction, require
 - [A34 external M07 attitude / inertia / quaternion policy Wave 1](assurance/m07_attitude_frame_policy_wave1_resolution.md)
 
 - [A35 external M07 attitude / inertia / quaternion policy Wave 2](assurance/m07_attitude_frame_policy_wave2_resolution.md)
+
+- [A36 external M07 attitude dynamics/control policy Wave 1](assurance/m07_attitude_dynamics_control_policy_wave1_resolution.md)
