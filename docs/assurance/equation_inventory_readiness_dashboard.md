@@ -72,3 +72,7 @@ External M07 processed rows increase to 914; remaining backlog is 409. A35 adds 
 ### A36 attitude dynamics/control policy Wave 1
 
 External M07 processed rows increase to 952; remaining backlog is 371. A36 adds only research-required metadata dispositions for the attitude dynamics/control policy candidate pool.
+
+### A37 external M07 J2 perturbation / numerical propagation policy Wave 1
+
+A37 adds 40 research-required terminal dispositions for `10B_J2_perturbation_and_numerical_policy`, bringing external M07 processed/backlog counters to 992/331.

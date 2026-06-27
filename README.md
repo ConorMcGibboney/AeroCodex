@@ -196,3 +196,7 @@ A35 closes the remaining 19 metadata-only terminal dispositions for the attitude
 ### A36 external M07 attitude dynamics/control policy Wave 1
 
 A36 records 38 metadata-only terminal dispositions for the attitude dynamics/control policy candidate pool. It raises the external M07 processed counter to 952 rows and leaves 371 rows in backlog. No runtime source, Scilab source, certification, or external parity claim is added.
+
+### A37 external M07 J2 perturbation / numerical propagation policy Wave 1
+
+A37 records 40 metadata-only terminal dispositions for the first bounded J2 perturbation / numerical-propagation policy slice. It raises the external M07 processed counter to 992 rows and leaves 331 rows in the external backlog. No runtime source, Scilab source, certification, or external parity claim is added.

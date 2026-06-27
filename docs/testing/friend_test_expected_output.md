@@ -135,3 +135,5 @@ A34 attitude frame policy Wave 1 is metadata-only; friend-test runtime output is
 A35 attitude frame policy Wave 2 is metadata-only; friend-test runtime output is unchanged.
 
 A36 attitude dynamics/control policy Wave 1 is metadata-only; friend-test runtime output is unchanged.
+
+A37 J2 perturbation / numerical propagation policy Wave 1 is metadata-only; friend-test runtime output is unchanged.

@@ -76,3 +76,7 @@ A35 is metadata-only and blocks the remaining 19 attitude / inertia / quaternion
 ### A36 external M07 attitude dynamics/control policy Wave 1
 
 A36 is metadata-only and blocks 38 attitude dynamics/control source rows pending torque, inertia, integration, frame, source-registry, and validation-oracle policy. External M07 counters after A36: 952 processed / 371 backlog.
+
+### A37 external M07 J2 perturbation / numerical propagation policy Wave 1
+
+A37 is metadata-only and blocks 40 J2 perturbation / numerical-propagation source rows pending force-model, frame/time, source-registry, numerical integration, and validation-oracle policy. External M07 counters after A37: 992 processed / 331 backlog.

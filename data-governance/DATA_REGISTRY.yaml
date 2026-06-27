@@ -673,3 +673,18 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: immutable bounded wave; completes the attitude dynamics/control policy candidate pool
     notes: Records zero aliases, zero helper exclusions, and thirty-eight contract or policy blocks; preserves thirty-eight high-risk numerical-policy labels; no source import, runtime promotion, or parity claim.
+
+- id: stage4.m07.j2_perturbation_policy_wave1.2026_06_27
+    title: External M07 J2 perturbation / numerical propagation policy Wave 1 terminal resolutions
+    local_path: formula-vault/resolutions/m07_j2_perturbation_policy_wave1.tsv
+    artifact_kind: repo_file_external_backlog_resolution_research_metadata
+    origin: Post-Stage-5 A37 derivative of the registered M07 classifier metadata tied to stage4.m07_rust_port_v14.2026_06_15
+    license: MIT OR Apache-2.0 metadata with M07 source-boundary restrictions
+    sha256: 5b02f293d9fae12c8e1ffaaccadce4ea15682a61f75bdec147437b20a1e811ef
+    hash_status: sha256_verified_current_repo_file
+    allowed_use: terminal contract-or-policy-block disposition metadata only
+    bundling_decision: bundled repo-relative metadata only; no source/code/fixture import and no public API promotion
+    validation_status: repository_tracked_research_data
+    owner: AeroCodex maintainers
+    update_cadence: immutable bounded wave; leaves later J2 perturbation and numerical-propagation rows for bounded rollout
+    notes: Records zero aliases, zero helper exclusions, and forty policy blocks; preserves forty high-risk numerical-policy labels; no source import, runtime promotion, or parity claim.

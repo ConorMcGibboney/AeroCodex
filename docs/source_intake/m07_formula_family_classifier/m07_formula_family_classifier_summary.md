@@ -219,3 +219,7 @@ Selected the remaining 19 rows from `10A_attitude_quaternion_DCM_contracts`. All
 ### A36 attitude dynamics/control policy Wave 1 summary
 
 Selected 38 rows from `10A_attitude_dynamics_and_control_policy`. All remain blocked until attitude dynamics/control, torque/inertia, integration, and validation-oracle policy is approved. External M07 processed/backlog after A36: 952/371.
+
+### A37 J2 perturbation / numerical propagation policy Wave 1 summary
+
+Selected 40 rows from `10B_J2_perturbation_and_numerical_policy`. All remain blocked until J2 perturbation force-model and numerical validation policy is approved. External M07 processed/backlog after A37: 992/331.
