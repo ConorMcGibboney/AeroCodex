@@ -190,3 +190,6 @@ A23 adds the eighth 40-row orbital-geometry/conic slice: 1 existing-runtime alia
 A24 adds the ninth 40-row orbital-geometry/conic slice: 0 existing-runtime aliases, 0 helper exclusions, and 40 contract or policy blocks, while retaining 34 medium-risk and 6 high-risk labels. A16-A24 cover 360 rows, leave 17 group rows, and update external accounting to 521 terminally processed rows and 802 remaining backlog rows.
 
 A25 adds the final 17-row orbital-geometry/conic slice: 0 existing-runtime aliases, 0 helper exclusions, and 17 contract or policy blocks, while retaining 14 medium-risk and 3 high-risk labels. A16-A25 cover all 377 rows, leave 0 group rows, and update external accounting to 538 terminally processed rows and 785 remaining backlog rows.
+
+A26 adds the first 40-row governed coordinate-transform / frame-graph / time-scale policy slice: 0 existing-runtime aliases, 0 helper exclusions, and 40 contract or policy blocks, while retaining 29 medium-risk and 11 frame/time-policy blocked labels. The selected rows span 29 coordinate-transform contract rows, 9 time-scale/sidereal policy rows, and 2 frame-graph/time-policy rows, leave 45 rows in the 9B candidate pool, and update external accounting to 578 terminally processed rows and 745 remaining backlog rows.
+

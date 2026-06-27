@@ -264,3 +264,15 @@ A25 processes the final 17 source-ordered rows in `9A_classical_elements_and_9E_
 - remaining external backlog: 785;
 - validation status: `research_required`;
 - no raw Rust-port, M07, or Scilab source review or parity claim.
+
+## A26 external coordinate-transform / frame-graph / time-scale policy Wave 1
+
+A26 processes the first 40 source-ordered rows in the governed 9B coordinate-transform, frame-graph, and time-scale policy backlog without adding a formula node or Rust kernel. All 40 rows remain contract- or policy-blocked pending explicit frame/sign/rotation-order contracts, epoch/time-scale and sidereal policy, source registry, and independent validation oracles. The selected risk tiers remain unchanged: 29 medium-risk contract-review rows and 11 frame/time-policy blocked rows. This leaves 45 rows in the 9B candidate pool.
+
+- disposition manifest: `formula-vault/resolutions/m07_coordinate_transform_frame_time_policy_wave1.tsv`;
+- verifier: `python3 scripts/verify_external_m07_coordinate_transform_frame_time_policy_wave1.py --repo .`;
+- cumulative external terminal dispositions: 578;
+- remaining external backlog: 745;
+- validation status: `research_required`;
+- no raw Rust-port, M07, or Scilab source review or parity claim.
+
