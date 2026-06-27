@@ -63,3 +63,7 @@ A public friend-test report is useful if it includes:
 - whether a root `Cargo.lock` appeared after the run.
 
 A clean report is still not a safety or certification claim.
+
+### A34 external M07 attitude / inertia / quaternion policy Wave 1
+
+A34 is metadata-only and blocks 40 attitude / inertia / quaternion source rows pending representation, frame, source-registry, and validation-oracle policy. External M07 counters after A34: 895 processed / 428 backlog.

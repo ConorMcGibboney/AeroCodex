@@ -206,3 +206,7 @@ A31 starts the relative-motion and finite-burn scalar policy slice: 0 aliases, 0
 A32 continues the relative-motion and finite-burn scalar policy slice: 0 aliases, 0 helper exclusions, and 40 contract or policy blocks. The selected rows span 10 relative-motion frame-policy rows, 23 rocket-vehicle policy rows, and 7 rocket-equation scalar contract rows; the wave leaves 29 rows in this candidate pool and updates external accounting to 826 terminally processed rows and 497 remaining backlog rows.
 
 A33 closes the relative-motion and finite-burn scalar policy slice: 0 aliases, 0 helper exclusions, and 29 contract or policy blocks. The selected rows span 28 rocket-vehicle policy rows and 1 rocket-equation scalar contract row; the wave leaves 0 rows in this candidate pool and updates external accounting to 855 terminally processed rows and 468 remaining backlog rows.
+
+### A34 attitude frame policy Wave 1 summary
+
+Selected 40 rows from `10A_attitude_quaternion_DCM_contracts`. All remain blocked until attitude representation and inertia policy is approved. External M07 processed/backlog after A34: 895/428.

@@ -124,3 +124,5 @@ The Phase 0.001 life-support crate has reviewed scalar closure-fraction, require
 - [A31 relative-motion finite-burn policy Wave 1 resolution](assurance/m07_relative_motion_finite_burn_policy_wave1_resolution.md)
 - [A32 relative-motion finite-burn policy Wave 2 resolution](assurance/m07_relative_motion_finite_burn_policy_wave2_resolution.md)
 - [A33 relative-motion / finite-burn scalar policy Wave 3 resolution](assurance/m07_relative_motion_finite_burn_policy_wave3_resolution.md)
+
+- [A34 external M07 attitude / inertia / quaternion policy Wave 1](assurance/m07_attitude_frame_policy_wave1_resolution.md)

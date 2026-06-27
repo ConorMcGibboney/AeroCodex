@@ -183,3 +183,7 @@ AeroCodex core repository code is licensed under `MIT OR Apache-2.0` unless a fi
 A28-A30 complete the governed solver / numerical propagation policy backlog with 123 contract- or policy-blocked rows and leave 0 rows in that candidate pool. A31 starts the relative-motion and finite-burn scalar policy backlog with 40 contract- or policy-blocked rows and leaves 69 rows in that candidate pool.
 
 A28-A30 complete the governed solver / numerical propagation policy backlog with 123 contract- or policy-blocked rows and leave 0 rows in that candidate pool. A31-A33 complete the relative-motion and finite-burn scalar policy backlog with 109 contract- or policy-blocked rows and leave 0 rows in that candidate pool.
+
+### A34 external M07 attitude / inertia / quaternion policy Wave 1
+
+A34 records 40 metadata-only terminal dispositions for the first bounded attitude representation, inertia, quaternion, and DCM policy slice. It raises the external M07 processed counter to 895 rows and leaves 428 rows in backlog. No runtime source, SCILAB source, certification, or external parity claim is added.

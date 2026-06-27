@@ -354,3 +354,5 @@ A33 records:
 - cumulative external terminal dispositions: 855;
 - remaining external backlog: 468;
 - relative-motion and finite-burn candidate-pool tail after A33: 0.
+
+- `formula-vault/resolutions/m07_attitude_frame_policy_wave1.tsv` records A34 metadata-only terminal dispositions for 40 attitude representation / inertia / quaternion policy rows.

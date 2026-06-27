@@ -627,3 +627,8 @@ artifacts:
     owner: AeroCodex maintainers
     update_cadence: immutable bounded wave; completes the relative-motion and finite-burn scalar policy backlog
     notes: Records zero aliases, zero helper exclusions, and twenty-nine contract or policy blocks; preserves 28 high-risk numerical-policy and 1 medium-risk contract-review labels; no source import, runtime promotion, or parity claim.
+
+- path: formula-vault/resolutions/m07_attitude_frame_policy_wave1.tsv
+    status: research_required
+    owner: AeroCodex
+    notes: A34 metadata-only terminal dispositions for attitude representation / inertia / quaternion policy rows; no source import or runtime claim.

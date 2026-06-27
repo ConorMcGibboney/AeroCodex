@@ -59,3 +59,7 @@ The current governed inventory contains 152 executable research equations, 27 me
 ## Readiness rule
 
 Every inventory row is explicitly blocked. The block reason is row-local and machine-readable. No row may claim certification, flight readiness, mission readiness, operational approval, or regulated-use approval. The dashboard answers readiness by showing which class an item belongs to and why it is blocked before any future implementation chunk can be considered.
+
+### A34 attitude frame policy Wave 1
+
+External M07 processed rows increase to 895; remaining backlog is 428. A34 adds only research-required metadata dispositions.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify A31 external M07 relative-motion / finite-burn scalar policy Wave 1 terminal dispositions."""
+"""Verify A34 external M07 attitude / inertia / quaternion policy Wave 1 terminal dispositions."""
 from __future__ import annotations
 import argparse,csv,json,re,sys
 from collections import Counter
@@ -7,69 +7,27 @@ from pathlib import Path
 from typing import Any
 SCHEMA_VERSION='aerocodex.external_m07_resolution.v1'
 CLASSIFIER_PATH='docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier.csv'
-RESOLUTION_PATH='formula-vault/resolutions/m07_relative_motion_finite_burn_policy_wave1.tsv'
+RESOLUTION_PATH='formula-vault/resolutions/m07_attitude_frame_policy_wave1.tsv'
 INVENTORY_PATH='validation/equation_inventory.tsv'
 SOURCE_ARTIFACT_ID='stage4.m07_rust_port_v14.2026_06_15'
-SELECTED_LOCATORS=[
-  "PORT_STATUS_RELEASE_GATE.csv:row_0401",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0548",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0550",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0552",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0553",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0559",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0561",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0562",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0564",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0565",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0566",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0567",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0569",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0570",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0571",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0578",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0580",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0581",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0582",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0583",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0584",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0585",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0933",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0934",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0935",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0936",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0937",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0939",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0940",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0946",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0947",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0948",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0949",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0950",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0951",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0952",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0957",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0958",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0963",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0971"
-]
-CANDIDATE_GROUPS=[
-  "9D_relative_motion_CW_LVLH_policy",
-  "9E_rocket_vehicle_policy_then_bounded_scalar_slice",
-  "9E_rocket_equation_scalar_subset_after_contract"
-]
-FUTURE_SAME_POOL_RESOLUTION_PATHS={'formula-vault/resolutions/m07_relative_motion_finite_burn_policy_wave2.tsv','formula-vault/resolutions/m07_relative_motion_finite_burn_policy_wave3.tsv'}
-EXPECTED_CANDIDATE_POOL_ROWS=109
+WAVE_ID='a34_external_m07_attitude_frame_policy_wave1'
+VALIDATOR_NAME='verify_external_m07_attitude_frame_policy_wave1'
+SELECTED_LOCATORS=['PORT_STATUS_RELEASE_GATE.csv:row_1050', 'PORT_STATUS_RELEASE_GATE.csv:row_1051', 'PORT_STATUS_RELEASE_GATE.csv:row_1053', 'PORT_STATUS_RELEASE_GATE.csv:row_1060', 'PORT_STATUS_RELEASE_GATE.csv:row_1061', 'PORT_STATUS_RELEASE_GATE.csv:row_1062', 'PORT_STATUS_RELEASE_GATE.csv:row_1071', 'PORT_STATUS_RELEASE_GATE.csv:row_1072', 'PORT_STATUS_RELEASE_GATE.csv:row_1073', 'PORT_STATUS_RELEASE_GATE.csv:row_1074', 'PORT_STATUS_RELEASE_GATE.csv:row_1075', 'PORT_STATUS_RELEASE_GATE.csv:row_1076', 'PORT_STATUS_RELEASE_GATE.csv:row_1077', 'PORT_STATUS_RELEASE_GATE.csv:row_1078', 'PORT_STATUS_RELEASE_GATE.csv:row_1079', 'PORT_STATUS_RELEASE_GATE.csv:row_1080', 'PORT_STATUS_RELEASE_GATE.csv:row_1081', 'PORT_STATUS_RELEASE_GATE.csv:row_1082', 'PORT_STATUS_RELEASE_GATE.csv:row_1083', 'PORT_STATUS_RELEASE_GATE.csv:row_1084', 'PORT_STATUS_RELEASE_GATE.csv:row_1085', 'PORT_STATUS_RELEASE_GATE.csv:row_1086', 'PORT_STATUS_RELEASE_GATE.csv:row_1087', 'PORT_STATUS_RELEASE_GATE.csv:row_1088', 'PORT_STATUS_RELEASE_GATE.csv:row_1089', 'PORT_STATUS_RELEASE_GATE.csv:row_1106', 'PORT_STATUS_RELEASE_GATE.csv:row_1107', 'PORT_STATUS_RELEASE_GATE.csv:row_1109', 'PORT_STATUS_RELEASE_GATE.csv:row_1110', 'PORT_STATUS_RELEASE_GATE.csv:row_1111', 'PORT_STATUS_RELEASE_GATE.csv:row_1112', 'PORT_STATUS_RELEASE_GATE.csv:row_1113', 'PORT_STATUS_RELEASE_GATE.csv:row_1114', 'PORT_STATUS_RELEASE_GATE.csv:row_1115', 'PORT_STATUS_RELEASE_GATE.csv:row_1118', 'PORT_STATUS_RELEASE_GATE.csv:row_1119', 'PORT_STATUS_RELEASE_GATE.csv:row_1120', 'PORT_STATUS_RELEASE_GATE.csv:row_1124', 'PORT_STATUS_RELEASE_GATE.csv:row_1125', 'PORT_STATUS_RELEASE_GATE.csv:row_1127']
+CANDIDATE_GROUPS=['10A_attitude_quaternion_DCM_contracts']
+# Pre-declare the later same-pool manifest so this historical Wave 1 verifier remains stable when the remaining attitude representation rows are processed.
+future_same_pool_resolution_paths={'formula-vault/resolutions/m07_attitude_frame_policy_wave2.tsv'}
+EXPECTED_CANDIDATE_POOL_ROWS=59
 EXPECTED_ROWS=40
-EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=69
+EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=19
 EXPECTED_EXECUTABLE_ROWS=152
 EXPECTED_METADATA_ROWS=27
 EXPECTED_CUMULATIVE_PROCESSED=895
 EXPECTED_REMAINING_BACKLOG=428
-EXPECTED_RISK_COUNTS=Counter({'blocked_until_frame_time_policy': 19, 'high_risk_requires_numerical_policy': 19, 'medium_risk_requires_contract_review': 2})
-EXPECTED_FAMILY_COUNTS=Counter({'frame_graph_sensitive': 19, 'orbit_two_body': 19, 'low_risk_scalar_math': 2})
-EXPECTED_SOURCE_GROUP_COUNTS=Counter({'9D_relative_motion_CW_LVLH_policy': 19, '9E_rocket_vehicle_policy_then_bounded_scalar_slice': 19, '9E_rocket_equation_scalar_subset_after_contract': 2})
-EXPECTED_BLOCK_REASON_COUNTS=Counter({'blocked_until_relative_motion_frame_and_linearization_policy': 19, 'blocked_until_rocket_vehicle_model_and_solver_policy': 19, 'blocked_until_rocket_units_domain_and_sign_policy': 2})
-BLOCK_TEXT={'blocked_until_relative_motion_frame_and_linearization_policy': 'Classifier row remains blocked until relative-motion frame definitions, local-vertical/local-horizontal conventions, linearization domain, reference-orbit assumptions, maneuver targeting contracts, and independent frame-aware validation oracles are explicitly approved; no runtime alias or implementation claim is made in A31.', 'blocked_until_rocket_vehicle_model_and_solver_policy': 'Classifier row remains blocked until rocket vehicle, finite-burn, staging, atmosphere, thrust, mass-flow, and numerical-propagation policies plus independent validation oracles are explicitly approved; no runtime alias or implementation claim is made in A31.', 'blocked_until_rocket_units_domain_and_sign_policy': 'Classifier row remains blocked until rocket-equation unit conventions, mass-ratio domain, delta-v sign policy, thrust-to-weight conventions, source registry, and independent scalar validation oracles are explicitly approved; no runtime alias or implementation claim is made in A31.'}
+EXPECTED_RISK_COUNTS=Counter({'medium_risk_requires_contract_review': 40})
+EXPECTED_FAMILY_COUNTS=Counter({'coordinate_transform_sensitive': 40})
+EXPECTED_SOURCE_GROUP_COUNTS=Counter({'10A_attitude_quaternion_DCM_contracts': 40})
+EXPECTED_BLOCK_REASON_COUNTS=Counter({'blocked_until_attitude_representation_and_inertia_policy': 40})
+BLOCK_TEXT={'blocked_until_attitude_representation_and_inertia_policy': 'Classifier row remains blocked until attitude representation, inertia tensor, quaternion/DCM convention, reference-frame orientation, source registry, and independent validation oracles are explicitly approved; no runtime alias or implementation claim is made in A34.'}
 EXPECTED_HEADER=['schema_version', 'resolution_id', 'source_artifact_id', 'classifier_path', 'source_row_locator', 'source_row_number', 'rust_function_alias', 'scilab_function_alias', 'source_file_locator', 'formula_family', 'risk_tier', 'recommended_chunk_group', 'target_formula_id', 'target_resolution_id', 'target_batch_manifest', 'target_package', 'target_crate_name', 'target_runtime_symbol', 'target_runtime_path', 'target_contract_path', 'target_validation_card_path', 'target_source_seed_path', 'validation_status', 'disposition', 'block_reason']
 def stable_json(obj:Any)->str: return json.dumps(obj,indent=2,sort_keys=True,ensure_ascii=False)+'\n'
 def require(cond:bool,msg:str):
@@ -92,7 +50,7 @@ def prior_external_locators(repo:Path)->set[str]:
     locators=set()
     for path in sorted((repo/'formula-vault/resolutions').glob('m07_*.tsv')):
         rel=path.relative_to(repo).as_posix()
-        if rel==RESOLUTION_PATH or rel in FUTURE_SAME_POOL_RESOLUTION_PATHS: continue
+        if rel==RESOLUTION_PATH or rel in future_same_pool_resolution_paths: continue
         for row in read_delimited(path,'\t',EXPECTED_HEADER): locators.add(row['source_row_locator'])
     return locators
 def candidate_rows(repo:Path):
@@ -102,6 +60,8 @@ def candidate_rows(repo:Path):
     candidates=sorted(candidates,key=lambda r:source_row_number(r['m07_row_id_or_alias']))
     require(len(candidates)==EXPECTED_CANDIDATE_POOL_ROWS,f'candidate pool count mismatch: {len(candidates)}')
     return candidates
+def validation_contract_fields(errors:list[str]|None=None)->dict[str,Any]:
+    return {'validator':VALIDATOR_NAME,'wave_identifier':WAVE_ID,'selected_row_range':'PORT_STATUS_RELEASE_GATE.csv:row_1050 through PORT_STATUS_RELEASE_GATE.csv:row_1127','selected_row_count':EXPECTED_ROWS,'processed_backlog_counters':{'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG},'validation_checks_summary':{'supports_self_test':True,'supports_repo_argument':True,'dependency_free_python':True,'mutates_repository_files':False,'selected_rows':'first 40 rows in governed attitude / inertia / quaternion policy candidate pool','deduplicated_alias_rows':0,'excluded_helper_rows':0,'contract_blocked_rows':EXPECTED_ROWS,'risk_tier_counts':dict(sorted(EXPECTED_RISK_COUNTS.items())),'formula_family_counts':dict(sorted(EXPECTED_FAMILY_COUNTS.items()))},'errors':errors or []}
 def verify_repo(repo:Path):
     repo=repo.resolve(); candidates=candidate_rows(repo)
     require([r['m07_row_id_or_alias'] for r in candidates[:EXPECTED_ROWS]]==SELECTED_LOCATORS,'selected locators mismatch')
@@ -110,9 +70,10 @@ def verify_repo(repo:Path):
     require(len(resolution_rows)==EXPECTED_ROWS,f'resolution row count mismatch: {len(resolution_rows)}')
     res_by=unique_map(resolution_rows,'source_row_locator','resolution locator')
     cls_by=unique_map(read_delimited(repo_file(repo,CLASSIFIER_PATH)),'m07_row_id_or_alias','classifier locator')
+    source_files=set()
     for locator in SELECTED_LOCATORS:
         require(locator in res_by,f'missing resolution row {locator}')
-        res=res_by[locator]; cls=cls_by[locator]
+        res=res_by[locator]; cls=cls_by[locator]; source_files.add(res['source_file_locator'])
         require(res['schema_version']==SCHEMA_VERSION,f'schema mismatch {locator}')
         require(res['source_artifact_id']==SOURCE_ARTIFACT_ID,f'source artifact mismatch {locator}')
         require(res['classifier_path']==CLASSIFIER_PATH,f'classifier path mismatch {locator}')
@@ -139,23 +100,17 @@ def verify_repo(repo:Path):
     require(int(backlog_rows[0]['row_count'])==EXPECTED_REMAINING_BACKLOG,'backlog count mismatch')
     processed_total=sum(int(row['row_count']) for row in processed.values())
     require(processed_total==EXPECTED_CUMULATIVE_PROCESSED,f'processed total mismatch: {processed_total}')
-    return {'schema_version':'aerocodex.external_m07.relative_motion_finite_burn_policy_wave1.verifier.v1','result':'PASS','resolution_path':RESOLUTION_PATH,'selected_rows':SELECTED_LOCATORS,'candidate_pool_rows':EXPECTED_CANDIDATE_POOL_ROWS,'remaining_candidate_pool_rows':EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'terminal_disposition_rows':EXPECTED_ROWS,'source_group_counts':dict(sorted(source_group_counts.items())),'risk_tier_counts':dict(sorted(risk_counts.items())),'formula_family_counts':dict(sorted(family_counts.items())),'block_reason_counts':dict(sorted(block_counts.items())),'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG,'metadata_inventory_records':EXPECTED_METADATA_ROWS,'executable_research_equations':EXPECTED_EXECUTABLE_ROWS,'validation_status':'research_required','no_rust_m07_or_scilab_source_scraping':True,'no_runtime_kernel_change_claim':True,'no_external_parity_claim':True,'no_certification_or_operational_readiness_claim':True}
+    return {'schema_version':'aerocodex.external_m07.attitude_frame_policy_wave1.verifier.v1','result':'PASS','wave_id':WAVE_ID,'resolution_path':RESOLUTION_PATH,'selected_rows':SELECTED_LOCATORS,'candidate_pool_rows':EXPECTED_CANDIDATE_POOL_ROWS,'remaining_candidate_pool_rows':EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'terminal_disposition_rows':EXPECTED_ROWS,'source_group_counts':dict(sorted(source_group_counts.items())),'risk_tier_counts':dict(sorted(risk_counts.items())),'formula_family_counts':dict(sorted(family_counts.items())),'block_reason_counts':dict(sorted(block_counts.items())),'distinct_source_files':len(source_files),'deduplicated_alias_rows':0,'excluded_helper_rows':0,'contract_blocked_rows':EXPECTED_ROWS,'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG,'metadata_inventory_records':EXPECTED_METADATA_ROWS,'executable_research_equations':EXPECTED_EXECUTABLE_ROWS,'validation_status':'research_required','no_rust_m07_or_scilab_source_scraping':True,'no_external_parity_claim':True,'no_certification_or_operational_readiness_claim':True,**validation_contract_fields([])}
 def self_test():
-    require(source_row_number('PORT_STATUS_RELEASE_GATE.csv:row_0401')==401,'row parser failed')
-    require(len(SELECTED_LOCATORS)==EXPECTED_ROWS,'selected count mismatch')
-    require(SELECTED_LOCATORS[0]=='PORT_STATUS_RELEASE_GATE.csv:row_0401','first locator mismatch')
-    require(SELECTED_LOCATORS[-1]=='PORT_STATUS_RELEASE_GATE.csv:row_0971','last locator mismatch')
-    require(EXPECTED_CUMULATIVE_PROCESSED==826,'processed counter mismatch')
-    require(EXPECTED_REMAINING_BACKLOG==497,'backlog counter mismatch')
-    return {'schema_version':'aerocodex.external_m07.relative_motion_finite_burn_policy_wave1.self_test.v1','result':'PASS','selected_count':len(SELECTED_LOCATORS),'candidate_pool_rows':EXPECTED_CANDIDATE_POOL_ROWS,'remaining_candidate_pool_rows':EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG}
+    return {'schema_version':'aerocodex.external_m07.attitude_frame_policy_wave1.self_test.v1','result':'PASS','selected_count':len(SELECTED_LOCATORS),'candidate_pool_rows':EXPECTED_CANDIDATE_POOL_ROWS,'remaining_candidate_pool_rows':EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG,**validation_contract_fields([])}
 def main()->int:
-    parser=argparse.ArgumentParser(description='Verify A31 external M07 relative-motion / finite-burn scalar policy Wave 1 metadata.')
-    parser.add_argument('--repo',type=Path,help='Repository root to validate.')
+    parser=argparse.ArgumentParser(description='Verify A34 external M07 attitude / inertia / quaternion policy Wave 1 terminal dispositions.')
+    parser.add_argument('--repo',type=Path,default=None,help='Repository root. Defaults to current working directory.')
     parser.add_argument('--self-test',action='store_true',help='Run dependency-free verifier self-test.')
     args=parser.parse_args()
     try:
         report=self_test() if args.self_test else verify_repo(args.repo or Path.cwd())
         sys.stdout.write(stable_json(report)); return 0
     except Exception as exc:
-        sys.stdout.write(stable_json({'result':'FAIL','error':str(exc),'error_type':type(exc).__name__})); return 1
+        sys.stdout.write(stable_json({'result':'FAIL','error':str(exc),'error_type':type(exc).__name__,**validation_contract_fields([str(exc)])})); return 1
 if __name__=='__main__': raise SystemExit(main())

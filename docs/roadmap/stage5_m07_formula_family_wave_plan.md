@@ -158,3 +158,7 @@ A32 processes the second 40 source-ordered rows from the governed relative-motio
 ### Post-Stage-5 A33 overlay
 
 A33 processes the final 29 source-ordered rows from the governed relative-motion and finite-burn scalar policy backlog: 0 exact aliases, 0 helper exclusions, and 29 rows remain contract- or policy-blocked. The selected rows span the rocket-vehicle policy group (28) and the rocket-equation scalar contract group (1), while retaining 28 high-risk numerical-policy labels and 1 medium-risk contract-review label. A33 leaves 0 rows in this candidate pool and updates external accounting to 855 terminally processed rows and 468 remaining backlog rows. No raw Rust-port, M07, or Scilab source is imported or executed.
+
+### Post-Stage-5 A34 execution overlay
+
+A34 executes the first bounded slice of `10A_attitude_quaternion_DCM_contracts`. It records 40 terminal contract/policy blocks for attitude representation, inertia, quaternion, and DCM rows, without runtime import or parity claims. External M07 backlog changes from 468 to 428.

@@ -129,3 +129,5 @@ Additional notes:
 
 - the A27 verifier reports the remaining 45 coordinate-transform / frame-graph / time-scale policy rows with 0 aliases, 0 helper exclusions, 45 contract or policy blocks, 0 candidate-pool rows remaining, 29 medium-risk plus 16 frame/time-policy blocked labels retained, and an aggregate remaining backlog of 700;
 
+
+A34 attitude frame policy Wave 1 is metadata-only; friend-test runtime output is unchanged.
