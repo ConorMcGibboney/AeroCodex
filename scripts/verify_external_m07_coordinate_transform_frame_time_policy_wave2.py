@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Verify A26 coordinate-transform / frame-graph / time-scale policy Wave 1 terminal dispositions.
+"""Verify A27 coordinate-transform / frame-graph / time-scale policy Wave 2 terminal dispositions.
 
-This dependency-free verifier consumes governed classifier metadata and external
-resolution manifests. It never opens or parses raw Rust-port, M07, or Scilab
-source text.
+Dependency-free metadata verifier. It consumes only governed classifier metadata,
+external resolution manifests, and the repository inventory; it never opens raw
+Rust-port, M07, or Scilab source text.
 """
 from __future__ import annotations
 import argparse,csv,json,re,sys
@@ -12,50 +12,55 @@ from pathlib import Path
 from typing import Any,Iterable
 SCHEMA_VERSION='aerocodex.external_m07_resolution.v1'
 CLASSIFIER_PATH='docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier.csv'
-RESOLUTION_PATH='formula-vault/resolutions/m07_coordinate_transform_frame_time_policy_wave1.tsv'
+RESOLUTION_PATH='formula-vault/resolutions/m07_coordinate_transform_frame_time_policy_wave2.tsv'
 INVENTORY_PATH='validation/equation_inventory.tsv'
 SOURCE_ARTIFACT_ID='stage4.m07_rust_port_v14.2026_06_15'
 SELECTED_LOCATORS=[
-  "PORT_STATUS_RELEASE_GATE.csv:row_0013",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0123",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0124",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0125",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0126",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0127",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0128",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0129",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0130",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0131",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0132",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0133",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0134",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0135",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0136",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0137",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0138",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0139",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0140",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0141",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0142",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0143",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0144",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0145",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0146",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0147",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0156",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0167",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0168",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0169",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0170",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0173",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0185",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0187",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0239",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0241",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0324",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0332",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0339",
-  "PORT_STATUS_RELEASE_GATE.csv:row_0404"
+  "PORT_STATUS_RELEASE_GATE.csv:row_0405",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0465",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0466",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0487",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0493",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0506",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0507",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0508",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0510",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0529",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0546",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0556",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0563",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0574",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0575",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0576",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0591",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0643",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0691",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0708",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0810",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0825",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0828",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0829",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0945",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0953",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0954",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0955",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0956",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0959",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0960",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0964",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0965",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0966",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0967",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0968",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0969",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0970",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0973",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0974",
+  "PORT_STATUS_RELEASE_GATE.csv:row_0975",
+  "PORT_STATUS_RELEASE_GATE.csv:row_1013",
+  "PORT_STATUS_RELEASE_GATE.csv:row_1015",
+  "PORT_STATUS_RELEASE_GATE.csv:row_1185",
+  "PORT_STATUS_RELEASE_GATE.csv:row_1259"
 ]
 CANDIDATE_GROUPS=[
   "9B_coordinate_transform_contracts_after_frame_policy",
@@ -63,24 +68,24 @@ CANDIDATE_GROUPS=[
   "9B_time_scale_and_sidereal_policy"
 ]
 M07_REPRESENTED_FUNCTION_ROWS=1350
-EXPECTED_CANDIDATE_POOL_ROWS=85
-EXPECTED_ROWS=40
-EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=45
+EXPECTED_CANDIDATE_POOL_ROWS=45
+EXPECTED_ROWS=45
+EXPECTED_REMAINING_CANDIDATE_POOL_ROWS=0
 EXPECTED_EXECUTABLE_ROWS=152
 EXPECTED_METADATA_ROWS=27
 EXPECTED_CUMULATIVE_PROCESSED=623
 EXPECTED_REMAINING_BACKLOG=700
-EXPECTED_RISK_COUNTS=Counter({'medium_risk_requires_contract_review': 29, 'blocked_until_frame_time_policy': 11})
-EXPECTED_FAMILY_COUNTS=Counter({'coordinate_transform_sensitive': 29, 'time_scale_sensitive': 9, 'frame_graph_sensitive': 2})
-EXPECTED_BLOCK_REASON_COUNTS=Counter({'blocked_until_coordinate_frame_sign_and_rotation_order_contract': 29, 'blocked_until_epoch_time_scale_and_sidereal_policy': 9, 'blocked_until_frame_graph_and_time_policy': 2})
+EXPECTED_RISK_COUNTS=Counter({'blocked_until_frame_time_policy': 16, 'medium_risk_requires_contract_review': 29})
+EXPECTED_FAMILY_COUNTS=Counter({'coordinate_transform_sensitive': 29, 'frame_graph_sensitive': 13, 'time_scale_sensitive': 3})
+EXPECTED_BLOCK_REASON_COUNTS=Counter({'blocked_until_coordinate_frame_sign_and_rotation_order_contract': 29, 'blocked_until_epoch_time_scale_and_sidereal_policy': 3, 'blocked_until_frame_graph_and_time_policy': 13})
 BLOCK_TEXT={
-  "blocked_until_coordinate_frame_sign_and_rotation_order_contract": "Classifier row remains blocked until coordinate-frame sign, axis order, rotation order, round-trip contract, source registry, and independent coordinate-transform oracles are explicitly approved; no runtime alias or implementation claim is made in A26.",
-  "blocked_until_epoch_time_scale_and_sidereal_policy": "Classifier row remains blocked until epoch, time-scale, and sidereal-day policy, source registry, and independent time oracles are explicitly approved; no runtime alias or implementation claim is made in A26.",
-  "blocked_until_frame_graph_and_time_policy": "Classifier row remains blocked until frame-graph semantics, epoch/time-scale policy, source registry, and independent frame/time oracle fixtures are explicitly approved; no runtime alias or implementation claim is made in A26."
+  "blocked_until_coordinate_frame_sign_and_rotation_order_contract": "Classifier row remains blocked until coordinate-frame sign, axis order, rotation order, round-trip contract, source registry, and independent coordinate-transform oracles are explicitly approved; no runtime alias or implementation claim is made in A27.",
+  "blocked_until_epoch_time_scale_and_sidereal_policy": "Classifier row remains blocked until epoch, time-scale, and sidereal-day policy, source registry, and independent time oracles are explicitly approved; no runtime alias or implementation claim is made in A27.",
+  "blocked_until_frame_graph_and_time_policy": "Classifier row remains blocked until frame-graph semantics, epoch/time-scale policy, relative-frame conventions, source registry, and independent frame/time oracle fixtures are explicitly approved; no runtime alias or implementation claim is made in A27."
 }
 EXPECTED_HEADER=['schema_version', 'resolution_id', 'source_artifact_id', 'classifier_path', 'source_row_locator', 'source_row_number', 'rust_function_alias', 'scilab_function_alias', 'source_file_locator', 'formula_family', 'risk_tier', 'recommended_chunk_group', 'target_formula_id', 'target_resolution_id', 'target_batch_manifest', 'target_package', 'target_crate_name', 'target_runtime_symbol', 'target_runtime_path', 'target_contract_path', 'target_validation_card_path', 'target_source_seed_path', 'validation_status', 'disposition', 'block_reason']
-VALIDATOR_NAME='verify_external_m07_coordinate_transform_frame_time_policy_wave1'
-WAVE_ID='a26_external_m07_coordinate_transform_frame_time_policy_wave1'
+VALIDATOR_NAME='verify_external_m07_coordinate_transform_frame_time_policy_wave2'
+WAVE_ID='a27_external_m07_coordinate_transform_frame_time_policy_wave2'
 SELECTED_ROW_RANGE={'first':SELECTED_LOCATORS[0],'last':SELECTED_LOCATORS[-1],'count':EXPECTED_ROWS}
 class VerificationError(RuntimeError): pass
 def require(c:bool,m:str)->None:
@@ -123,26 +128,25 @@ def verify_repo(repo:Path)->dict[str,Any]:
             candidate_pool.append(row)
     candidate_pool=sorted(candidate_pool,key=lambda r:source_row_number(r['m07_row_id_or_alias']))
     require(len(candidate_pool)==EXPECTED_CANDIDATE_POOL_ROWS,f'candidate pool count mismatch: {len(candidate_pool)}')
+    require([r['m07_row_id_or_alias'] for r in candidate_pool]==SELECTED_LOCATORS,'selected locators are not the complete remaining source-ordered candidate pool')
     selected=[classifier[loc] for loc in SELECTED_LOCATORS]
-    require([r['m07_row_id_or_alias'] for r in candidate_pool[:EXPECTED_ROWS]]==SELECTED_LOCATORS,'selected locators are not the first bounded source-ordered candidate-pool slice')
-    require(len(candidate_pool[EXPECTED_ROWS:])==EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'remaining candidate-pool count mismatch')
     risk=Counter(r['risk_tier'] for r in selected); family=Counter(r['formula_family'] for r in selected); groups=Counter(r['recommended_chunk_group'] for r in selected); block=Counter(r['block_reason'] for r in selected)
     require(risk==EXPECTED_RISK_COUNTS,f'risk counts mismatch: {dict(risk)}'); require(family==EXPECTED_FAMILY_COUNTS,f'family counts mismatch: {dict(family)}'); require(block==EXPECTED_BLOCK_REASON_COUNTS,f'block counts mismatch: {dict(block)}')
     rows=read_delimited(repo_file(repo,RESOLUTION_PATH),'\t',EXPECTED_HEADER); require(len(rows)==EXPECTED_ROWS,f'resolution row count mismatch: {len(rows)}'); resolutions=unique_map(rows,'source_row_locator','resolution'); unique_map(rows,'resolution_id','resolution'); require(list(resolutions)==SELECTED_LOCATORS,'resolution rows are not exact selected locator order')
     source_files=set(); numbers=[]
     for i,row in enumerate(rows,1):
         loc=row['source_row_locator']; source=classifier[loc]; n=source_row_number(loc); numbers.append(n)
-        require(row['schema_version']==SCHEMA_VERSION,f'row {i} schema mismatch'); require(row['resolution_id']==f'resolution.external_m07.coordinate_transform_frame_time_policy_wave1.{n:04d}',f'row {i} resolution ID mismatch'); require(row['source_artifact_id']==SOURCE_ARTIFACT_ID,f'row {i} source artifact mismatch'); require(row['classifier_path']==CLASSIFIER_PATH,f'row {i} classifier path mismatch'); require(row['source_row_number']==str(n),f'row {i} source row mismatch')
+        require(row['schema_version']==SCHEMA_VERSION,f'row {i} schema mismatch'); require(row['resolution_id']==f'resolution.external_m07.coordinate_transform_frame_time_policy_wave2.{n:04d}',f'row {i} resolution ID mismatch'); require(row['source_artifact_id']==SOURCE_ARTIFACT_ID,f'row {i} source artifact mismatch'); require(row['classifier_path']==CLASSIFIER_PATH,f'row {i} classifier path mismatch'); require(row['source_row_number']==str(n),f'row {i} source row mismatch')
         for field,cf in [('rust_function_alias','rust_function_alias'),('scilab_function_alias','scilab_function_alias_if_known'),('source_file_locator','source_file_locator'),('formula_family','formula_family'),('risk_tier','risk_tier'),('recommended_chunk_group','recommended_chunk_group')]: require(row[field]==source[cf],f'row {i} classifier mismatch for {field}')
         require(row['validation_status']=='research_required',f'row {i} validation status mismatch'); require(row['disposition']==source['block_reason'],f'row {i} disposition mismatch'); require(row['block_reason']==BLOCK_TEXT[source['block_reason']],f'row {i} block reason mismatch'); source_files.add(row['source_file_locator'])
         for field in ['target_formula_id','target_resolution_id','target_batch_manifest','target_package','target_crate_name','target_runtime_symbol','target_runtime_path','target_contract_path','target_validation_card_path','target_source_seed_path']: require(row[field]=='',f'row {i} blocked disposition must leave {field} empty')
     inventory=read_delimited(repo_file(repo,INVENTORY_PATH),'\t'); executable=[r for r in inventory if r['category']=='executable_research_equation']; metadata=[r for r in inventory if r['category']=='metadata_only_formula_vault_candidate']; total,backlog,_=external_resolution_inventory(repo,inventory,len(metadata)); require(len(executable)==EXPECTED_EXECUTABLE_ROWS,f'executable count mismatch: {len(executable)}'); require(len(metadata)==EXPECTED_METADATA_ROWS,f'metadata count mismatch: {len(metadata)}'); require(total==EXPECTED_CUMULATIVE_PROCESSED,f'processed count mismatch: {total}'); require(backlog==EXPECTED_REMAINING_BACKLOG,f'backlog count mismatch: {backlog}')
-    return {'schema_version':SCHEMA_VERSION,'result':'PASS','wave_id':WAVE_ID,'candidate_pool_rows':len(candidate_pool),'classifier_rows_selected':EXPECTED_ROWS,'candidate_pool_remaining_rows':EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'terminal_disposition_rows':len(rows),'deduplicated_alias_rows':0,'excluded_helper_rows':0,'contract_blocked_rows':40,'risk_tier_counts':dict(sorted(risk.items())),'formula_family_counts':dict(sorted(family.items())),'source_group_counts':dict(sorted(groups.items())),'block_reason_counts':dict(sorted(block.items())),'target_formula_counts':{},'distinct_source_files':len(source_files),'risk_tier_not_downgraded':True,'executable_research_equations':len(executable),'metadata_inventory_records':len(metadata),'external_m07_processed_rows':total,'external_m07_backlog_rows':backlog,'formula_count_delta':0,'runtime_kernel_files_changed':0,'new_validation_cards_required':0,'new_source_seeds_required':0,'validation_status':'research_required','no_rust_m07_or_scilab_source_scraping':True,'no_external_parity_claim':True,'no_certification_or_operational_readiness_claim':True,**validation_contract_fields([])}
+    return {'schema_version':SCHEMA_VERSION,'result':'PASS','wave_id':WAVE_ID,'candidate_pool_rows':len(candidate_pool),'classifier_rows_selected':EXPECTED_ROWS,'candidate_pool_remaining_rows':EXPECTED_REMAINING_CANDIDATE_POOL_ROWS,'terminal_disposition_rows':len(rows),'deduplicated_alias_rows':0,'excluded_helper_rows':0,'contract_blocked_rows':EXPECTED_ROWS,'risk_tier_counts':dict(sorted(risk.items())),'formula_family_counts':dict(sorted(family.items())),'source_group_counts':dict(sorted(groups.items())),'block_reason_counts':dict(sorted(block.items())),'target_formula_counts':{},'distinct_source_files':len(source_files),'risk_tier_not_downgraded':True,'executable_research_equations':len(executable),'metadata_inventory_records':len(metadata),'external_m07_processed_rows':total,'external_m07_backlog_rows':backlog,'formula_count_delta':0,'runtime_kernel_files_changed':0,'new_validation_cards_required':0,'new_source_seeds_required':0,'validation_status':'research_required','no_rust_m07_or_scilab_source_scraping':True,'no_external_parity_claim':True,'no_certification_or_operational_readiness_claim':True,**validation_contract_fields([])}
 def validation_contract_fields(errors:list[str]|None=None)->dict[str,Any]:
-    return {'validator':VALIDATOR_NAME,'wave_identifier':WAVE_ID,'selected_row_range':SELECTED_ROW_RANGE,'selected_row_count':EXPECTED_ROWS,'processed_backlog_counters':{'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG},'validation_checks_summary':{'supports_self_test':True,'supports_repo_argument':True,'dependency_free_python':True,'mutates_repository_files':False,'selected_rows':'row_0013 through row_0404 governed-family slice','deduplicated_alias_rows':0,'excluded_helper_rows':0,'contract_blocked_rows':40,'risk_tier_counts':dict(sorted(EXPECTED_RISK_COUNTS.items())),'formula_family_counts':dict(sorted(EXPECTED_FAMILY_COUNTS.items()))},'errors':errors or []}
+    return {'validator':VALIDATOR_NAME,'wave_identifier':WAVE_ID,'selected_row_range':SELECTED_ROW_RANGE,'selected_row_count':EXPECTED_ROWS,'processed_backlog_counters':{'external_m07_processed_rows':EXPECTED_CUMULATIVE_PROCESSED,'external_m07_backlog_rows':EXPECTED_REMAINING_BACKLOG},'validation_checks_summary':{'supports_self_test':True,'supports_repo_argument':True,'dependency_free_python':True,'mutates_repository_files':False,'selected_rows':'row_0405 through row_1259 remaining governed 9B candidate pool','deduplicated_alias_rows':0,'excluded_helper_rows':0,'contract_blocked_rows':EXPECTED_ROWS,'risk_tier_counts':dict(sorted(EXPECTED_RISK_COUNTS.items())),'formula_family_counts':dict(sorted(EXPECTED_FAMILY_COUNTS.items()))},'errors':errors or []}
 def self_test()->dict[str,Any]:
     errors=[]
-    if EXPECTED_ROWS!=40: errors.append('EXPECTED_ROWS mismatch')
+    if EXPECTED_ROWS!=45: errors.append('EXPECTED_ROWS mismatch')
     if EXPECTED_CUMULATIVE_PROCESSED!=623: errors.append('EXPECTED_CUMULATIVE_PROCESSED mismatch')
     if EXPECTED_REMAINING_BACKLOG!=700: errors.append('EXPECTED_REMAINING_BACKLOG mismatch')
     if sum(EXPECTED_RISK_COUNTS.values())!=EXPECTED_ROWS: errors.append('risk tier total mismatch')

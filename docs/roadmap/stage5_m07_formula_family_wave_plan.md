@@ -126,3 +126,8 @@ A25 processes the final 17 source-ordered rows from `9A_classical_elements_and_9
 ### Post-Stage-5 A26 overlay
 
 A26 processes the first 40 source-ordered rows from the governed coordinate-transform / frame-graph / time-scale policy backlog: 0 exact aliases, 0 helper exclusions, and 40 rows remain contract- or policy-blocked. The selected rows span `9B_coordinate_transform_contracts_after_frame_policy` (29), `9B_time_scale_and_sidereal_policy` (9), and `9B_frame_graph_time_policy_before_coordinate_transforms` (2), while retaining 29 `medium_risk_requires_contract_review` and 11 `blocked_until_frame_time_policy` labels. A26 leaves 45 rows in this 9B candidate pool and updates external accounting to 578 terminally processed rows and 745 remaining backlog rows. No raw Rust-port, M07, or Scilab source is imported or executed.
+
+### Post-Stage-5 A27 overlay
+
+A27 processes the remaining 45 source-ordered rows from the governed coordinate-transform / frame-graph / time-scale policy backlog: 0 exact aliases, 0 helper exclusions, and 45 rows remain contract- or policy-blocked. The selected rows span `9B_coordinate_transform_contracts_after_frame_policy` (29), `9B_frame_graph_time_policy_before_coordinate_transforms` (13), and `9B_time_scale_and_sidereal_policy` (3), while retaining 29 `medium_risk_requires_contract_review` and 16 `blocked_until_frame_time_policy` labels. A27 leaves 0 rows in this 9B candidate pool and updates external accounting to 623 terminally processed rows and 700 remaining backlog rows. No raw Rust-port, M07, or Scilab source is imported or executed.
+
