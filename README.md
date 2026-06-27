@@ -186,4 +186,4 @@ A28-A30 complete the governed solver / numerical propagation policy backlog with
 
 ### A34 external M07 attitude / inertia / quaternion policy Wave 1
 
-A34 records 40 metadata-only terminal dispositions for the first bounded attitude representation, inertia, quaternion, and DCM policy slice. It raises the external M07 processed counter to 895 rows and leaves 428 rows in backlog. No runtime source, SCILAB source, certification, or external parity claim is added.
+A34 records 40 metadata-only terminal dispositions for the first bounded attitude representation, inertia, quaternion, and DCM policy slice. It raises the external M07 processed counter to 895 rows and leaves 428 rows in backlog. No runtime source, Scilab source, certification, or external parity claim is added.

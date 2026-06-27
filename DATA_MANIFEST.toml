@@ -24,14 +24,14 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "README.md"
 bytes = 18194
-sha256 = "b7c24c5b518db50ba107eb3331e3687a240fbf51517fac7c002b20c51f75bfa9"
+sha256 = "c3cf31ed39339fa439560276693697da916722bc93eb62b3aaacf33a42c3082a"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "checksums/SHA256SUMS"
 bytes = 12878
-sha256 = "f957e60da1827b252bc2b1afad961223b8a35193dbfd7417eb69a59841113385"
+sha256 = "6c8df88e4775f03a173939517ff6b57543bfa3cd9b1def659a34bf2a474bffbb"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -317,8 +317,8 @@ status = "repository_tracked_research_data"
 
 [[files]]
 path = "data-governance/DATA_REGISTRY.yaml"
-bytes = 51838
-sha256 = "33d9348c166a8e22c484d96f3079204e5c6ef7460247824cdb361965990c2c27"
+bytes = 52811
+sha256 = "1a30a3a938826d8aa3a40a5f99d4cdfcc4fa14659033e54b33436743068072a7"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
