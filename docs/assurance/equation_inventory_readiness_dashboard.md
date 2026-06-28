@@ -92,3 +92,4 @@ A40 adds 45 research-required terminal dispositions for `10C_sgp4_teme_oracle_an
 ### A41 external M07 CR3BP / external-data / input-output policy Wave 1
 
 A41 adds 45 research-required terminal dispositions for CR3BP family/oracle policy, external data-table fixture governance, and input/output demonstration-row exclusions, bringing external M07 processed/backlog counters to 1170/153.
+A42 adds 45 research-required terminal dispositions for classifier-refresh and manual source-review rows, bringing external M07 processed/backlog counters to 1215/108.

@@ -96,3 +96,6 @@ A40 is metadata-only and records 45 SGP4/TEME frame-time policy terminal disposi
 ### A41 external M07 CR3BP / external-data / input-output policy Wave 1
 
 Status: research-required metadata only. A41 adds no public API and no readiness promotion; it records 45 terminal dispositions and leaves 153 external M07 backlog rows.
+### A42 classifier-refresh / manual source-review policy Wave 1
+
+Status: research-required metadata only. A42 records 45 terminal dispositions and leaves 108 external M07 backlog rows. No public API readiness promotion is made.

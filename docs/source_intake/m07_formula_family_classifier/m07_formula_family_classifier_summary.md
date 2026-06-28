@@ -239,3 +239,6 @@ Selected 45 rows from `10C_sgp4_teme_oracle_and_frame_time_gate` and `10C_sgp4_h
 ### A41 CR3BP / external-data / input-output policy Wave 1 summary
 
 Selected 45 rows spanning `10E_CR3BP_family_policy_and_oracle_before_promotion` (23), `10D_external_data_table_and_fixture_governance` (15), and `10D_do_not_import_io_demo_utility_rows` (7). External M07 processed/backlog after A41: 1170/153.
+### A42 classifier-refresh / manual source-review policy Wave 1 summary
+
+Selected 45 rows from `10E_classifier_refresh_or_manual_source_review`, leaving 13 rows in that candidate pool. All remain blocked until family-contract source review, classifier refresh, and validation-evidence policy are complete. External M07 processed/backlog after A42: 1215/108.
