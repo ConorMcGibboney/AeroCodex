@@ -22,14 +22,14 @@ source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 [[files]]
 path = "README.md"
-bytes = 22388
-sha256 = "234c26bc57cc25cd1d31a5ef08eefd1207a8b4e6c92816b13c398e42e40b63f2"
+bytes = 22540
+sha256 = "276fcab92bcc51c328ad648d92496a095d562fc71a4037b615bb0bb4da0c9c4d"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 [[files]]
 path = "checksums/SHA256SUMS"
 bytes = 17232
-sha256 = "bda558422903e6f8e73acac21340d956954d9700ad37969ec33929969f1882c1"
+sha256 = "c1321bb6b0ee8b55a8bfebce31566dbb9ff83205ace1982c6cd4c42f016db6ee"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 [[files]]
@@ -280,8 +280,8 @@ source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 [[files]]
 path = "docs/assurance/equation_inventory_readiness_dashboard.md"
-bytes = 7109
-sha256 = "8494fcf6b65c2b334cad96a4ca2c4de0c58ab15044ff6c2f79c83bad38df1555"
+bytes = 7198
+sha256 = "8052be32847da62330d74bd0d00316b6042e5fbb97416aeb4871a34e9d95c9f6"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 [[files]]

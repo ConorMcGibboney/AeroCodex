@@ -29,9 +29,9 @@ The inventory distinguishes:
 - `validation_card_only_record` — validation-card metadata rows. These records are not formula implementations.
 - `helper_algorithm` — public support/helper routines, validation helpers, type constructors, provenance helpers, BioSim governance primitives, and other support algorithms not counted as executable research equations.
 
-## Historical Stage 4 Chunk 7E counts
+## Historical Stage 4 Chunk 7E baseline counts
 
-The verifier is expected to report:
+The following figures are the Stage 4 Chunk 7E historical baseline, not the current post-A45/A46 source-snapshot state. At that checkpoint, the verifier was expected to report:
 
 - executable research equations: 112
 - metadata-only formula-vault candidates: 3
@@ -41,12 +41,12 @@ The verifier is expected to report:
 - validation-card-only records: 36
 - helper algorithms: 89
 
-The remaining external M07 backlog is derived from the registered 1,350 represented rows minus 27 formula-vault candidate records and minus rows with terminal external-resolution dispositions. A11-A33 assign 855 terminal dispositions, leaving 468 rows unprocessed.
+At the historical Stage 4 Chunk 7E baseline, the remaining external M07 backlog was derived from the registered 1,350 represented rows minus 27 formula-vault candidate records and minus rows with terminal external-resolution dispositions. Later A11-A45 waves close the tracked external M07 backlog to 0; do not read the 1,347 baseline value as current backlog.
 
 
-## Current post-A27 resolution state
+## Current post-A45 external M07 closure state
 
-The current governed inventory contains 152 executable research equations, 27 metadata-only intake records, 855 external M07 rows with terminal dispositions, 468 remaining external M07 backlog rows, 46 validation-card-only records, and 262 helper algorithms. The A10 runtime-resolution counters remain:
+The current governed inventory contains 152 executable research equations, 27 metadata-only intake records, 1323 external M07 rows with terminal metadata dispositions, 0 remaining external M07 backlog rows, 46 validation-card-only records, and 262 helper algorithms. The A10 runtime-resolution counters remain:
 
 - runtime-linked formula-vault records: 27;
 - unresolved formula-vault candidate formula IDs: 0;
@@ -54,7 +54,7 @@ The current governed inventory contains 152 executable research equations, 27 me
 - vector-algebra links: 14;
 - canonical-unit links: 10.
 
-`formula-vault/resolutions/m00_runtime_links.tsv` must exactly match the formula IDs in the candidate records and the runtime, contract, validation-card, and source-seed fields in the two governed M00 equation-batch manifests. A11 processes 38 unit-conversion rows. A12-A13 process all 74 vector-helper rows: 56 aliases, 13 excluded internal utilities, and 5 contract blocks. A14-A15 process all 49 classical two-body algebra rows: 22 aliases and 27 contract blocks. A16-A25 complete all 377 rows of `9A_classical_elements_and_9E_mission_design_contracts`: 12 aliases, 90 internal/composite-helper exclusions, and 275 contract or policy blocks, leaving 0 group rows. A26-A27 complete the governed 9B coordinate-transform/frame-graph/time-scale policy backlog with 85 contract or policy blocks, leaving 0 rows in that candidate pool. A26-A27 preserve 58 medium-risk and 27 frame/time-policy blocked classifier labels without downgrade. No executable or metadata-candidate count changes.
+`formula-vault/resolutions/m00_runtime_links.tsv` must exactly match the formula IDs in the candidate records and the runtime, contract, validation-card, and source-seed fields in the governed M00 equation-batch manifests. A11-A45 collectively assign terminal evidence-only metadata dispositions across 35 bounded `formula-vault/resolutions/m07_*.tsv` manifests. `validation/equation_inventory.tsv` records `stage4.m07.remaining_backlog_rows` as an `external_m07_backlog_row` with `row_count=0`. All external M07 rows remain `research_required` and blocked. This closure is backlog-accounting evidence only: it does not import M07/Scilab source, add runtime implementations, assert external parity, or promote certification, flight readiness, mission readiness, operational approval, or regulated-use approval.
 
 ## Readiness rule
 
