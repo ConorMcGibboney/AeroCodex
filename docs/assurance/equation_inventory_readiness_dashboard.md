@@ -89,3 +89,6 @@ A39 adds 48 research-required terminal dispositions for `10B_J2_perturbation_and
 ### A40 external M07 SGP4 / TEME frame-time policy Wave 1
 
 A40 adds 45 research-required terminal dispositions for `10C_sgp4_teme_oracle_and_frame_time_gate` and `10C_sgp4_hold_no_public_helper_import`, bringing external M07 processed/backlog counters to 1125/198.
+### A41 external M07 CR3BP / external-data / input-output policy Wave 1
+
+A41 adds 45 research-required terminal dispositions for CR3BP family/oracle policy, external data-table fixture governance, and input/output demonstration-row exclusions, bringing external M07 processed/backlog counters to 1170/153.

@@ -212,3 +212,6 @@ A39 closes the remaining 48 metadata-only terminal dispositions for the J2 pertu
 ### A40 external M07 SGP4 / TEME frame-time policy Wave 1
 
 A40 records 45 metadata-only terminal dispositions for the SGP4/TEME frame-time policy and helper-exclusion candidate pool. It raises the external M07 processed counter to 1125 rows and leaves 198 rows in the external backlog. No runtime source, Scilab source, certification, or external parity claim is added.
+### A41 external M07 CR3BP / external-data / input-output policy Wave 1
+
+A41 records 45 metadata-only terminal dispositions for the CR3BP family/oracle policy, external data-table fixture governance, and input/output demonstration-row exclusion candidate pools. It raises the external M07 processed counter to 1170 rows and leaves 153 rows in the external backlog. No runtime source, Scilab source, external fixtures, certification, or external parity claim is added.

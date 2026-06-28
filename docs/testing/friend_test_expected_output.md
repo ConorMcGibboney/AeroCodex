@@ -143,3 +143,4 @@ A38 J2 perturbation / numerical propagation policy Wave 2 is metadata-only; frie
 A39 J2 perturbation / numerical propagation policy Wave 3 is metadata-only; friend-test runtime output is unchanged.
 
 A40 SGP4 / TEME frame-time policy Wave 1 is metadata-only; friend-test runtime output is unchanged.
+A41 external M07 metadata-only wave: processed/backlog counters 1170/153; no executable output changes expected.

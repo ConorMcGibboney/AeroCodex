@@ -93,3 +93,6 @@ A39 is metadata-only and blocks 48 J2 perturbation / numerical-propagation sourc
 ### A40 external M07 SGP4 / TEME frame-time policy Wave 1
 
 A40 is metadata-only and records 45 SGP4/TEME frame-time policy terminal dispositions or helper exclusions. External M07 counters after A40: 1125 processed / 198 backlog.
+### A41 external M07 CR3BP / external-data / input-output policy Wave 1
+
+Status: research-required metadata only. A41 adds no public API and no readiness promotion; it records 45 terminal dispositions and leaves 153 external M07 backlog rows.

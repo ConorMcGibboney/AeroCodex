@@ -23,15 +23,15 @@ status = "repository_tracked_research_data"
 
 [[files]]
 path = "README.md"
-bytes = 20482
-sha256 = "18b312b234f2f415ea0c83c583a5c394974ed363dd132150616df61abe37c662"
+bytes = 20950
+sha256 = "57ec2801a4654431ee11bba605b3491c22eb204b103cc1c2821beeef6f964297"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "checksums/SHA256SUMS"
-bytes = 15185
-sha256 = "4e7aa678f83eb11ade65592fa477f67bfe59313e3040802798bdf9edd97b3a62"
+bytes = 15580
+sha256 = "161441223477895fd1b495af802b01d8c755d0137f9ff034f6883b61b3d01996"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -317,22 +317,22 @@ status = "repository_tracked_research_data"
 
 [[files]]
 path = "data-governance/DATA_REGISTRY.yaml"
-bytes = 60287
-sha256 = "c49952bacf596bb8d5b71e3c64178f63cdb33b31d5050f7d22f5f3da2b194560"
+bytes = 61657
+sha256 = "762758af5ad598331dd21447f585ea71593bcf393debc603e5fdd9e099a0843d"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "docs/assurance/equation_inventory_readiness_dashboard.md"
-bytes = 5989
-sha256 = "1b3e8c79601cd2b69116fc82e12ab7b23b231d8eab69b4eb7a7e502656c78653"
+bytes = 6295
+sha256 = "2b89dbe7d2d886f7c49243ba08e40e0df5e2baef02e6ff95d281b9ad00ec0194"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "docs/assurance/formula_vault_runtime_resolution.md"
-bytes = 4055
-sha256 = "ef1ce5bf1f0900e8fbefcdd034fbc3c41c11a6b2de62ed2dab8e6bfbc623c466"
+bytes = 4240
+sha256 = "6193256970f9ed779449bf457f478d147e6e518085d42581ea35d74178829071"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -345,15 +345,15 @@ status = "repository_tracked_research_data"
 
 [[files]]
 path = "docs/index.md"
-bytes = 11357
-sha256 = "72585dfc4bb331855adb485dc026c14e3214386e32398cde14dc20a5ddcf2f17"
+bytes = 11491
+sha256 = "07c41827b9cc2a740497c7f3da7cc1f9f21e6828864f7b4ee94e5d45bbbfd20f"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "docs/roadmap/public_alpha_readiness_dashboard.md"
-bytes = 9036
-sha256 = "56cd5e411963d3d3d1e20c5f969c5b30a8591632ae77d487b9eabb3dea5d30f8"
+bytes = 9279
+sha256 = "696c9a324847809504bab6185d435e6a7d12641f483423a28fceda88e354f253"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -366,22 +366,22 @@ status = "repository_tracked_research_data"
 
 [[files]]
 path = "docs/source_intake/m07_formula_family_classifier/m07_formula_family_classifier_summary.md"
-bytes = 19645
-sha256 = "b142fb722c69bcf940e67c321f3a73144e4607e896922ef1ebb159da7bc57807"
+bytes = 19956
+sha256 = "ea7298360121a0a520129cb297351bd6070205df6c042af0d81da843ab4d1678"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "docs/testing/friend_test_expected_output.md"
-bytes = 13952
-sha256 = "8d064d9381a8e116eae3676ed9c4d6457ac944f01d4368f890d40e141f785dfa"
+bytes = 14065
+sha256 = "a26bef50e4165e548d48963105973d95a74367e5f1757348483c4399272f16df"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "formula-vault/README.md"
-bytes = 28853
-sha256 = "40d17ca0c29034ac7610e3afefdbe0b680a63736a1f9e49a1ceef0a1193e54da"
+bytes = 29085
+sha256 = "3bf102eed2472593cb4ac9b18541aaa255127f88c57ff01ad8d56ab7e9d5e784"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -395,105 +395,105 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_coordinate_transform_frame_time_policy_wave1.py"
 bytes = 16264
-sha256 = "3bf5d33129fa0f386aae6404ae146d1b73b28f2bb9752bf69a81b8977222e763"
+sha256 = "c7c3e1f015e91653a39576f70f62e39c3c1cca80c7da52f1e3e3ae0ddf7917e3"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave1.py"
 bytes = 24176
-sha256 = "b0950b693435053f03c05d706e563c308f114da0030e64c314c8cdab6c7495ed"
+sha256 = "cbcdeb8ba82120dd1ad6cbb6ab6a246fbe89f726a476a979ac39ddf029ff0fab"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave10.py"
 bytes = 14195
-sha256 = "08bb3d54e345ccc86d367a890554900c2b4e636fdcafd1dc846793647388791b"
+sha256 = "8457fe268a64afe3e127bd9580e00689e26f2c144d26be7d527a42639c62db9a"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave2.py"
 bytes = 20197
-sha256 = "6cdf33fe468484631e18dbffe51bade3c44eeab906f0fbf1ebd7f0c8d118fd11"
+sha256 = "99ce0b9943022f258dad834dd0bb5be56f10adbbd49747769989f261c5f9ff9e"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave3.py"
 bytes = 21043
-sha256 = "790eed2dab3fccaf154b8a89c09b9c7425c6cc48d6a3aa890ac0796cbdd7fa39"
+sha256 = "8ce08d21ea5c2914d27230026d06feb1df52a52e6e33d5d931e3c54b2b9270dc"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave4.py"
 bytes = 24088
-sha256 = "bb41e88ca39421f6197c85b31b42c46e7fdcfab88e637236ffc5137d89286af1"
+sha256 = "585dd49c1cfa7a15046edacbbd0bde675ec1fb4f4ac24f328da49c99221bd247"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave5.py"
 bytes = 25227
-sha256 = "9ea7cbf12bec72a1208655b4491d753f100a694e242e36be8ebe599c6eff7d08"
+sha256 = "9141e22e19c87810eed698103208a998f50d35b30ced232bebe145c0eb93846d"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave6.py"
 bytes = 27239
-sha256 = "df0443e8e9c43e39399f3bb65a3953a0fb2844672806279b18509959e4733428"
+sha256 = "df399eb844a55d7e3cf07b7ed9fae15d1e83a18d5aa69911ea9a5f9a87f0869a"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave7.py"
 bytes = 26887
-sha256 = "fa4e16b3d3355ca01bb09c6d234d5541f32c7136d0208cbed745c4fad0cb02ef"
+sha256 = "b01a1d24e45a4c2c8436dce0a069b002a6624fd64bcaee2533f9709e4a4550ca"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave8.py"
 bytes = 27481
-sha256 = "dacc8534f46a26d53fbdb4cfb8f6d1ef855fbca61dfb0202e8359605edbf2298"
+sha256 = "fd056db7c27ff61d73329abb870378b37e0ed25d642e1b3be8d7659026df735c"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_orbital_geometry_conic_wave9.py"
 bytes = 14124
-sha256 = "c579ecf4b74e10cc6193f9bd98782d9e36d92c2b08b3096f862a820cddde6bd5"
+sha256 = "0ae3623869b8593f3f8240d264b43b635e38c4730daaf603cb9bb96d943088c3"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_two_body_algebra_wave1.py"
 bytes = 20938
-sha256 = "653f81cb9b128f7c101092a33ae5a66d09eff0a2f545ed04e6f5e29e697d549e"
+sha256 = "7fbd4af5c62c90639c19dff20811a470faacf6b2fd710ede3dcdf67670ee26c9"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_two_body_algebra_wave2.py"
 bytes = 18002
-sha256 = "2e46973bb7e3175bb8a045a9c08a85a969bc22728ce02c40bc90f1b0fc78ac9d"
+sha256 = "ad92ee305ab66d973d64390f6cd201d0e2729ed9219b38ff694602eed51361fc"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "scripts/verify_external_m07_vector_helper_wave2.py"
 bytes = 15403
-sha256 = "0aad9cb666e33d92df94ca74ca55d2fccbc2dd0800b7a5c739f648f352059571"
+sha256 = "711b4fc5a5df3371c807fba7d2d6c39df1f5cd880652cae8618d675986d62354"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
 [[files]]
 path = "validation/equation_inventory.tsv"
-bytes = 137070
-sha256 = "1e090589b6bfa65abb5a67610ab3ae69c9e6437f99410ef1ca67ed92409e8a05"
+bytes = 137385
+sha256 = "c4925b8a722eb2649aee0bce7059f78205867ec1d814b6759e5aee1d730b5e2c"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -514,7 +514,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_coordinate_transform_frame_time_policy_wave2.py"
 bytes = 16262
-sha256 = "c9306a61bc76c97323ba397f97224747c6357695c2d54b138e956dd3ee5f643d"
+sha256 = "194da6e06a397ff1bce671d3b1586fe12dae19d7a4e506790beeeb0207f17346"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -633,7 +633,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_solver_policy_wave1.py"
 bytes = 14871
-sha256 = "a11bd02a5f36572071e3a56385033a47f02b7498f435a7b63b47a4659a8b5df8"
+sha256 = "515ec706fd7289c3916afc08c1647edb625de6aa50b5bb343ca779aa84bbeff1"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -661,7 +661,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_solver_policy_wave2.py"
 bytes = 14505
-sha256 = "747464645488dbd13cb9c6f1cc083d64698e8fe05b926dc646a23eda2c316c8a"
+sha256 = "08eb455f9d046901a63f0bcf30d1c4b64d92655e437d22c585593af1419d79d2"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -682,7 +682,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_solver_policy_wave3.py"
 bytes = 12305
-sha256 = "0b44ce17290b2d594bb23e992aac313c2979dae611118f8d44db8a361c2415df"
+sha256 = "f7a0d1e6db17abc7f0945dbb072818159ce82492a98794f52bab3ee3d7946330"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -703,7 +703,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_relative_motion_finite_burn_policy_wave1.py"
 bytes = 13452
-sha256 = "4688ae217ec2471afaa0c4f1c7a686a639e6873e4bef4bc51bb52a8a72d02e46"
+sha256 = "4ccac16cbb937762150f916d88da4f4b101ea70f3196b890c084d9d86e15af39"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -724,7 +724,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_relative_motion_finite_burn_policy_wave2.py"
 bytes = 13397
-sha256 = "d3306b6eea3f01c55bfaf693873940c6e558312056b8f37b940cd315caed85c0"
+sha256 = "35843954b68c5d97817afd27aff4c682ebbb38e0630f3a899139b67d2efc8aef"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -745,7 +745,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_relative_motion_finite_burn_policy_wave3.py"
 bytes = 13732
-sha256 = "8455b262b4b20f029672d3a8befa78c6f035c8002eab22b1518d7317968c37cd"
+sha256 = "2df5e5af27ae60a3cc49824751b2c62da952826f2201184daae8784ab5491d22"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -766,7 +766,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_attitude_frame_policy_wave1.py"
 bytes = 13067
-sha256 = "9e75b81967bafca49ed45726f983b28577aac04a7970ea534696afda9858a123"
+sha256 = "5b73362dfb5f32260477dd34903e7fbce5f46d744d05394ec2556bf7da4d384a"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -787,7 +787,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_attitude_frame_policy_wave2.py"
 bytes = 11909
-sha256 = "4b1dd848db9734dc02d40078fc78bf3c0c24cf42e6844cebce17189187547021"
+sha256 = "ea9ab254527a5c18ad2bccf051f42c74c815c693aa77898e81009248201fa0bb"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -808,7 +808,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_attitude_dynamics_control_policy_wave1.py"
 bytes = 12355
-sha256 = "8873f26c24967fba4869ff12d210cb7a04f40462e3a9458925a4de402b83594c"
+sha256 = "b97bcc947069f7aeaccff4fb44a3007ef2aa066c6a418f8bacbfc8e3f2f042de"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -829,7 +829,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_j2_perturbation_policy_wave1.py"
 bytes = 10964
-sha256 = "39ab82889cb10e682f803bf9461ef7c74a5d9fafb715d4fb1f73a9635cd4101e"
+sha256 = "a93bd9973f0923ba3b225693e1a7f3b146248c05e3f1d9090836a6f9355f006d"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -850,7 +850,7 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_j2_perturbation_policy_wave2.py"
 bytes = 11133
-sha256 = "5813718d39155cdfcdb8bf911692750d1c99e700905287dfa9269c6e39d292be"
+sha256 = "f5e653410b1b579cc519d3c7800136a42288e94162564d254e56838c45cfbb82"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 
@@ -869,7 +869,7 @@ source = "AeroCodex governed repository file"
 [[files]]
 path = "scripts/verify_external_m07_j2_perturbation_policy_wave3.py"
 bytes = 11334
-sha256 = "05171ce95970aa9558f9650c3ed220d86183e9d8a0a5c9c9765df71eb0cc4a8e"
+sha256 = "eedbab9c657042e29dccb23980dba58bdf2d6c4716f541bfb5ae7d01775a4f40"
 source = "AeroCodex governed repository file"
 [[files]]
 path = "docs/assurance/m07_sgp4_teme_policy_wave1_resolution.md"
@@ -888,7 +888,28 @@ status = "repository_tracked_research_data"
 [[files]]
 path = "scripts/verify_external_m07_sgp4_teme_policy_wave1.py"
 bytes = 11449
-sha256 = "2e056c371b068637dae191b0d5a641714eba871dfffd19618fd9161203161032"
+sha256 = "43cbbb363cc668667de4e46c83751040211c342e4145dba749e6dc171cc2e7a3"
+source = "AeroCodex governed repository file"
+status = "repository_tracked_research_data"
+
+[[files]]
+path = "docs/assurance/m07_cr3bp_external_data_policy_wave1_resolution.md"
+bytes = 1109
+sha256 = "c31393b4397b28f322db3fad887fa0a89019933498edeff90b8357d668e1a842"
+source = "AeroCodex governed repository file"
+status = "repository_tracked_research_data"
+
+[[files]]
+path = "formula-vault/resolutions/m07_cr3bp_external_data_policy_wave1.tsv"
+bytes = 37285
+sha256 = "e4124b6a7bb0b2f45e0defb56ceed91972c925a24d31577455e03f53a5b5d8df"
+source = "AeroCodex governed repository file"
+status = "repository_tracked_research_data"
+
+[[files]]
+path = "scripts/verify_external_m07_cr3bp_external_data_policy_wave1.py"
+bytes = 11676
+sha256 = "a600bb45fe1a27c5bd11c2fbff0eed06db4d11e4cb0712f4eaab403c063fd5d3"
 source = "AeroCodex governed repository file"
 status = "repository_tracked_research_data"
 

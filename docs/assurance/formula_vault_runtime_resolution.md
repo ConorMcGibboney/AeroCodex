@@ -45,3 +45,4 @@ The verifier fails closed on duplicate or missing formula IDs, unresolved candid
 - `formula-vault/resolutions/m07_j2_perturbation_policy_wave3.tsv`: A39 J2 perturbation / numerical propagation policy Wave 3, 48 research-required blocked rows, no runtime mappings.
 
 - `formula-vault/resolutions/m07_sgp4_teme_policy_wave1.tsv`: A40 SGP4 / TEME frame-time policy Wave 1, 45 research-required terminal rows, no runtime mappings.
+- `formula-vault/resolutions/m07_cr3bp_external_data_policy_wave1.tsv`: A41 CR3BP / external-data / input-output policy Wave 1, 45 research-required terminal rows, no runtime mappings.

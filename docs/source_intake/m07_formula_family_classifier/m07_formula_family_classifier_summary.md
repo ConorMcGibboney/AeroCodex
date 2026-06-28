@@ -236,3 +236,6 @@ Selected 48 rows from `10B_J2_perturbation_and_numerical_policy`, closing that g
 ### A40 SGP4 / TEME frame-time policy Wave 1 summary
 
 Selected 45 rows from `10C_sgp4_teme_oracle_and_frame_time_gate` and `10C_sgp4_hold_no_public_helper_import`, closing the SGP4/TEME candidate pool. External M07 processed/backlog after A40: 1125/198.
+### A41 CR3BP / external-data / input-output policy Wave 1 summary
+
+Selected 45 rows spanning `10E_CR3BP_family_policy_and_oracle_before_promotion` (23), `10D_external_data_table_and_fixture_governance` (15), and `10D_do_not_import_io_demo_utility_rows` (7). External M07 processed/backlog after A41: 1170/153.
