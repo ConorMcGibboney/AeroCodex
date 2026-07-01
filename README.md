@@ -74,14 +74,23 @@ AeroCodex does **not** currently provide certified flight software, a complete B
 | `aero-codex-cli` | Beta 1 concept binary for ten governed M00 canonical-unit formulas, stable JSON output, exit codes, and bounded self-checks. |
 | `xtask` | Dependency-free Rust local governance, validation, data-registry, formula-vault, equation-batch-manifest, and inventory checks. |
 
-## Quick start
+## Developer quickstart
+
+AeroCodex uses Rust stable only and a cargo-first workflow for the first research-readiness milestone. Linux and macOS are the primary contributor targets; Windows should not be intentionally broken. This repository is research/preliminary-design software and is not certified for flight, mission operations, habitat safety, medical/life-support decisions, or regulatory approval.
+
+Fresh-clone baseline commands:
 
 ```bash
 git clone https://github.com/sci-labs-ai/AeroCodex.git
 cd AeroCodex
-cargo test --workspace --all-features
+cargo fmt --check
+cargo clippy --all-targets --all-features -- -D warnings
+cargo test --all
+cargo doc --no-deps
 cargo run -p xtask -- verify --all
 ```
+
+See [toolchain baseline](docs/development/toolchain.md) and [CI/local verification gates](docs/development/ci_gates.md) for the RR-003 tooling baseline, including future deterministic registry and formula status/gating check placeholders.
 
 ## Beta 1 concept CLI
 
