@@ -659,7 +659,7 @@ fn load_workspace_index(root: &Path) -> WorkspaceIndex {
     WorkspaceIndex { packages, warnings }
 }
 
-fn parse_workspace_members(text: &str) -> Result<Vec<String>, String> {
+pub(crate) fn parse_workspace_members(text: &str) -> Result<Vec<String>, String> {
     let mut in_workspace = false;
     let mut collecting_members = false;
     let mut members = Vec::new();
@@ -703,7 +703,7 @@ fn parse_workspace_members(text: &str) -> Result<Vec<String>, String> {
     }
 }
 
-fn parse_toml_string_assignment_in_section(
+pub(crate) fn parse_toml_string_assignment_in_section(
     text: &str,
     target_section: &str,
     key: &str,
